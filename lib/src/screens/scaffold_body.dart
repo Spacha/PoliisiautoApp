@@ -5,10 +5,10 @@
 import 'package:flutter/material.dart';
 
 import '../routing.dart';
-import '../screens/settings.dart';
 import '../widgets/fade_transition_page.dart';
-import 'authors.dart';
+import 'home.dart';
 import 'books.dart';
+import 'authors.dart';
 import 'scaffold.dart';
 
 /// Displays the contents of the body of [PoliisiautoScaffold]
@@ -29,23 +29,22 @@ class PoliisiautoScaffoldBody extends StatelessWidget {
       key: navigatorKey,
       onPopPage: (route, dynamic result) => route.didPop(result),
       pages: [
-        if (currentRoute.pathTemplate.startsWith('/authors'))
-          const FadeTransitionPage<void>(
-            key: ValueKey('authors'),
-            child: AuthorsScreen(),
-          )
-        else if (currentRoute.pathTemplate.startsWith('/settings'))
-          const FadeTransitionPage<void>(
-            key: ValueKey('settings'),
-            child: SettingsScreen(),
-          )
-        else if (currentRoute.pathTemplate.startsWith('/books') ||
+        if (currentRoute.pathTemplate.startsWith('/home') ||
             currentRoute.pathTemplate == '/')
+          const FadeTransitionPage<void>(
+            key: ValueKey('home'),
+            child: HomeScreen(),
+          )
+        else if (currentRoute.pathTemplate.startsWith('/reports'))
           const FadeTransitionPage<void>(
             key: ValueKey('books'),
             child: BooksScreen(),
           )
-
+        else if (currentRoute.pathTemplate.startsWith('/authors'))
+          const FadeTransitionPage<void>(
+            key: ValueKey('authors'),
+            child: AuthorsScreen(),
+          )
         // Avoid building a Navigator with an empty `pages` list when the
         // RouteState is set to an unexpected path, such as /signin.
         //

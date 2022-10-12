@@ -33,11 +33,11 @@ class _BooksScreenState extends State<BooksScreen>
     super.didChangeDependencies();
 
     final newPath = _routeState.route.pathTemplate;
-    if (newPath.startsWith('/books/popular')) {
+    if (newPath.startsWith('/reports/popular')) {
       _tabController.index = 0;
-    } else if (newPath.startsWith('/books/new')) {
+    } else if (newPath.startsWith('/reports/new')) {
       _tabController.index = 1;
-    } else if (newPath == '/books/all') {
+    } else if (newPath == '/reports/all') {
       _tabController.index = 2;
     }
   }
@@ -92,20 +92,20 @@ class _BooksScreenState extends State<BooksScreen>
   RouteState get _routeState => RouteStateScope.of(context);
 
   void _handleBookTapped(Book book) {
-    _routeState.go('/book/${book.id}');
+    _routeState.go('/report/${book.id}');
   }
 
   void _handleTabIndexChanged() {
     switch (_tabController.index) {
       case 1:
-        _routeState.go('/books/new');
+        _routeState.go('/reports/new');
         break;
       case 2:
-        _routeState.go('/books/all');
+        _routeState.go('/reports/all');
         break;
       case 0:
       default:
-        _routeState.go('/books/popular');
+        _routeState.go('/reports/popular');
         break;
     }
   }

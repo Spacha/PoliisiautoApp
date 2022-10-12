@@ -23,22 +23,22 @@ class PoliisiautoScaffold extends StatelessWidget {
         selectedIndex: selectedIndex,
         body: const PoliisiautoScaffoldBody(),
         onDestinationSelected: (idx) {
-          if (idx == 0) routeState.go('/books/popular');
-          if (idx == 1) routeState.go('/authors');
-          if (idx == 2) routeState.go('/settings');
+          if (idx == 0) routeState.go('/home');
+          if (idx == 1) routeState.go('/reports/popular');
+          if (idx == 2) routeState.go('/authors');
         },
         destinations: const [
           AdaptiveScaffoldDestination(
-            title: 'Books',
+            title: 'Home',
+            icon: Icons.home,
+          ),
+          AdaptiveScaffoldDestination(
+            title: 'Reports',
             icon: Icons.book,
           ),
           AdaptiveScaffoldDestination(
             title: 'Authors',
             icon: Icons.person,
-          ),
-          AdaptiveScaffoldDestination(
-            title: 'Settings',
-            icon: Icons.settings,
           ),
         ],
       ),
@@ -46,9 +46,9 @@ class PoliisiautoScaffold extends StatelessWidget {
   }
 
   int _getSelectedIndex(String pathTemplate) {
-    if (pathTemplate.startsWith('/books')) return 0;
-    if (pathTemplate == '/authors') return 1;
-    if (pathTemplate == '/settings') return 2;
+    if (pathTemplate == '/home') return 0;
+    if (pathTemplate.startsWith('/reports')) return 1;
+    if (pathTemplate == '/authors') return 2;
     return 0;
   }
 }

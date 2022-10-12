@@ -41,9 +41,9 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     final pathTemplate = routeState.route.pathTemplate;
 
     Book? selectedBook;
-    if (pathTemplate == '/book/:bookId') {
+    if (pathTemplate == '/report/:reportId') {
       selectedBook = libraryInstance.allBooks.firstWhereOrNull(
-          (b) => b.id.toString() == routeState.route.parameters['bookId']);
+          (b) => b.id.toString() == routeState.route.parameters['reportId']);
     }
 
     Author? selectedAuthor;
@@ -59,7 +59,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
         // the /books or /authors tab in BookstoreScaffold.
         if (route.settings is Page &&
             (route.settings as Page).key == _bookDetailsKey) {
-          routeState.go('/books/popular');
+          routeState.go('/reports/popular');
         }
 
         if (route.settings is Page &&
@@ -79,7 +79,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
                 var signedIn = await authState.signIn(
                     credentials.username, credentials.password);
                 if (signedIn) {
-                  await routeState.go('/books/popular');
+                  await routeState.go('/home');
                 }
               },
             ),

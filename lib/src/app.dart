@@ -28,13 +28,25 @@ class _PoliisiautoState extends State<Poliisiauto> {
     _routeParser = TemplateRouteParser(
       allowedPaths: [
         '/signin',
-        '/authors',
-        '/settings',
-        '/books/new',
-        '/books/all',
-        '/books/popular',
-        '/book/:bookId',
-        '/author/:authorId',
+        '/home',
+        '/reports',
+        '/reports/new', // TODO: Remove!
+        '/reports/all', // TODO: Remove!
+        '/reports/popular', // TODO: Remove!
+        '/report/:reportId',
+        '/profile',
+
+        '/authors', // TODO: Remove!
+        '/author/:authorId', // TODO: Remove!
+        // '/authors',
+        // '/signin',
+        // '/authors',
+        // '/settings',
+        // '/books/new',
+        // '/books/all',
+        // '/books/popular',
+        // '/book/:bookId',
+        // '/author/:authorId',
       ],
       guard: _guard,
       initialRoute: '/signin',
@@ -89,9 +101,10 @@ class _PoliisiautoState extends State<Poliisiauto> {
     if (!signedIn && from != signInRoute) {
       return signInRoute;
     }
-    // Go to /books if the user is signed in and tries to go to /signin.
+    // Go to /home if the user is signed in and tries to go to /signin.
     else if (signedIn && from == signInRoute) {
-      return ParsedRoute('/books/popular', '/books/popular', {}, {});
+      //return ParsedRoute('/books/popular', '/books/popular', {}, {});
+      return ParsedRoute('/home', '/home', {}, {});
     }
     return from;
   }
