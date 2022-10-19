@@ -65,6 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: const Text('Kirjaudu'),
                     ),
                   ),
+                  /*
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: TextButton(
@@ -76,6 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: const Text('Unohtuiko salasana?'),
                     ),
                   ),
+                  */
                 ],
               ),
             ),
