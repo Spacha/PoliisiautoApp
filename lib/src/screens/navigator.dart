@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../auth.dart';
 import '../data.dart';
 import '../routing.dart';
+import '../screens/front_page.dart';
 import '../screens/sign_in.dart';
 import '../widgets/fade_transition_page.dart';
 import 'author_details.dart';
@@ -29,6 +30,7 @@ class PoliisiautoNavigator extends StatefulWidget {
 }
 
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
+  final _frontPageKey = const ValueKey('Front page');
   final _signInKey = const ValueKey('Sign in');
   final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
@@ -70,7 +72,21 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
         return route.didPop(result);
       },
       pages: [
-        if (routeState.route.pathTemplate == '/signin')
+        if (routeState.route.pathTemplate == '/frontpage')
+          // Display front page.
+          FadeTransitionPage<void>(
+            key: _frontPageKey,
+            child: FrontPageScreen(
+              onFrontPage: (buttons) async {
+                var signInButtonPressed = false;
+                
+                if (signInButtonPressed) {
+                  await routeState.go('signIn');
+                }
+              },
+            ),
+          )
+        else if (routeState.route.pathTemplate == '/signin')
           // Display the sign in screen.
           FadeTransitionPage<void>(
             key: _signInKey,

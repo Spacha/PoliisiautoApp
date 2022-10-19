@@ -27,6 +27,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
     /// Configure the parser with all of the app's allowed path templates.
     _routeParser = TemplateRouteParser(
       allowedPaths: [
+        '/frontpage',
         '/signin',
         '/home',
         '/reports',
@@ -49,7 +50,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
         // '/author/:authorId',
       ],
       guard: _guard,
-      initialRoute: '/signin',
+      initialRoute: '/frontpage',
     );
 
     _routeState = RouteState(_routeParser);
