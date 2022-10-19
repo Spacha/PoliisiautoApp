@@ -38,19 +38,19 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Text('Kirjaudu sisään',
+                  style: Theme.of(context).textTheme.headlineMedium),
                   Image.asset(
                     "graphics/logo-text-1x.png",
                     height: 200,
                     width: 200,
                   ),
-                  Text('Sign in',
-                      style: Theme.of(context).textTheme.headlineMedium),
                   TextField(
-                    decoration: const InputDecoration(labelText: 'Username'),
+                    decoration: const InputDecoration(labelText: 'Käyttäjätunnus'),
                     controller: _usernameController,
                   ),
                   TextField(
-                    decoration: const InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(labelText: 'Salasana'),
                     obscureText: true,
                     controller: _passwordController,
                   ),
@@ -62,7 +62,18 @@ class _SignInScreenState extends State<SignInScreen> {
                             _usernameController.value.text,
                             _passwordController.value.text));
                       },
-                      child: const Text('Sign in'),
+                      child: const Text('Kirjaudu'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: TextButton(
+                      onPressed: () async {
+                        widget.onSignIn(Credentials(
+                            _usernameController.value.text,
+                            _passwordController.value.text));
+                      },
+                      child: const Text('Unohtuiko salasana?'),
                     ),
                   ),
                 ],
