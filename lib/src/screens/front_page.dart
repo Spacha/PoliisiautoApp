@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import '../routing.dart';
 
 class Buttons {
   final bool signInButton;
 
   Buttons(this.signInButton);
 }
-
 class FrontPageScreen extends StatefulWidget {
   final ValueChanged<Buttons> onFrontPage;
 
@@ -30,19 +30,24 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Kirjaudu sisään',
-                  style: Theme.of(context).textTheme.headlineMedium),
                   Image.asset(
                     "graphics/logo-text-1x.png",
                     height: 200,
                     width: 200,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(0),
                     child: TextButton(
-                      onPressed: () async {},
+                      onPressed: () async {RouteStateScope.of(context).go('/signin');},
                       child: const Text('Kirjaudu sisään'),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(0),
+                      child: TextButton(
+                        onPressed: () async {},
+                        child: const Text('Unohtuiko salasana?'),
+                      ),
                   ),
                 ],
               ),
@@ -51,4 +56,3 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
         ),
       );
 }
-
