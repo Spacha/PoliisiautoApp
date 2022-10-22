@@ -28,6 +28,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
     _routeParser = TemplateRouteParser(
       allowedPaths: [
         '/frontpage',
+        '/forgot_password',
         '/signin',
         '/home',
         '/reports',
@@ -98,8 +99,9 @@ class _PoliisiautoState extends State<Poliisiauto> {
     final signedIn = _auth.signedIn;
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
     final frontPageRoute = ParsedRoute('/frontpage', '/frontpage', {}, {});
+    final forgotPasswordRoute = ParsedRoute('/forgot_password', '/forgot_password', {}, {});
 
-    if (!signedIn && from != frontPageRoute && from != signInRoute) {
+    if (!signedIn && from != frontPageRoute && from != signInRoute && from != forgotPasswordRoute) {
       return frontPageRoute;
       
     }

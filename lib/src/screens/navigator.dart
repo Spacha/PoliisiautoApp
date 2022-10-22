@@ -9,6 +9,7 @@ import '../auth.dart';
 import '../data.dart';
 import '../routing.dart';
 import '../screens/front_page.dart';
+import '../screens/forgot_password.dart';
 import '../screens/sign_in.dart';
 import '../widgets/fade_transition_page.dart';
 import 'author_details.dart';
@@ -31,6 +32,7 @@ class PoliisiautoNavigator extends StatefulWidget {
 
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _frontPageKey = const ValueKey('Front page');
+  final _forgotPasswordKey = const ValueKey('Forgot Password');
   final _signInKey = const ValueKey('Sign in');
   final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
@@ -78,7 +80,15 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             key: _frontPageKey,
             child: FrontPageScreen(
               onFrontPage: (buttons) async {
-
+              },
+            ),
+          )
+        else if (routeState.route.pathTemplate == '/forgot_password')
+          // Display forgot password screen.
+          FadeTransitionPage<void>(
+            key: _forgotPasswordKey,
+            child: ForgotPasswordScreen(
+              onForgotPassword: (buttons) async {
               },
             ),
           )

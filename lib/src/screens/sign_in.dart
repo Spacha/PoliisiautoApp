@@ -79,19 +79,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: const Text('Kirjaudu'),
                     ),
                   ),
-                  /*
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: TextButton(
-                      onPressed: () async {
-                        widget.onSignIn(Credentials(
-                            _usernameController.value.text,
-                            _passwordController.value.text));
-                      },
-                      child: const Text('Unohtuiko salasana?'),
-                    ),
+                   Padding(
+                    padding: const EdgeInsets.all(0),
+                      child: TextButton(
+                        onPressed: () async {RouteStateScope.of(context).go('/forgot_password');},
+                        child: const Text('Unohtuiko salasana?'),
+                      ),
                   ),
-                  */
                 ],
               ),
             ),

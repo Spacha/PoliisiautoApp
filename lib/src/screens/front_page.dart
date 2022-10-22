@@ -42,13 +42,6 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                       child: const Text('Kirjaudu sisään'),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(0),
-                      child: TextButton(
-                        onPressed: () async {},
-                        child: const Text('Unohtuiko salasana?'),
-                      ),
-                  ),
                 ],
               ),
             ),
