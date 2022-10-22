@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import '../routing.dart';
 
 class Credentials {
   final String username;
@@ -29,6 +30,19 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    appBar : AppBar (
+        title: const Text('Kirjaudu Sisään'),
+        centerTitle : true,
+        leading: InkWell(
+          onTap: () {
+            RouteStateScope.of(context).go('/frontpage');
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+    ),
         body: Center(
           child: Card(
             child: Container(
