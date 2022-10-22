@@ -29,16 +29,16 @@ class PoliisiautoScaffold extends StatelessWidget {
         },
         destinations: const [
           AdaptiveScaffoldDestination(
-            title: 'Home',
+            title: 'Etusivu',
             icon: Icons.home,
           ),
           AdaptiveScaffoldDestination(
-            title: 'Reports',
-            icon: Icons.book,
+            title: 'Minun ilmoitukset',
+            icon: Icons.notifications,
           ),
           AdaptiveScaffoldDestination(
-            title: 'Authors',
-            icon: Icons.person,
+            title: 'Viestit',
+            icon: Icons.message,
           ),
         ],
       ),
