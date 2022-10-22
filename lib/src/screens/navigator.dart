@@ -78,11 +78,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             key: _frontPageKey,
             child: FrontPageScreen(
               onFrontPage: (buttons) async {
-                var signInButtonPressed = false;
-                
-                if (signInButtonPressed) {
-                  await routeState.go('signIn');
-                }
+
               },
             ),
           )

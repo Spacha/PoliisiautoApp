@@ -97,11 +97,16 @@ class _PoliisiautoState extends State<Poliisiauto> {
   Future<ParsedRoute> _guard(ParsedRoute from) async {
     final signedIn = _auth.signedIn;
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
+    final frontPageRoute = ParsedRoute('/frontpage', '/frontpage', {}, {});
 
-    // Go to /signin if the user is not signed in
-    if (!signedIn && from != signInRoute) {
-      return signInRoute;
+    if (!signedIn && from != frontPageRoute && from != signInRoute) {
+      return frontPageRoute;
+      
     }
+    // Go to /signin if the user is not signed in
+    //else if (!signedIn && from != signInRoute) {
+    //  return signInRoute;
+    //}
     // Go to /home if the user is signed in and tries to go to /signin.
     else if (signedIn && from == signInRoute) {
       //return ParsedRoute('/books/popular', '/books/popular', {}, {});
@@ -115,6 +120,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
       _routeState.go('/signin');
     }
   }
+
 
   @override
   void dispose() {
