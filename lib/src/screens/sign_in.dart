@@ -52,8 +52,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Kirjaudu sisään',
-                  style: Theme.of(context).textTheme.headlineMedium),
+                  //Text('Kirjaudu sisään',
+                  //style: Theme.of(context).textTheme.headlineMedium),
                   Image.asset(
                     "graphics/logo-text-1x.png",
                     height: 200,
@@ -69,13 +69,23 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: _passwordController,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: TextButton(
+                    padding: const EdgeInsets.only(top: 25),
+                    child: OutlinedButton(
                       onPressed: () async {
                         widget.onSignIn(Credentials(
                             _usernameController.value.text,
-                            _passwordController.value.text));
-                      },
+                            _passwordController.value.text));},
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: Colors.white,
+                        backgroundColor: const Color.fromARGB(255, 97, 144, 184),
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       child: const Text('Kirjaudu'),
                     ),
                   ),

@@ -36,9 +36,36 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                     width: 200,
                   ),
                   Padding(
+                    padding: const EdgeInsets.only(top: 80, bottom: 50),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(80),
+                        backgroundColor: const Color.fromARGB(255, 158, 29, 20),
+                        textStyle: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      child: const Text('SOS'),
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(0),
-                    child: TextButton(
+                    child: OutlinedButton(
                       onPressed: () async {RouteStateScope.of(context).go('/signin');},
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: Colors.white,
+                        backgroundColor: const Color.fromARGB(255, 97, 144, 184),
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       child: const Text('Kirjaudu sisään'),
                     ),
                   ),
