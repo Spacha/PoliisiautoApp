@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../auth.dart';
 import '../routing.dart';
+import '../screens/sidebar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,33 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle : true,
         backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),
-    drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 32, 112, 232),
-                ),
-                child: Text('Drawer Header'),
-              ),
-              ListTile(
-                title: const Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ],
-          ),
-        ),
+    drawer: const MyDrawer(),
     body: SafeArea(
       child: SingleChildScrollView(
         child: Align(
