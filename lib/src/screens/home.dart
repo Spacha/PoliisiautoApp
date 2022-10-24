@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
      appBar : AppBar (
         title: const Text('Home'),
         centerTitle : true,
-        backgroundColor: const Color.fromARGB(255, 97, 144, 184),
+        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),
     drawer: Drawer(
           child: ListView(
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 32, 112, 232),
                 ),
                 child: Text('Drawer Header'),
               ),
@@ -112,7 +112,7 @@ class HomeContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 primary: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 97, 144, 184),
+                backgroundColor: const Color.fromARGB(255, 112, 162, 237),
                 textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class HomeContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 primary: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 97, 144, 184),
+                backgroundColor: const Color.fromARGB(255, 112, 162, 237),
                 textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
