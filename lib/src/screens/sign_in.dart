@@ -33,6 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
     appBar : AppBar (
         title: const Text('Kirjaudu Sisään'),
         centerTitle : true,
+        backgroundColor: const Color.fromARGB(255, 97, 144, 184),
         leading: InkWell(
           onTap: () {
             RouteStateScope.of(context).go('/frontpage');

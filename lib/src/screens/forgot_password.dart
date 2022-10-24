@@ -26,6 +26,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         appBar : AppBar (
         title: const Text('Unohditko salasanasi?'),
         centerTitle : true,
+        backgroundColor: const Color.fromARGB(255, 97, 144, 184),
         leading: InkWell(
           onTap: () {
             RouteStateScope.of(context).go('/frontpage');
