@@ -48,7 +48,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Minun ilmoitukset'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/reports/popular');  // TODO: change route
+                RouteStateScope.of(context).go('/my_reports');
               },
             ),
             ListTile(
