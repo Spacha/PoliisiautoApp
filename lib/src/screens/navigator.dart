@@ -4,6 +4,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:poliisiauto/src/screens/home.dart';
 
 import '../auth.dart';
 import '../data.dart';
@@ -32,9 +33,10 @@ class PoliisiautoNavigator extends StatefulWidget {
 
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _frontPageKey = const ValueKey('Front page');
+  final _homePageKey = const ValueKey('Home page');
   final _forgotPasswordKey = const ValueKey('Forgot Password');
   final _signInKey = const ValueKey('Sign in');
-  final _scaffoldKey = const ValueKey('App scaffold');
+  // final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
   final _authorDetailsKey = const ValueKey('Author details screen');
 
@@ -106,29 +108,11 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
               },
             ),
           )
-        else ...[
-          // Display the app
-          FadeTransitionPage<void>(
-            key: _scaffoldKey,
-            child: const PoliisiautoScaffold(),
-          ),
-          // Add an additional page to the stack if the user is viewing a book
-          // or an author
-          if (selectedBook != null)
-            MaterialPage<void>(
-              key: _bookDetailsKey,
-              child: BookDetailsScreen(
-                book: selectedBook,
-              ),
-            )
-          else if (selectedAuthor != null)
-            MaterialPage<void>(
-              key: _authorDetailsKey,
-              child: AuthorDetailsScreen(
-                author: selectedAuthor,
-              ),
-            ),
-        ],
+        else if (routeState.route.pathTemplate == '/home')
+        FadeTransitionPage<void>(
+          key: _homePageKey,
+          child: const HomeScreen()
+        )
       ],
     );
   }
