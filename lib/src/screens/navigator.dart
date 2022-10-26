@@ -8,6 +8,8 @@ import 'package:poliisiauto/src/screens/create_new_report.dart';
 import 'package:poliisiauto/src/screens/home.dart';
 import 'package:poliisiauto/src/screens/messages.dart';
 import 'package:poliisiauto/src/screens/my_reports.dart';
+import 'package:poliisiauto/src/screens/settings.dart';
+import 'package:poliisiauto/src/screens/user_info.dart';
 
 import '../auth.dart';
 import '../data.dart';
@@ -42,6 +44,8 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _createNewReportKey = const ValueKey('New Report');
   final _myReportsKey = const ValueKey('My Reports');
   final _myMessagesKey = const ValueKey('My Messages');
+  final _myInformationKey = const ValueKey('User Information');
+  final _mySettingsKey = const ValueKey('User Settings');
   // final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
   final _authorDetailsKey = const ValueKey('Author details screen');
@@ -133,6 +137,16 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           FadeTransitionPage<void>(
             key: _myMessagesKey,
             child: const MyMessagesScreen()
+          )
+        else if (routeState.route.pathTemplate == '/user_info')
+          FadeTransitionPage<void>(
+            key: _myInformationKey,
+            child: const UserInformationScreen()
+          )
+        else if (routeState.route.pathTemplate == '/settings')
+          FadeTransitionPage<void>(
+            key: _mySettingsKey,
+            child: const SettingsScreen()
           )
       ],
     );

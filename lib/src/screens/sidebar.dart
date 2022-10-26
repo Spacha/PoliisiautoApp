@@ -56,7 +56,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Viestit'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/messages');  // TODO: change route
+                RouteStateScope.of(context).go('/messages');
               },
             ),
             const SizedBox(height: 20),
@@ -67,14 +67,14 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Asetukset'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/reports/popular');  // TODO: change route
+                RouteStateScope.of(context).go('/settings');
               },
             ),ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Minun tiedot'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/authors');  // TODO: change route
+                RouteStateScope.of(context).go('/user_info');
               },
             ),ListTile(
               leading: const Icon(Icons.logout),

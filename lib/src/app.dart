@@ -40,6 +40,8 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/create_new_report',
         '/my_reports',
         '/messages',
+        '/user_info',
+        '/settings',
 
         '/authors', // TODO: Remove!
         '/author/:authorId', // TODO: Remove!

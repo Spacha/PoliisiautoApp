@@ -7,6 +7,7 @@ import 'package:url_launcher/link.dart';
 
 import '../auth.dart';
 import '../routing.dart';
+import '../screens/sidebar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -18,23 +19,29 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: const Card(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                    child: SettingsContent(),
-                  ),
-                ),
+     appBar : AppBar (
+        title: const Text('Minun tiedot'),
+        centerTitle : true,
+        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
+     ),
+    drawer: const MyDrawer(),
+    body: SafeArea(
+      child: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: const Card(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                child: SettingsContent(),
               ),
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class SettingsContent extends StatelessWidget {
@@ -47,14 +54,14 @@ class SettingsContent extends StatelessWidget {
         children: [
           ...[
             Text(
-              'Settings',
+              'Minun asetukset',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
               onPressed: () {
                 PoliisiautoAuthScope.of(context).signOut();
               },
-              child: const Text('Sign out'),
+              child: const Text('Kirjaudu ulos'),
             ),
             Link(
               uri: Uri.parse('/book/0'),
