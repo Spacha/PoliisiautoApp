@@ -37,10 +37,10 @@ class MyDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.border_color),
-              title: const Text('Kirjoita uusi raportti'),
+              title: const Text('Tee uusi ilmoitus'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/reports/popular');  // TODO: change route
+                RouteStateScope.of(context).go('/create_new_report');
               },
             ),
             ListTile(

@@ -37,6 +37,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/reports/popular', // TODO: Remove!
         '/report/:reportId',
         '/profile',
+        '/create_new_report',
 
         '/authors', // TODO: Remove!
         '/author/:authorId', // TODO: Remove!

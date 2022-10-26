@@ -4,6 +4,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:poliisiauto/src/screens/create_new_report.dart';
 import 'package:poliisiauto/src/screens/home.dart';
 
 import '../auth.dart';
@@ -36,6 +37,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _homePageKey = const ValueKey('Home page');
   final _forgotPasswordKey = const ValueKey('Forgot Password');
   final _signInKey = const ValueKey('Sign in');
+  final _createNewReportKey = const ValueKey('New Report');
   // final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
   final _authorDetailsKey = const ValueKey('Author details screen');
@@ -109,10 +111,15 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             ),
           )
         else if (routeState.route.pathTemplate == '/home')
-        FadeTransitionPage<void>(
-          key: _homePageKey,
-          child: const HomeScreen()
-        )
+          FadeTransitionPage<void>(
+            key: _homePageKey,
+            child: const HomeScreen()
+          )
+        else if (routeState.route.pathTemplate == '/create_new_report')
+          FadeTransitionPage<void>(
+            key: _createNewReportKey,
+            child: const CreateNewReportScreen()
+          )
       ],
     );
   }
