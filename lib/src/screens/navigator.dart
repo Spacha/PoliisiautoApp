@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/screens/create_new_report.dart';
 import 'package:poliisiauto/src/screens/home.dart';
+import 'package:poliisiauto/src/screens/messages.dart';
 import 'package:poliisiauto/src/screens/my_reports.dart';
 
 import '../auth.dart';
@@ -40,6 +41,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _signInKey = const ValueKey('Sign in');
   final _createNewReportKey = const ValueKey('New Report');
   final _myReportsKey = const ValueKey('My Reports');
+  final _myMessagesKey = const ValueKey('My Messages');
   // final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
   final _authorDetailsKey = const ValueKey('Author details screen');
@@ -126,6 +128,11 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           FadeTransitionPage<void>(
             key: _myReportsKey,
             child: const MyReportsScreen()
+          )
+        else if (routeState.route.pathTemplate == '/messages')
+          FadeTransitionPage<void>(
+            key: _myMessagesKey,
+            child: const MyMessagesScreen()
           )
       ],
     );

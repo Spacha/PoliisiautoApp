@@ -56,7 +56,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Viestit'),
               textColor: Colors.white70,
               onTap: () {
-                RouteStateScope.of(context).go('/reports/popular');  // TODO: change route
+                RouteStateScope.of(context).go('/messages');  // TODO: change route
               },
             ),
             const SizedBox(height: 20),
