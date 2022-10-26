@@ -85,11 +85,29 @@ class NewReportContent extends StatelessWidget {
                 primary: Colors.white,
                 backgroundColor: const Color.fromARGB(255, 112, 162, 237),
                 textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              child: const Text('          Lähetä          '),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(0),
+            child: OutlinedButton(
+              onPressed: () async {RouteStateScope.of(context).go('/home');},
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                primary: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 158, 29, 20),
+                textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              child: const Text('Lähetä'),
+              child: const Text('Peruuta'),
             ),
           ),
       ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
