@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
      appBar : AppBar (
-        title: const Text('Home'),
+        title: const Text('Etusivu'),
         centerTitle : true,
         backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),

@@ -13,7 +13,7 @@ class _CreateNewReportScreenState extends State<CreateNewReportScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
      appBar : AppBar (
-        title: const Text('New Report'),
+        title: const Text('Uusi ilmoitus'),
         centerTitle : true,
         backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),

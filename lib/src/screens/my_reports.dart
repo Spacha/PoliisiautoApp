@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../routing.dart';
 import '../screens/sidebar.dart';
 
 class MyReportsScreen extends StatefulWidget {
@@ -13,7 +12,7 @@ class _MyReportsScreenState extends State<MyReportsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
      appBar : AppBar (
-        title: const Text('My Reports'),
+        title: const Text('Minun ilmoitukset'),
         centerTitle : true,
         backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),
