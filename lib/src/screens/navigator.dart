@@ -9,6 +9,8 @@ import 'package:poliisiauto/src/screens/home.dart';
 import 'package:poliisiauto/src/screens/messages.dart';
 import 'package:poliisiauto/src/screens/my_reports.dart';
 import 'package:poliisiauto/src/screens/settings.dart';
+import 'package:poliisiauto/src/screens/sos_confirmation.dart';
+import 'package:poliisiauto/src/screens/sos_confirmed.dart';
 import 'package:poliisiauto/src/screens/user_info.dart';
 
 import '../auth.dart';
@@ -46,6 +48,8 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _myMessagesKey = const ValueKey('My Messages');
   final _myInformationKey = const ValueKey('User Information');
   final _mySettingsKey = const ValueKey('User Settings');
+  final _sosConfirmationKey = const ValueKey('SOS Confirmation');
+  final _sendingSOSKey = const ValueKey('Sending SOS');
   // final _scaffoldKey = const ValueKey('App scaffold');
   final _bookDetailsKey = const ValueKey('Book details screen');
   final _authorDetailsKey = const ValueKey('Author details screen');
@@ -101,6 +105,24 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             key: _forgotPasswordKey,
             child: ForgotPasswordScreen(
               onForgotPassword: (buttons) async {
+              },
+            ),
+          )
+        else if (routeState.route.pathTemplate == '/sos_confirmation')
+          // Display SOS confirmation screen.
+          FadeTransitionPage<void>(
+            key: _sosConfirmationKey,
+            child: SOSConfirmationScreen(
+              onSosConfirmed: (buttons) async {
+              },
+            ),
+          )
+        else if (routeState.route.pathTemplate == '/send_sos')
+          // Display SOS confirmation screen.
+          FadeTransitionPage<void>(
+            key: _sendingSOSKey,
+            child: SendingSOSScreen(
+              onSendingSOS: (buttons) async {
               },
             ),
           )

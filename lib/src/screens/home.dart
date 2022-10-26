@@ -61,7 +61,7 @@ class HomeContent extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(top: 50, bottom: 10),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {RouteStateScope.of(context).go('/sos_confirmation');},
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(80),

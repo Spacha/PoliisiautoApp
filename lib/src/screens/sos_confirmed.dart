@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import '../routing.dart';
 
 class Buttons {
-  final bool signInButton;
+  final bool onSendingSOS;
 
-  Buttons(this.signInButton);
+  Buttons(this.onSendingSOS);
 }
-class FrontPageScreen extends StatefulWidget {
-  final ValueChanged<Buttons> onFrontPage;
+class SendingSOSScreen extends StatefulWidget {
+  final ValueChanged<Buttons> onSendingSOS;
 
-  const FrontPageScreen({
-    required this.onFrontPage,
+  const SendingSOSScreen({
+    required this.onSendingSOS,
     super.key,
   });
 
   @override
-  State<FrontPageScreen> createState() => _FrontPageScreenState();
+  State<SendingSOSScreen> createState() => _SendingSOSScreenState();
 }
 
-class _FrontPageScreenState extends State<FrontPageScreen> {
+class _SendingSOSScreenState extends State<SendingSOSScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: Center(
@@ -30,15 +30,15 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                "graphics/logo-text-1x.png",
-                height: 200,
-                width: 200,
+              const Padding(
+                padding: EdgeInsets.all(0),
+                child: Text('SOS ilmoitusta lähetetään',
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 80, bottom: 50),
                 child: ElevatedButton(
-                  onPressed: () {RouteStateScope.of(context).go('/sos_confirmation');},
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(80),
@@ -51,10 +51,15 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                   child: const Text('SOS'),
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: Text('Sijaintiasi lähetetään\nlähimmille opettajille',
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(20),
                 child: OutlinedButton(
-                  onPressed: () async {RouteStateScope.of(context).go('/signin');},
+                  onPressed: () async {},
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -66,9 +71,28 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: const Text('Kirjaudu sisään'),
+                  child: const Text('Paina tästä lähettääksesi\n     ääninäyte tai video'),
                 ),
               ),
+                        Padding(
+            padding: const EdgeInsets.all(0),
+            child: OutlinedButton(
+              onPressed: () async {RouteStateScope.of(context).go('/home');},
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                primary: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 158, 29, 20),
+                textStyle: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              child: const Text('   Lopeta lähetys   '),
+            ),
+          ),
+
             ],
           ),
         ),

@@ -42,6 +42,8 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/messages',
         '/user_info',
         '/settings',
+        '/sos_confirmation',
+        '/send_sos',
 
         '/authors', // TODO: Remove!
         '/author/:authorId', // TODO: Remove!
@@ -105,8 +107,11 @@ class _PoliisiautoState extends State<Poliisiauto> {
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
     final frontPageRoute = ParsedRoute('/frontpage', '/frontpage', {}, {});
     final forgotPasswordRoute = ParsedRoute('/forgot_password', '/forgot_password', {}, {});
+    final sosConfirmationRoute = ParsedRoute('/sos_confirmation', '/sos_confirmation', {}, {});
+    final sosConfirmedRoute = ParsedRoute('/send_sos', '/send_sos', {}, {});
 
-    if (!signedIn && from != frontPageRoute && from != signInRoute && from != forgotPasswordRoute) {
+    if (!signedIn && from != frontPageRoute && from != signInRoute && 
+    from != forgotPasswordRoute && from != sosConfirmationRoute && from != sosConfirmedRoute) {
       return frontPageRoute;
       
     }
