@@ -81,7 +81,7 @@ class HomeContent extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(0),
             child: OutlinedButton(
-              onPressed: () async {RouteStateScope.of(context).go('/signin');},
+              onPressed: () async {RouteStateScope.of(context).go('/create_new_report');},
               style: OutlinedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -93,27 +93,10 @@ class HomeContent extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              child: const Text('Kirjoita uusi raportti'),
+              child: const Text('Tee uusi ilmoitus'),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(0),
-            child: OutlinedButton(
-              onPressed: () {PoliisiautoAuthScope.of(context).signOut();},
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                primary: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 112, 162, 237),
-                textStyle: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              child: const Text('Kirjaudu ulos'),
-            ),
-          ),
+
         /*Link(
           uri: Uri.parse('/report/0'),
           builder: (context, followLink) => TextButton(
