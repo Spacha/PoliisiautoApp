@@ -20,7 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
      appBar : AppBar (
-        title: const Text('Minun tiedot'),
+        title: const Text('Asetukset'),
         centerTitle : true,
         backgroundColor: const Color.fromARGB(255, 112, 162, 237),
      ),
