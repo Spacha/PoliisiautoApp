@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../data/library.dart';
 import '../routing.dart';
+import '../widgets/drawer.dart';
 import '../widgets/author_list.dart';
 
 class AuthorsScreen extends StatelessWidget {
@@ -18,6 +19,7 @@ class AuthorsScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
+        drawer: const PoliisiautoDrawer(),
         body: AuthorList(
           authors: libraryInstance.allAuthors,
           onTap: (author) {

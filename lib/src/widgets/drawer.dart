@@ -57,7 +57,7 @@ class PoliisiautoDrawer extends StatelessWidget {
                 (selectedIndex == 2) ? tileHighlightColor : Colors.transparent,
             onTap: () {
               // Update the state of the app
-              // ...
+              routeState.go('/information');
               // Then close the drawer
               Navigator.pop(context);
             },
@@ -70,7 +70,7 @@ class PoliisiautoDrawer extends StatelessWidget {
   int _getSelectedIndex(String pathTemplate) {
     if (pathTemplate.startsWith('/home')) return 0;
     if (pathTemplate.startsWith('/reports')) return 1;
-    if (pathTemplate.startsWith('/authors')) return 2;
+    if (pathTemplate.startsWith('/information')) return 2;
 
     return -1;
   }

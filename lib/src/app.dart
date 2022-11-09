@@ -37,6 +37,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/profile',
         '/authors',
         '/author/:authorId',
+        '/information',
       ],
       guard: _guard,
       initialRoute: '/signin',

@@ -46,6 +46,7 @@ dependencies:
   path_to_regexp: ^0.4.0
   url_launcher: ^6.1.6
   adaptive_navigation: ^0.0.7
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

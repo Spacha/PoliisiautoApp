@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Align(
             alignment: Alignment.topCenter,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
+              constraints: const BoxConstraints(minWidth: double.infinity),
               child: const Card(
                 child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
