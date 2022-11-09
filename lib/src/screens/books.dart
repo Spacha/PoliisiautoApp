@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../routing.dart';
+import '../widgets/drawer.dart';
 import '../widgets/book_list.dart';
 
 class BooksScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _BooksScreenState extends State<BooksScreen>
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Books'),
+          title: const Text('Reports'),
           bottom: TabBar(
             controller: _tabController,
             tabs: const [
@@ -70,6 +71,7 @@ class _BooksScreenState extends State<BooksScreen>
             ],
           ),
         ),
+        drawer: const PoliisiautoDrawer(),
         body: TabBarView(
           controller: _tabController,
           children: [

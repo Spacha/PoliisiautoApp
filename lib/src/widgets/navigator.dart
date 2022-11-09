@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import '../auth.dart';
 import '../data.dart';
 import '../routing.dart';
+import 'fade_transition_page.dart';
 import '../screens/sign_in.dart';
-import '../widgets/fade_transition_page.dart';
-import 'author_details.dart';
-import 'book_details.dart';
+import '../screens/author_details.dart';
+import '../screens/book_details.dart';
 import 'scaffold.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
@@ -90,8 +90,11 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             key: _scaffoldKey,
             child: const PoliisiautoScaffold(),
           ),
+
           // Add an additional page to the stack if the user is viewing a book
           // or an author
+
+          // Show book
           if (selectedBook != null)
             MaterialPage<void>(
               key: _bookDetailsKey,
@@ -99,6 +102,8 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
                 book: selectedBook,
               ),
             )
+
+          // Show author
           else if (selectedAuthor != null)
             MaterialPage<void>(
               key: _authorDetailsKey,

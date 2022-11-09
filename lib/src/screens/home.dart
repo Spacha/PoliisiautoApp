@@ -7,6 +7,7 @@ import 'package:url_launcher/link.dart';
 
 import '../auth.dart';
 import '../routing.dart';
+import '../widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,23 +19,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: const Card(
-                  child: Padding(
+      appBar: AppBar(title: const Text('Welcome!')),
+      drawer: const PoliisiautoDrawer(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: const Card(
+                child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                    child: HomeContent(),
-                  ),
-                ),
+                    child: HomeContent()),
               ),
             ),
           ),
         ),
-      );
+      ));
 }
 
 class HomeContent extends StatelessWidget {

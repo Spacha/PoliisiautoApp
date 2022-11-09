@@ -5,10 +5,10 @@
 import 'package:flutter/material.dart';
 
 import '../routing.dart';
+import '../screens/home.dart';
+import '../screens/books.dart';
+import '../screens/authors.dart';
 import '../widgets/fade_transition_page.dart';
-import 'home.dart';
-import 'books.dart';
-import 'authors.dart';
 import 'scaffold.dart';
 
 /// Displays the contents of the body of [PoliisiautoScaffold]

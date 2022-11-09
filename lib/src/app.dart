@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'auth.dart';
 import 'routing.dart';
-import 'screens/navigator.dart';
+import 'widgets/navigator.dart';
 
 class Poliisiauto extends StatefulWidget {
   const Poliisiauto({super.key});
@@ -30,23 +30,13 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/signin',
         '/home',
         '/reports',
-        '/reports/new', // TODO: Remove!
-        '/reports/all', // TODO: Remove!
-        '/reports/popular', // TODO: Remove!
+        '/reports/new',
+        '/reports/all',
+        '/reports/popular',
         '/report/:reportId',
         '/profile',
-
-        '/authors', // TODO: Remove!
-        '/author/:authorId', // TODO: Remove!
-        // '/authors',
-        // '/signin',
-        // '/authors',
-        // '/settings',
-        // '/books/new',
-        // '/books/all',
-        // '/books/popular',
-        // '/book/:bookId',
-        // '/author/:authorId',
+        '/authors',
+        '/author/:authorId',
       ],
       guard: _guard,
       initialRoute: '/signin',
@@ -103,7 +93,6 @@ class _PoliisiautoState extends State<Poliisiauto> {
     }
     // Go to /home if the user is signed in and tries to go to /signin.
     else if (signedIn && from == signInRoute) {
-      //return ParsedRoute('/books/popular', '/books/popular', {}, {});
       return ParsedRoute('/home', '/home', {}, {});
     }
     return from;
