@@ -137,7 +137,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
   @override
   void dispose() {
     _auth.removeListener(_handleAuthStateChanged);
-    _routeState.dispose();
+    // _routeState.dispose();
     _routerDelegate.dispose();
     super.dispose();
   }

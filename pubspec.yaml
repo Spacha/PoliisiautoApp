@@ -48,8 +48,11 @@ dependencies:
   adaptive_navigation: ^0.0.7
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
+  # test: <latest_version>
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
