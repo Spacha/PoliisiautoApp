@@ -62,10 +62,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   TextField(
                     decoration: const InputDecoration(labelText: 'Käyttäjätunnus'),
+                    key: const ValueKey("username"),
                     controller: _usernameController,
                   ),
                   TextField(
                     decoration: const InputDecoration(labelText: 'Salasana'),
+                    key: const ValueKey("password"),
                     obscureText: true,
                     controller: _passwordController,
                   ),
