@@ -8,6 +8,7 @@ import '../data.dart';
 import '../routing.dart';
 import '../widgets/drawer.dart';
 import '../widgets/report_list.dart';
+import '../auth.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({
@@ -51,49 +52,52 @@ class _ReportsScreenState extends State<ReportsScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Reports'),
-          bottom: TabBar(
-            controller: _tabController,
-            tabs: const [
-              Tab(
-                text: 'Popular',
-                icon: Icon(Icons.people),
-              ),
-              Tab(
-                text: 'New',
-                icon: Icon(Icons.new_releases),
-              ),
-              Tab(
-                text: 'All',
-                icon: Icon(Icons.list),
-              ),
-            ],
-          ),
-        ),
-        drawer: const PoliisiautoDrawer(),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            ReportList(
-              reports: [], //libraryInstance.popularReports,
-              onTap: _handleBookTapped,
-            ),
-            ReportList(
-              reports: [], //libraryInstance.newReports,
-              onTap: _handleBookTapped,
-            ),
-            ReportList(
-              reports: [], //libraryInstance.allReports,
-              onTap: _handleBookTapped,
-            ),
-          ],
-        ),
-      );
+      appBar: AppBar(
+        title: const Text('Reports'),
+        bottom: isTeacher(context)
+            ? TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(
+                    text: 'Popular',
+                    icon: Icon(Icons.people),
+                  ),
+                  Tab(
+                    text: 'New',
+                    icon: Icon(Icons.new_releases),
+                  ),
+                  Tab(
+                    text: 'All',
+                    icon: Icon(Icons.list),
+                  ),
+                ],
+              )
+            : null,
+      ),
+      drawer: const PoliisiautoDrawer(),
+      body: isTeacher(context)
+          ? TabBarView(
+              controller: _tabController,
+              children: [
+                ReportList(
+                  category: 'category 1',
+                  onTap: _handleReportTapped,
+                ),
+                ReportList(
+                  category: 'category 2',
+                  onTap: _handleReportTapped,
+                ),
+                ReportList(
+                  category: 'category 3',
+                  onTap: _handleReportTapped,
+                )
+              ],
+            )
+          : ReportList(category: 'all', onTap: _handleReportTapped));
 
   RouteState get _routeState => RouteStateScope.of(context);
 
-  void _handleBookTapped(Report report) {
+  void _handleReportTapped(Report report) {
     _routeState.go('/report/${report.id}');
   }
 

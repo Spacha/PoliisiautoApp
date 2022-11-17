@@ -4,9 +4,34 @@
 
 import 'package:flutter/widgets.dart';
 
+PoliisiautoAuth getAuth(BuildContext context) {
+  return PoliisiautoAuthScope.of(context);
+}
+
+bool isTeacher(BuildContext context) {
+  PoliisiautoAuth auth = getAuth(context);
+  return auth.signedIn && auth.user?.role == Role.teacher;
+}
+
+bool isStudent(BuildContext context) {
+  PoliisiautoAuth auth = getAuth(context);
+  return auth.signedIn && auth.user?.role == Role.student;
+}
+
+enum Role { teacher, student }
+
+/// TODO: Implement and move to 'data/user.dart'
+class User {
+  final String name;
+  final Role role;
+
+  User(this.name, this.role);
+}
+
 /// A mock authentication service
 class PoliisiautoAuth extends ChangeNotifier {
   bool _signedIn = false;
+  User? user;
 
   bool get signedIn => _signedIn;
 
@@ -21,7 +46,13 @@ class PoliisiautoAuth extends ChangeNotifier {
     await Future<void>.delayed(const Duration(milliseconds: 200));
 
     // Sign in. Allow any password.
+
+    // fall back to the lowest role; student
+    user = (username.toLowerCase() == 'teacher')
+        ? User(username, Role.teacher)
+        : User(username, Role.student);
     _signedIn = true;
+
     notifyListeners();
     return _signedIn;
   }

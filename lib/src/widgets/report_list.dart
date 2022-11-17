@@ -39,11 +39,11 @@ Future<List<Report>> fetchReports() async {
 }
 
 class ReportList extends StatefulWidget {
-  final List<Report> reports;
+  final String category;
   final ValueChanged<Report>? onTap;
 
   const ReportList({
-    required this.reports,
+    required this.category,
     this.onTap,
     super.key,
   });
@@ -66,7 +66,6 @@ class _ReportListState extends State<ReportList> {
         future: futureReportList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            //return Text(snapshot.data!.description);
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) => ListTile(
@@ -74,13 +73,16 @@ class _ReportListState extends State<ReportList> {
                           //widget.reports[index].description,
                           snapshot.data?[index].description ??
                               'No description'),
+                      onTap: (widget.onTap != null)
+                          ? () => widget.onTap!(snapshot.data![index])
+                          : null,
                     ));
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }
 
           // By default, show a loading spinner.
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
         // itemCount: widget.reports.length,
         // itemBuilder: (context, index) => ListTile(

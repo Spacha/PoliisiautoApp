@@ -50,7 +50,7 @@ class HomeContent extends StatelessWidget {
           Image.asset('images/stock-image-classroom.jpg', fit: BoxFit.contain),
           ...[
             Text(
-              'Welcome, anonymous user!',
+              'Welcome, anonymous ${getAuth(context).user!.name}!',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const Text(
