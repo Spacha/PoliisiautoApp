@@ -10,8 +10,7 @@ import '../data.dart';
 import '../routing.dart';
 import 'fade_transition_page.dart';
 import '../screens/sign_in.dart';
-import '../screens/author_details.dart';
-import '../screens/book_details.dart';
+import '../screens/report_details.dart';
 import 'scaffold.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
@@ -40,11 +39,11 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     final authState = PoliisiautoAuthScope.of(context);
     final pathTemplate = routeState.route.pathTemplate;
 
-    Book? selectedBook;
-    if (pathTemplate == '/report/:reportId') {
-      selectedBook = libraryInstance.allBooks.firstWhereOrNull(
+    Report? selectedReport;
+    /*if (pathTemplate == '/report/:reportId') {
+      selectedReport = libraryInstance.allBooks.firstWhereOrNull(
           (b) => b.id.toString() == routeState.route.parameters['reportId']);
-    }
+    }*/
 
     Author? selectedAuthor;
     if (pathTemplate == '/author/:authorId') {
@@ -91,26 +90,16 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             child: const PoliisiautoScaffold(),
           ),
 
-          // Add an additional page to the stack if the user is viewing a book
-          // or an author
+          // Add an additional page to the stack if the user is viewing a report
 
-          // Show book
-          if (selectedBook != null)
+          // Show report
+          if (selectedReport != null)
             MaterialPage<void>(
               key: _bookDetailsKey,
-              child: BookDetailsScreen(
-                book: selectedBook,
+              child: ReportDetailsScreen(
+                report: selectedReport,
               ),
             )
-
-          // Show author
-          else if (selectedAuthor != null)
-            MaterialPage<void>(
-              key: _authorDetailsKey,
-              child: AuthorDetailsScreen(
-                author: selectedAuthor,
-              ),
-            ),
         ],
       ],
     );

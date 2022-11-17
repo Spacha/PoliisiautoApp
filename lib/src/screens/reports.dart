@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../routing.dart';
 import '../widgets/drawer.dart';
-import '../widgets/book_list.dart';
+import '../widgets/report_list.dart';
 
-class BooksScreen extends StatefulWidget {
-  const BooksScreen({
+class ReportsScreen extends StatefulWidget {
+  const ReportsScreen({
     super.key,
   });
 
   @override
-  State<BooksScreen> createState() => _BooksScreenState();
+  State<ReportsScreen> createState() => _ReportsScreenState();
 }
 
-class _BooksScreenState extends State<BooksScreen>
+class _ReportsScreenState extends State<ReportsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -75,16 +75,16 @@ class _BooksScreenState extends State<BooksScreen>
         body: TabBarView(
           controller: _tabController,
           children: [
-            BookList(
-              books: libraryInstance.popularBooks,
+            ReportList(
+              reports: [], //libraryInstance.popularReports,
               onTap: _handleBookTapped,
             ),
-            BookList(
-              books: libraryInstance.newBooks,
+            ReportList(
+              reports: [], //libraryInstance.newReports,
               onTap: _handleBookTapped,
             ),
-            BookList(
-              books: libraryInstance.allBooks,
+            ReportList(
+              reports: [], //libraryInstance.allReports,
               onTap: _handleBookTapped,
             ),
           ],
@@ -93,8 +93,8 @@ class _BooksScreenState extends State<BooksScreen>
 
   RouteState get _routeState => RouteStateScope.of(context);
 
-  void _handleBookTapped(Book book) {
-    _routeState.go('/report/${book.id}');
+  void _handleBookTapped(Report report) {
+    _routeState.go('/report/${report.id}');
   }
 
   void _handleTabIndexChanged() {

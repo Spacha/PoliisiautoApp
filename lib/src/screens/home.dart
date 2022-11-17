@@ -47,12 +47,15 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
         children: [
+          Image.asset('images/stock-image-classroom.jpg', fit: BoxFit.contain),
           ...[
-            Image.asset('images/stock-image-classroom.jpg',
-                fit: BoxFit.contain),
             Text(
               'Welcome, anonymous user!',
               style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const Text(
+              'This is a sample page with some weird sample and debugging content.',
+              textAlign: TextAlign.center,
             ),
             ElevatedButton(
               onPressed: () {
