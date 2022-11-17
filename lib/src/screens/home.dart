@@ -27,11 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.topCenter,
             child: ConstrainedBox(
               constraints: const BoxConstraints(minWidth: double.infinity),
-              child: const Card(
+              /*child: const Card(
                 child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                     child: HomeContent()),
-              ),
+              ),*/
+              child: const HomeContent(),
             ),
           ),
         ),
@@ -47,9 +48,11 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           ...[
+            Image.asset('images/stock-image-classroom.jpg',
+                fit: BoxFit.contain),
             Text(
-              'Settings',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'Welcome, anonymous user!',
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             ElevatedButton(
               onPressed: () {
