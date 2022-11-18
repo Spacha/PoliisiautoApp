@@ -37,7 +37,7 @@ class PoliisiautoScaffold extends StatelessWidget {
           )
         else if (currentRoute.pathTemplate.startsWith('/reports'))
           const FadeTransitionPage<void>(
-            key: ValueKey('books'),
+            key: ValueKey('reports'),
             child: ReportsScreen(),
           )
         else if (currentRoute.pathTemplate.startsWith('/authors'))

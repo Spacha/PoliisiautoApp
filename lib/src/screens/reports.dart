@@ -98,7 +98,7 @@ class _ReportsScreenState extends State<ReportsScreen>
   RouteState get _routeState => RouteStateScope.of(context);
 
   void _handleReportTapped(Report report) {
-    _routeState.go('/report/${report.id}');
+    _routeState.go('/reports/${report.id}');
   }
 
   void _handleTabIndexChanged() {

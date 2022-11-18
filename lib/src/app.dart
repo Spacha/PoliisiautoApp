@@ -33,7 +33,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
         '/reports/new',
         '/reports/all',
         '/reports/popular',
-        '/report/:reportId',
+        '/reports/:reportId',
         '/profile',
         '/authors',
         '/author/:authorId',

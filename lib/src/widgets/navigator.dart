@@ -39,17 +39,19 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     final authState = PoliisiautoAuthScope.of(context);
     final pathTemplate = routeState.route.pathTemplate;
 
-    Report? selectedReport;
-    /*if (pathTemplate == '/report/:reportId') {
-      selectedReport = libraryInstance.allBooks.firstWhereOrNull(
-          (b) => b.id.toString() == routeState.route.parameters['reportId']);
-    }*/
-
-    Author? selectedAuthor;
-    if (pathTemplate == '/author/:authorId') {
-      selectedAuthor = libraryInstance.allAuthors.firstWhereOrNull(
-          (b) => b.id.toString() == routeState.route.parameters['authorId']);
+    int? selectedReportId;
+    if (pathTemplate == '/reports/:reportId') {
+      selectedReportId = int.tryParse(routeState.route.parameters['reportId']!);
+      //selectedReport =
+      // selectedReport = libraryInstance.allBooks.firstWhereOrNull(
+      //     (b) => b.id.toString() == routeState.route.parameters['reportId']);
     }
+
+    // Author? selectedAuthor;
+    // if (pathTemplate == '/author/:authorId') {
+    //   selectedAuthor = libraryInstance.allAuthors.firstWhereOrNull(
+    //       (b) => b.id.toString() == routeState.route.parameters['authorId']);
+    // }
 
     return Navigator(
       key: widget.navigatorKey,
@@ -93,11 +95,11 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           // Add an additional page to the stack if the user is viewing a report
 
           // Show report
-          if (selectedReport != null)
+          if (selectedReportId != null)
             MaterialPage<void>(
               key: _bookDetailsKey,
               child: ReportDetailsScreen(
-                report: selectedReport,
+                reportId: selectedReportId,
               ),
             )
         ],
