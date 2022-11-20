@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../routing.dart';
 import '../screens/home.dart';
 import '../screens/reports.dart';
-import '../screens/authors.dart';
 import '../screens/information.dart';
 import '../widgets/fade_transition_page.dart';
 
@@ -39,11 +38,6 @@ class PoliisiautoScaffold extends StatelessWidget {
           const FadeTransitionPage<void>(
             key: ValueKey('reports'),
             child: ReportsScreen(),
-          )
-        else if (currentRoute.pathTemplate.startsWith('/authors'))
-          const FadeTransitionPage<void>(
-            key: ValueKey('authors'),
-            child: AuthorsScreen(),
           )
         else if (currentRoute.pathTemplate.startsWith('/information'))
           const FadeTransitionPage<void>(

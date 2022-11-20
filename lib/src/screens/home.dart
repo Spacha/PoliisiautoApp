@@ -63,40 +63,40 @@ class HomeContent extends StatelessWidget {
               },
               child: const Text('Sign out'),
             ),
-            Link(
-              uri: Uri.parse('/report/0'),
-              builder: (context, followLink) => TextButton(
-                onPressed: followLink,
-                child: const Text('Go directly to /report/0 (Link)'),
-              ),
-            ),
-            TextButton(
-              child: const Text('Go directly to /report/0 (RouteState)'),
-              onPressed: () {
-                RouteStateScope.of(context).go('/report/0');
-              },
-            ),
+            // Link(
+            //   uri: Uri.parse('/report/0'),
+            //   builder: (context, followLink) => TextButton(
+            //     onPressed: followLink,
+            //     child: const Text('Go directly to /report/0 (Link)'),
+            //   ),
+            // ),
+            // TextButton(
+            //   child: const Text('Go directly to /report/0 (RouteState)'),
+            //   onPressed: () {
+            //     RouteStateScope.of(context).go('/report/0');
+            //   },
+            // ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
-          TextButton(
-            onPressed: () => showDialog<String>(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Alert!'),
-                content: const Text('The alert description goes here.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            ),
-            child: const Text('Show Dialog'),
-          )
+          // TextButton(
+          //   onPressed: () => showDialog<String>(
+          //     context: context,
+          //     builder: (context) => AlertDialog(
+          //       title: const Text('Alert!'),
+          //       content: const Text('The alert description goes here.'),
+          //       actions: [
+          //         TextButton(
+          //           onPressed: () => Navigator.pop(context, 'Cancel'),
+          //           child: const Text('Cancel'),
+          //         ),
+          //         TextButton(
+          //           onPressed: () => Navigator.pop(context, 'OK'),
+          //           child: const Text('OK'),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          //   child: const Text('Show Dialog'),
+          // )
         ],
       );
 }
