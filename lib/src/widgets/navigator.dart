@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 
 import '../auth.dart';
 import '../routing.dart';
-import 'fade_transition_page.dart';
 import '../screens/sign_in.dart';
+import '../screens/report_new.dart';
 import '../screens/report_details.dart';
+import 'fade_transition_page.dart';
 import 'scaffold.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
@@ -29,8 +30,8 @@ class PoliisiautoNavigator extends StatefulWidget {
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _signInKey = const ValueKey('Sign in');
   final _scaffoldKey = const ValueKey('App scaffold');
-  final _bookDetailsKey = const ValueKey('Book details screen');
-  final _authorDetailsKey = const ValueKey('Author details screen');
+  final _reportNewKey = const ValueKey('New report screen');
+  final _reportDetailsKey = const ValueKey('Report details screen');
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,15 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     final authState = PoliisiautoAuthScope.of(context);
     final pathTemplate = routeState.route.pathTemplate;
 
+    bool creatingNewReport = false;
     int? selectedReportId;
     if (pathTemplate == '/reports/:reportId') {
-      selectedReportId = int.tryParse(routeState.route.parameters['reportId']!);
+      if (routeState.route.parameters['reportId'] == 'new') {
+        creatingNewReport = true;
+      } else {
+        selectedReportId =
+            int.tryParse(routeState.route.parameters['reportId']!);
+      }
       //selectedReport =
       // selectedReport = libraryInstance.allBooks.firstWhereOrNull(
       //     (b) => b.id.toString() == routeState.route.parameters['reportId']);
@@ -57,16 +64,14 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
       onPopPage: (route, dynamic result) {
         // When a page that is stacked on top of the scaffold is popped, display
         // the /books or /authors tab in BookstoreScaffold.
-        if (route.settings is Page &&
-            (route.settings as Page).key == _bookDetailsKey) {
-          routeState.go('/reports/popular');
-        }
-
-        if (route.settings is Page &&
-            (route.settings as Page).key == _authorDetailsKey) {
-          routeState.go('/authors');
-        }
-
+        // if (route.settings is Page &&
+        //     (route.settings as Page).key == _reportDetailsKey) {
+        //   routeState.go('/reports/popular');
+        // }
+        // if (route.settings is Page &&
+        //     (route.settings as Page).key == _authorDetailsKey) {
+        //   routeState.go('/authors');
+        // }
         return route.didPop(result);
       },
       pages: [
@@ -96,10 +101,15 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           // Show report
           if (selectedReportId != null)
             MaterialPage<void>(
-              key: _bookDetailsKey,
+              key: _reportDetailsKey,
               child: ReportDetailsScreen(
                 reportId: selectedReportId,
               ),
+            )
+          else if (creatingNewReport)
+            MaterialPage<void>(
+              key: _reportNewKey,
+              child: ReportNewScreen(),
             )
         ],
       ],

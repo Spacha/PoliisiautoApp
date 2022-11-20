@@ -22,6 +22,7 @@ class ReportsScreen extends StatefulWidget {
 class _ReportsScreenState extends State<ReportsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  RouteState get _routeState => RouteStateScope.of(context);
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _ReportsScreenState extends State<ReportsScreen>
     final newPath = _routeState.route.pathTemplate;
     if (newPath.startsWith('/reports/popular')) {
       _tabController.index = 0;
-    } else if (newPath.startsWith('/reports/new')) {
+    } else if (newPath.startsWith('/reports/recent')) {
       _tabController.index = 1;
     } else if (newPath == '/reports/all') {
       _tabController.index = 2;
@@ -52,50 +53,54 @@ class _ReportsScreenState extends State<ReportsScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('Reports'),
-        bottom: isTeacher(context)
-            ? TabBar(
+        appBar: AppBar(
+          title: const Text('Reports'),
+          bottom: isTeacher(context)
+              ? TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(
+                      text: 'Popular',
+                      icon: Icon(Icons.people),
+                    ),
+                    Tab(
+                      text: 'New',
+                      icon: Icon(Icons.new_releases),
+                    ),
+                    Tab(
+                      text: 'All',
+                      icon: Icon(Icons.list),
+                    ),
+                  ],
+                )
+              : null,
+        ),
+        drawer: const PoliisiautoDrawer(),
+        body: isTeacher(context)
+            ? TabBarView(
                 controller: _tabController,
-                tabs: const [
-                  Tab(
-                    text: 'Popular',
-                    icon: Icon(Icons.people),
+                children: [
+                  ReportList(
+                    category: 'category 1',
+                    onTap: _handleReportTapped,
                   ),
-                  Tab(
-                    text: 'New',
-                    icon: Icon(Icons.new_releases),
+                  ReportList(
+                    category: 'category 2',
+                    onTap: _handleReportTapped,
                   ),
-                  Tab(
-                    text: 'All',
-                    icon: Icon(Icons.list),
-                  ),
+                  ReportList(
+                    category: 'category 3',
+                    onTap: _handleReportTapped,
+                  )
                 ],
               )
-            : null,
-      ),
-      drawer: const PoliisiautoDrawer(),
-      body: isTeacher(context)
-          ? TabBarView(
-              controller: _tabController,
-              children: [
-                ReportList(
-                  category: 'category 1',
-                  onTap: _handleReportTapped,
-                ),
-                ReportList(
-                  category: 'category 2',
-                  onTap: _handleReportTapped,
-                ),
-                ReportList(
-                  category: 'category 3',
-                  onTap: _handleReportTapped,
-                )
-              ],
-            )
-          : ReportList(category: 'all', onTap: _handleReportTapped));
-
-  RouteState get _routeState => RouteStateScope.of(context);
+            : ReportList(category: 'all', onTap: _handleReportTapped),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _routeState.go('/reports/new'),
+          tooltip: 'New report',
+          child: const Icon(Icons.add),
+        ),
+      );
 
   void _handleReportTapped(Report report) {
     _routeState.go('/reports/${report.id}');
@@ -104,7 +109,7 @@ class _ReportsScreenState extends State<ReportsScreen>
   void _handleTabIndexChanged() {
     switch (_tabController.index) {
       case 1:
-        _routeState.go('/reports/new');
+        _routeState.go('/reports/recent');
         break;
       case 2:
         _routeState.go('/reports/all');

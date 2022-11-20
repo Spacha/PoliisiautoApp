@@ -19,24 +19,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: const Text('Welcome!')),
-      drawer: const PoliisiautoDrawer(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: double.infinity),
-              /*child: const Card(
+        appBar: AppBar(title: const Text('Welcome!')),
+        drawer: const PoliisiautoDrawer(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: double.infinity),
+                /*child: const Card(
                 child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                     child: HomeContent()),
               ),*/
-              child: const HomeContent(),
+                child: const HomeContent(),
+              ),
             ),
           ),
         ),
-      ));
+      );
 }
 
 class HomeContent extends StatelessWidget {
@@ -63,19 +64,19 @@ class HomeContent extends StatelessWidget {
               },
               child: const Text('Sign out'),
             ),
-            // Link(
-            //   uri: Uri.parse('/report/0'),
-            //   builder: (context, followLink) => TextButton(
-            //     onPressed: followLink,
-            //     child: const Text('Go directly to /report/0 (Link)'),
-            //   ),
-            // ),
-            // TextButton(
-            //   child: const Text('Go directly to /report/0 (RouteState)'),
-            //   onPressed: () {
-            //     RouteStateScope.of(context).go('/report/0');
-            //   },
-            // ),
+            Link(
+              uri: Uri.parse('/reports/new'),
+              builder: (context, followLink) => TextButton(
+                onPressed: followLink,
+                child: const Text('Go directly report creation (Link)'),
+              ),
+            ),
+            TextButton(
+              child: const Text('Go directly to report creation (RouteState)'),
+              onPressed: () {
+                RouteStateScope.of(context).go('/reports/new');
+              },
+            ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
           // TextButton(
           //   onPressed: () => showDialog<String>(
