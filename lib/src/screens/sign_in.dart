@@ -70,6 +70,23 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: const Text('Sign in'),
                   ),
                 ),
+
+                /// Debug:
+                const Divider(),
+                TextButton(
+                  onPressed: () {
+                    _emailController.text = 'miika@example.com';
+                    _passwordController.text = 'kikkakokkeli';
+                  },
+                  child: const Text('Autofill (student)'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _emailController.text = 'miika@example.com';
+                    _passwordController.text = 'kikkakokkeli';
+                  },
+                  child: const Text('Autofill (teacher)'),
+                ),
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'routing.dart';
 import 'widgets/navigator.dart';
+import 'api.dart';
 
 class Poliisiauto extends StatefulWidget {
   const Poliisiauto({super.key});
@@ -24,6 +25,9 @@ class _PoliisiautoState extends State<Poliisiauto> {
 
   @override
   void initState() {
+    /// initialize the global API accessor
+    //api = PoliisiautoApi(host: 'http://192.168.56.56', version: 'v1');
+
     /// Configure the parser with all of the app's allowed path templates.
     _routeParser = TemplateRouteParser(
       allowedPaths: [

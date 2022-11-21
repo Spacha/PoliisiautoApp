@@ -2,33 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-//import 'package:url_launcher/link.dart';
-
+import '../api.dart';
 import '../data.dart';
-
-Future<Report> fetchReport(int reportId) async {
-  var headers = {'Authorization': 'Bearer $apiKey'};
-  var request = http.MultipartRequest(
-      'GET', Uri.parse('http://192.168.56.56/api/v1/reports/$reportId'));
-
-  request.headers.addAll(headers);
-
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    //print(await response.stream.bytesToString());
-    //return Album.fromJson(jsonDecode(response.body));
-    //List<Report> reports;
-    return Report.fromJson(jsonDecode(await response.stream.bytesToString()));
-  } else {
-    //print(response.reasonPhrase);
-    throw Exception('Failed to load report');
-  }
-}
 
 class ReportDetailsScreen extends StatefulWidget {
   final int reportId;
@@ -48,7 +24,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    futureReport = fetchReport(widget.reportId);
+    futureReport = api.fetchReport(widget.reportId);
   }
 
   @override

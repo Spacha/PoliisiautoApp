@@ -3,8 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+import 'api.dart';
 import 'data.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,34 +24,6 @@ bool isStudent(BuildContext context) {
   return auth.signedIn && auth.user?.role == Role.student;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-/// Login
-////////////////////////////////////////////////////////////////////////////////
-
-Future<String?> sendLogin(Credentials credentials) async {
-  // TODO: api.sendLogin(credentials);
-
-  var request = http.MultipartRequest(
-      'POST', Uri.parse('http://192.168.56.56/api/v1/login'));
-
-  request.fields.addAll({
-    'email': credentials.email,
-    'password': credentials.password,
-    'device_name': credentials.deviceName
-  });
-
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    print(await response.stream.bytesToString());
-    return 'token here';
-  } else {
-    print('Error: ${response.stream.toString()}');
-    return null;
-    //throw Exception('Failed to login (${response.statusCode})');
-  }
-}
-
 enum Role { teacher, student }
 
 /// TODO: Implement and move to 'data/user.dart'
@@ -65,32 +36,30 @@ class User {
 
 /// A mock authentication service
 class PoliisiautoAuth extends ChangeNotifier {
-  final storage = const FlutterSecureStorage();
   bool _signedIn = false;
   User? user;
 
   bool get signedIn => _signedIn;
 
   Future<void> signOut() async {
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    // Sign out.
-    _signedIn = false;
+    //await Future<void>.delayed(const Duration(milliseconds: 200));
+
+    _signedIn = await api.sendLogout();
+
     notifyListeners();
   }
 
   Future<bool> signIn(Credentials credentials) async {
     //await Future<void>.delayed(const Duration(milliseconds: 200));
 
-    // login...
-    String? token = await sendLogin(credentials);
+    String? token = await api.sendLogin(credentials);
 
-    // ...and store the token received
     if (token == null) {
       // Login failed, return to the form with a message
       return false;
     }
 
-    await storage.write(key: 'bearer_token', value: token);
+    api.setToken(token);
 
     //user = await getUser();
     user = User(credentials.email, Role.teacher); // FIXME

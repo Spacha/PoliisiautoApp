@@ -60,7 +60,7 @@ class HomeContent extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                PoliisiautoAuthScope.of(context).signOut();
+                getAuth(context).signOut();
               },
               child: const Text('Sign out'),
             ),
