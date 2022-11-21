@@ -30,8 +30,9 @@ enum Role { teacher, student }
 class User {
   final String name;
   final Role role;
+  final int organizationId;
 
-  User(this.name, this.role);
+  User(this.name, this.role, this.organizationId);
 }
 
 /// A mock authentication service
@@ -60,12 +61,26 @@ class PoliisiautoAuth extends ChangeNotifier {
     }
 
     api.setToken(token);
+    // api.getTokenAsync().then((t) {
+    //   print('TOKEN: $t');
+    // });
 
-    //user = await getUser();
-    user = User(credentials.email, Role.teacher); // FIXME
+    return _handleSuccessfulLogin();
+  }
+
+  Future<bool> tryRestoreSession() async {
+    return _handleSuccessfulLogin();
+  }
+
+  Future<bool> _handleSuccessfulLogin() async {
+    // TODO: Perhaps fetchProfile or something?
+    Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
+    user = User(
+        userTemp['name'] ?? 'Unknown',
+        (userTemp['role'] == 'TEACHER' ? Role.teacher : Role.student),
+        int.parse(userTemp['organization_id']));
 
     _signedIn = true;
-
     notifyListeners();
     return _signedIn;
   }

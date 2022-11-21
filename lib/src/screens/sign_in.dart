@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/auth.dart';
 import '../routing.dart';
 import '../data.dart';
+import '../api.dart';
 
 class SignInScreen extends StatefulWidget {
   // final ValueChanged<Credentials> onSignIn;
@@ -29,6 +30,13 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final authState = getAuth(context);
     final routeState = RouteStateScope.of(context);
+
+    // if a token is already found, try signing in immediately
+    api.hasTokenStored().then((hasTokenStored) {
+      authState.tryRestoreSession().then((success) {
+        if (success) routeState.go('/home');
+      });
+    });
 
     return Scaffold(
       body: Center(

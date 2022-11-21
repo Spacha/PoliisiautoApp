@@ -2,60 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-//import 'package:url_launcher/link.dart';
-import 'package:http/http.dart' as http;
-
-//import '../auth.dart';
-//import '../routing.dart';
 import '../widgets/drawer.dart';
-
-Future<Report> fetchReport() async {
-  var headers = {
-    'Authorization': 'Bearer 7|B95Amhh0gXp8rwDu3Ozhi0tFyolzYCpTPJtrSc7Y'
-  };
-  var request = http.MultipartRequest(
-      'GET', Uri.parse('http://192.168.56.56/api/v1/reports/1'));
-
-  request.headers.addAll(headers);
-
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    //print(await response.stream.bytesToString());
-    //return Album.fromJson(jsonDecode(response.body));
-    return Report.fromJson(jsonDecode(await response.stream.bytesToString()));
-  } else {
-    //print(response.reasonPhrase);
-    throw Exception('Failed to load album');
-  }
-}
-
-class Report {
-  final int id;
-  final String description;
-  final int reportCaseId;
-  final String openedAt;
-
-  const Report({
-    required this.id,
-    required this.description,
-    required this.reportCaseId,
-    required this.openedAt,
-  });
-
-  factory Report.fromJson(Map<String, dynamic> json) {
-    return Report(
-      id: json['id'],
-      description: json['description'],
-      reportCaseId: json['report_case_id'],
-      openedAt: json['opened_at'],
-    );
-  }
-}
+import '../data.dart';
+import '../api.dart';
 
 class InformationScreen extends StatefulWidget {
   const InformationScreen({super.key});
@@ -88,21 +38,19 @@ class _InformationScreenState extends State<InformationScreen> {
 }
 
 class InformationContent extends StatefulWidget {
-  const InformationContent({
-    super.key,
-  });
+  const InformationContent({super.key});
 
   @override
   State<InformationContent> createState() => _InformationContentState();
 }
 
 class _InformationContentState extends State<InformationContent> {
-  late Future<Report> futureReport;
+  late Future<Organization> futureOrganization;
 
   @override
   void initState() {
     super.initState();
-    futureReport = fetchReport();
+    futureOrganization = api.fetchAuthenticatedUserOrganization();
   }
 
   @override
@@ -134,11 +82,11 @@ class _InformationContentState extends State<InformationContent> {
             ),
             child: const Text('Show Dialog'),
           ),
-          FutureBuilder<Report>(
-            future: futureReport,
+          FutureBuilder<Organization>(
+            future: futureOrganization,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data!.description);
+                return Text(snapshot.data!.name);
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }

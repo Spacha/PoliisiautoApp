@@ -11,11 +11,9 @@ PoliisiautoApi api =
 class PoliisiautoApi {
   final String host;
   final String version;
-  final storage = const FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
-  PoliisiautoApi({required this.host, required this.version}) {
-    print('i was constructed');
-  }
+  PoliisiautoApi({required this.host, required this.version});
 
   //////////////////////////////////////////////////////////////////////////////
   /// API endpoints
@@ -49,7 +47,66 @@ class PoliisiautoApi {
 
     http.StreamedResponse response = await request.send();
 
-    return response.statusCode == 200;
+    if (response.statusCode == 200) {
+      await _storage.delete(key: 'bearer_token');
+
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<Organization> fetchAuthenticatedUserOrganization() async {
+    var request =
+        await buildAuthenticatedRequest('GET', 'profile/organization');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return Organization.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      //print(response.reasonPhrase);
+      throw Exception('Failed to load authenticated user');
+    }
+  }
+
+  Future<Map<String, String>> fetchAuthenticatedUser() async {
+    var request = await buildAuthenticatedRequest('GET', 'profile');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      //print(await response.stream.bytesToString());
+      //return Album.fromJson(jsonDecode(response.body));
+      //List<Report> reports;
+      Map<String, dynamic> user =
+          jsonDecode(await response.stream.bytesToString());
+
+      return {
+        'name': '${user['first_name']} ${user['last_name']}',
+        'role': '${user['role']}',
+        'organization_id': '${user['organization_id']}',
+      };
+    } else {
+      //print(response.reasonPhrase);
+      throw Exception('Failed to load authenticated user');
+    }
+  }
+
+  Future<Organization> fetchOrganization(int organizationId) async {
+    var request =
+        await buildAuthenticatedRequest('GET', 'organizations/$organizationId');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      //print(await response.stream.bytesToString());
+      //return Album.fromJson(jsonDecode(response.body));
+      //List<Report> reports;
+      return Organization.fromJson(
+          jsonDecode(await response.stream.bytesToString()));
+    } else {
+      //print(response.reasonPhrase);
+      throw Exception('Failed to load organization');
+    }
   }
 
   Future<List<Report>> fetchReports() async {
@@ -96,11 +153,11 @@ class PoliisiautoApi {
   //////////////////////////////////////////////////////////////////////////////
 
   Future<void> setTokenAsync(String token) async {
-    storage.write(key: 'bearer_token', value: token);
+    _storage.write(key: 'bearer_token', value: token);
   }
 
   Future<String?> getTokenAsync() async {
-    return storage.read(key: 'bearer_token');
+    return _storage.read(key: 'bearer_token');
   }
 
   /// Synchronously set token.
@@ -111,6 +168,11 @@ class PoliisiautoApi {
   //////////////////////////////////////////////////////////////////////////////
   /// Helpers
   //////////////////////////////////////////////////////////////////////////////
+
+  Future<bool> hasTokenStored() async {
+    getTokenAsync().then((t) => t != null);
+    return false;
+  }
 
   Future<http.MultipartRequest> buildRequest(String method, String endpoint,
       {Map<String, String>? headers}) async {
