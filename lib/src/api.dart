@@ -40,16 +40,11 @@ class PoliisiautoApi {
   }
 
   Future<bool> sendLogout() async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('http://192.168.56.56/api/v1/logout'));
-
-    request.headers.addAll({'Authorization': 'Bearer $apiKey'});
-
+    var request = await buildAuthenticatedRequest('POST', 'logout');
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       await _storage.delete(key: 'bearer_token');
-
       return true;
     }
 

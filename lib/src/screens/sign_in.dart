@@ -31,6 +31,10 @@ class _SignInScreenState extends State<SignInScreen> {
     final authState = getAuth(context);
     final routeState = RouteStateScope.of(context);
 
+    // FIXME: May be a bad idea to do this in 'build'...
+    //        Perhaps add a wrapper page that only checks this,
+    //        then proceeds to the actual sign in page?
+    //        OR use the notifier/listener thing!
     // if a token is already found, try signing in immediately
     api.hasTokenStored().then((hasTokenStored) {
       authState.tryRestoreSession().then((success) {

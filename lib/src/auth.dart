@@ -45,7 +45,7 @@ class PoliisiautoAuth extends ChangeNotifier {
   Future<void> signOut() async {
     //await Future<void>.delayed(const Duration(milliseconds: 200));
 
-    _signedIn = await api.sendLogout();
+    _signedIn = !(await api.sendLogout());
 
     notifyListeners();
   }
@@ -65,24 +65,28 @@ class PoliisiautoAuth extends ChangeNotifier {
     //   print('TOKEN: $t');
     // });
 
-    return _handleSuccessfulLogin();
+    return _tryInitializeSession();
   }
 
   Future<bool> tryRestoreSession() async {
-    return _handleSuccessfulLogin();
+    return _tryInitializeSession();
   }
 
-  Future<bool> _handleSuccessfulLogin() async {
-    // TODO: Perhaps fetchProfile or something?
-    Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
-    user = User(
-        userTemp['name'] ?? 'Unknown',
-        (userTemp['role'] == 'TEACHER' ? Role.teacher : Role.student),
-        int.parse(userTemp['organization_id']));
+  Future<bool> _tryInitializeSession() async {
+    try {
+      // TODO: Perhaps fetchProfile or something?
+      Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
+      user = User(
+          userTemp['name'] ?? 'Unknown',
+          (userTemp['role'] == 'TEACHER' ? Role.teacher : Role.student),
+          int.parse(userTemp['organization_id']));
 
-    _signedIn = true;
-    notifyListeners();
-    return _signedIn;
+      _signedIn = true;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @override

@@ -59,6 +59,9 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     //       (b) => b.id.toString() == routeState.route.parameters['authorId']);
     // }
 
+    // TODO: BIG: Wrap this with try-catch. Then, if a SessionExpiredException
+    //       is thrown, redirect to /home!
+
     return Navigator(
       key: widget.navigatorKey,
       onPopPage: (route, dynamic result) {
