@@ -36,7 +36,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   @override
   Widget build(BuildContext context) {
     final routeState = RouteStateScope.of(context);
-    final authState = PoliisiautoAuthScope.of(context);
+    //final authState = PoliisiautoAuthScope.of(context);
     final pathTemplate = routeState.route.pathTemplate;
 
     bool creatingNewReport = false;
@@ -79,15 +79,14 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           // Display the sign in screen.
           FadeTransitionPage<void>(
             key: _signInKey,
-            child: SignInScreen(
-              onSignIn: (credentials) async {
-                var signedIn = await authState.signIn(
-                    credentials.username, credentials.password);
-                if (signedIn) {
-                  await routeState.go('/home');
-                }
-              },
-            ),
+            child: const SignInScreen(
+                // onSignIn: (credentials) async {
+                //   var signedIn = await authState.signIn(credentials);
+                //   if (signedIn) {
+                //     await routeState.go('/home');
+                //   }
+                // },
+                ),
           )
         else ...[
           // Display the app
@@ -109,7 +108,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           else if (creatingNewReport)
             MaterialPage<void>(
               key: _reportNewKey,
-              child: ReportNewScreen(),
+              child: const ReportNewScreen(),
             )
         ],
       ],

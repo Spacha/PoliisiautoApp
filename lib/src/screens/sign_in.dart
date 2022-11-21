@@ -3,19 +3,15 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
-class Credentials {
-  final String username;
-  final String password;
-
-  Credentials(this.username, this.password);
-}
+import 'package:poliisiauto/src/auth.dart';
+import '../routing.dart';
+import '../data.dart';
 
 class SignInScreen extends StatefulWidget {
-  final ValueChanged<Credentials> onSignIn;
+  // final ValueChanged<Credentials> onSignIn;
 
   const SignInScreen({
-    required this.onSignIn,
+    // required this.onSignIn,
     super.key,
   });
 
@@ -24,46 +20,73 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  // TODO: Validate form!
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Card(
-            child: Container(
-              constraints: BoxConstraints.loose(const Size(600, 600)),
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Sign in',
-                      style: Theme.of(context).textTheme.headlineMedium),
-                  TextField(
-                    decoration: const InputDecoration(labelText: 'Username'),
-                    controller: _usernameController,
+  Widget build(BuildContext context) {
+    final authState = getAuth(context);
+    final routeState = RouteStateScope.of(context);
+
+    return Scaffold(
+      body: Center(
+        child: Card(
+          child: Container(
+            constraints: BoxConstraints.loose(const Size(600, 600)),
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Sign in',
+                    style: Theme.of(context).textTheme.headlineMedium),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  controller: _emailController,
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  controller: _passwordController,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: TextButton(
+                    onPressed: () async {
+                      bool success = await _tryLogin(authState);
+
+                      if (success) {
+                        await routeState.go('/home');
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const AlertDialog(
+                                  title: Text('Login failed!'),
+                                ));
+                      }
+                    },
+                    child: const Text('Sign in'),
                   ),
-                  TextField(
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    obscureText: true,
-                    controller: _passwordController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: TextButton(
-                      onPressed: () async {
-                        widget.onSignIn(Credentials(
-                            _usernameController.value.text,
-                            _passwordController.value.text));
-                      },
-                      child: const Text('Sign in'),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
+
+  Future<bool> _tryLogin(PoliisiautoAuth authState) async {
+    Credentials credentials = Credentials(_emailController.value.text,
+        _passwordController.value.text, _getDeviceName());
+
+    return await authState.signIn(credentials);
+  }
+
+  String _getDeviceName() {
+    // FIXME: Get or ask actual name
+    return 'Android';
+  }
 }
