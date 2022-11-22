@@ -44,6 +44,7 @@ class NewReportContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
+    key: const ValueKey("scroll new report page"),
     children: [
       ...[
           const Padding(
@@ -54,6 +55,7 @@ class NewReportContent extends StatelessWidget {
             controller: TextEditingController(),
             keyboardType: TextInputType.multiline,
             maxLines: null,
+            key: const ValueKey('What happened'),
           ),
           const Padding(
             padding: EdgeInsets.all(0),
@@ -63,6 +65,7 @@ class NewReportContent extends StatelessWidget {
             controller: TextEditingController(),
             keyboardType: TextInputType.multiline,
             maxLines: null,
+            key: const ValueKey('Who was there'),
           ),
           const Padding(
             padding: EdgeInsets.all(0),
@@ -167,7 +170,7 @@ class _SendAnonymousReportCheckboxState extends State<SendAnonymousReportCheckbo
   Widget build(BuildContext context) {
 
     return CheckboxListTile(
-      title: const Text("Lähetä nimetön ilmoitus"),
+      title: const Text('Lähetä nimetön ilmoitus'),
       checkColor: Colors.white,
       value: isChecked,
       onChanged: (bool? value) {

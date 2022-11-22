@@ -53,6 +53,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   TextField(
                     decoration: const InputDecoration(labelText: 'Sähköposti:'),
+                    key: const ValueKey("forgotten e-mail"),
                     obscureText: true,
                     controller: _emailController,
                   ),

@@ -36,7 +36,7 @@ class _FrontPageScreenState extends State<FrontPageScreen> {
                 width: 200,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 80, bottom: 50),
+                padding: const EdgeInsets.only(top: 40, bottom: 40),
                 child: ElevatedButton(
                   onPressed: () {RouteStateScope.of(context).go('/sos_confirmation');},
                   style: ElevatedButton.styleFrom(
