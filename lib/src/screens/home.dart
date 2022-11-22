@@ -1,10 +1,5 @@
-// Copyright 2021, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
-
 import '../auth.dart';
 import '../routing.dart';
 import '../widgets/drawer.dart';
@@ -78,26 +73,6 @@ class HomeContent extends StatelessWidget {
               },
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
-          // TextButton(
-          //   onPressed: () => showDialog<String>(
-          //     context: context,
-          //     builder: (context) => AlertDialog(
-          //       title: const Text('Alert!'),
-          //       content: const Text('The alert description goes here.'),
-          //       actions: [
-          //         TextButton(
-          //           onPressed: () => Navigator.pop(context, 'Cancel'),
-          //           child: const Text('Cancel'),
-          //         ),
-          //         TextButton(
-          //           onPressed: () => Navigator.pop(context, 'OK'),
-          //           child: const Text('OK'),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   child: const Text('Show Dialog'),
-          // )
         ],
       );
 }

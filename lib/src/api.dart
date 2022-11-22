@@ -165,8 +165,7 @@ class PoliisiautoApi {
   //////////////////////////////////////////////////////////////////////////////
 
   Future<bool> hasTokenStored() async {
-    getTokenAsync().then((t) => t != null);
-    return false;
+    return (await getTokenAsync() != null);
   }
 
   Future<http.MultipartRequest> buildRequest(String method, String endpoint,

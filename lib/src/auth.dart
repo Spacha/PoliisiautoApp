@@ -69,12 +69,15 @@ class PoliisiautoAuth extends ChangeNotifier {
   }
 
   Future<bool> tryRestoreSession() async {
+    // Before trying anything, check if we have an existing token stored
+    if (!(await api.hasTokenStored())) return false;
+
     return _tryInitializeSession();
   }
 
   Future<bool> _tryInitializeSession() async {
     try {
-      // TODO: Perhaps fetchProfile or something?
+      // FIXME
       Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
       user = User(
           userTemp['name'] ?? 'Unknown',

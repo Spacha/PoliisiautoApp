@@ -6,13 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/auth.dart';
 import '../routing.dart';
 import '../data.dart';
-import '../api.dart';
 
 class SignInScreen extends StatefulWidget {
-  // final ValueChanged<Credentials> onSignIn;
-
   const SignInScreen({
-    // required this.onSignIn,
     super.key,
   });
 
@@ -30,17 +26,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     final authState = getAuth(context);
     final routeState = RouteStateScope.of(context);
-
-    // FIXME: May be a bad idea to do this in 'build'...
-    //        Perhaps add a wrapper page that only checks this,
-    //        then proceeds to the actual sign in page?
-    //        OR use the notifier/listener thing!
-    // if a token is already found, try signing in immediately
-    api.hasTokenStored().then((hasTokenStored) {
-      authState.tryRestoreSession().then((success) {
-        if (success) routeState.go('/home');
-      });
-    });
 
     return Scaffold(
       body: Center(
@@ -115,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   String _getDeviceName() {
-    // FIXME: Get or ask actual name
+    // TODO: Get or ask actual name
     return 'Android';
   }
 }

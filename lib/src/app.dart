@@ -1,22 +1,19 @@
-// Copyright 2021, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
+// Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
 
 import 'auth.dart';
 import 'routing.dart';
 import 'widgets/navigator.dart';
-import 'api.dart';
 
-class Poliisiauto extends StatefulWidget {
-  const Poliisiauto({super.key});
+class PoliisiautoApp extends StatefulWidget {
+  const PoliisiautoApp({super.key});
 
   @override
-  State<Poliisiauto> createState() => _PoliisiautoState();
+  State<PoliisiautoApp> createState() => _PoliisiautoAppState();
 }
 
-class _PoliisiautoState extends State<Poliisiauto> {
+class _PoliisiautoAppState extends State<PoliisiautoApp> {
   final _auth = PoliisiautoAuth();
   final _navigatorKey = GlobalKey<NavigatorState>();
   late final RouteState _routeState;
@@ -25,8 +22,8 @@ class _PoliisiautoState extends State<Poliisiauto> {
 
   @override
   void initState() {
-    /// initialize the global API accessor
-    //api = PoliisiautoApi(host: 'http://192.168.56.56', version: 'v1');
+    // initialize the global API accessor
+    // api = PoliisiautoApi(host: 'http://192.168.56.56', version: 'v1');
 
     /// Configure the parser with all of the app's allowed path templates.
     _routeParser = TemplateRouteParser(
@@ -76,10 +73,7 @@ class _PoliisiautoState extends State<Poliisiauto> {
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                  // TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                  // TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                  // TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
-                  // TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
               ),
             ),
@@ -90,15 +84,30 @@ class _PoliisiautoState extends State<Poliisiauto> {
   Future<ParsedRoute> _guard(ParsedRoute from) async {
     final signedIn = _auth.signedIn;
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
+    final homeRoute = ParsedRoute('/home', '/home', {}, {});
 
-    // Go to /signin if the user is not signed in
-    if (!signedIn && from != signInRoute) {
-      return signInRoute;
+    // Flow paths:
+    // | signedIn | from == signInRoute | canRestoreSession || return value
+    // |----------|---------------------|-------------------||--------------
+    // |    0     |          0          |         x         || signInRoute
+    // |    0     |          1          |         0         || from
+    // |    0     |          1          |         1         || homeRoute
+    // |    1     |          0          |         x         || homeRoute
+    // |    1     |          1          |         x         || from
+
+    if (!signedIn) {
+      // If the user IS NOT signed in...
+      // ...and not on sign-in page -> redirect there
+      if (from != signInRoute) return signInRoute;
+
+      // ...and already in signInRoute, try restoring previous session
+      if (await _auth.tryRestoreSession()) return homeRoute;
+    } else {
+      // If the user IS signed in...
+      // ...going to signInRoute -> redirect home
+      if (from == signInRoute) return homeRoute;
     }
-    // Go to /home if the user is signed in and tries to go to /signin.
-    else if (signedIn && from == signInRoute) {
-      return ParsedRoute('/home', '/home', {}, {});
-    }
+
     return from;
   }
 
