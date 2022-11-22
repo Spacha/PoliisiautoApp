@@ -81,7 +81,9 @@ class PoliisiautoAuth extends ChangeNotifier {
       Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
       user = User(
           userTemp['name'] ?? 'Unknown',
-          (userTemp['role'] == 'TEACHER' ? Role.teacher : Role.student),
+          (userTemp['role'].toLowerCase() == 'teacher'
+              ? Role.teacher
+              : Role.student),
           int.parse(userTemp['organization_id']));
 
       _signedIn = true;

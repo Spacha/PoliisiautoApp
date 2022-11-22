@@ -5,7 +5,6 @@
 //import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../auth.dart';
 import '../routing.dart';
 import '../screens/sign_in.dart';
 import '../screens/report_new.dart';
@@ -82,14 +81,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
           // Display the sign in screen.
           FadeTransitionPage<void>(
             key: _signInKey,
-            child: const SignInScreen(
-                // onSignIn: (credentials) async {
-                //   var signedIn = await authState.signIn(credentials);
-                //   if (signedIn) {
-                //     await routeState.go('/home');
-                //   }
-                // },
-                ),
+            child: const SignInScreen(),
           )
         else ...[
           // Display the app
