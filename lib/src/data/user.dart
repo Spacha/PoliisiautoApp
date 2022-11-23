@@ -56,5 +56,15 @@ class User {
     );
   }
 
+  @override
+  int get hashCode => Object.hash(email, name);
   String get name => '$firstName $lastName';
+
+  @override
+  bool operator ==(Object other) {
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is User && other.name == name && other.email == email;
+  }
 }

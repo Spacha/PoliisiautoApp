@@ -27,7 +27,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _splashKey = const ValueKey('Splash');
   final _signInKey = const ValueKey('Sign in');
   final _scaffoldKey = const ValueKey('App scaffold');
-  final _reportNewKey = const ValueKey('New repor');
+  final _reportNewKey = const ValueKey('New report');
   final _reportDetailsKey = const ValueKey('Report details');
 
   @override

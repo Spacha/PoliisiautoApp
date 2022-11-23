@@ -120,6 +120,13 @@ class PoliisiautoApi {
     throw Exception('Failed to load report: $response.reasonPhrase');
   }
 
+  Future<bool> storeReport(Report report) async {
+    return Future.delayed(const Duration(seconds: 0), () {
+      print('$report');
+      return false;
+    });
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   /// Bearer Token
   //////////////////////////////////////////////////////////////////////////////

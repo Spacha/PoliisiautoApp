@@ -23,7 +23,7 @@ enum ReportStatus {
 }
 
 class Report {
-  final int id;
+  final int? id;
   final String description;
   final int? reportCaseId;
   final int? reporterId;
@@ -35,9 +35,9 @@ class Report {
   final DateTime? closedAt;
 
   const Report({
-    required this.id,
     required this.description,
     required this.isAnonymous,
+    this.id,
     this.openedAt,
     this.closedAt,
     this.reportCaseId,
@@ -70,5 +70,10 @@ class Report {
     } else {
       return ReportStatus.pending;
     }
+  }
+
+  @override
+  String toString() {
+    return 'Report(id: $id, description: $description, isAnonymous: $isAnonymous, openedAt: $openedAt, closedAt: $closedAt, reportCaseId: $reportCaseId, reporterId: $reporterId, assigneeId: $assigneeId, bullyId: $bullyId, bulliedId: $bulliedId)';
   }
 }
