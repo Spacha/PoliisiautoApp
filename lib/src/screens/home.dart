@@ -1,3 +1,5 @@
+// Copyright 2022, Poliisiauto developers.
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 import '../auth.dart';

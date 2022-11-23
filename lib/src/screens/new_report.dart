@@ -1,18 +1,16 @@
-// Copyright 2021, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
+// Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
 //import '../data.dart';
 
-class ReportNewScreen extends StatefulWidget {
-  const ReportNewScreen({super.key});
+class NewReportScreen extends StatefulWidget {
+  const NewReportScreen({super.key});
 
   @override
-  State<ReportNewScreen> createState() => _ReportNewScreenState();
+  State<NewReportScreen> createState() => _NewReportScreenState();
 }
 
-class _ReportNewScreenState extends State<ReportNewScreen> {
+class _NewReportScreenState extends State<NewReportScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override

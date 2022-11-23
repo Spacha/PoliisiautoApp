@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// Copyright 2022, Poliisiauto developers.
 
+import 'package:flutter/material.dart';
 import '../routing.dart';
 
 class PoliisiautoDrawer extends StatelessWidget {

@@ -1,3 +1,5 @@
+// Copyright 2022, Poliisiauto developers.
+
 export 'routing/delegate.dart';
 export 'routing/parsed_route.dart';
 export 'routing/parser.dart';
