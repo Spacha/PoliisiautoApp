@@ -47,7 +47,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   children: [
                     Text(snapshot.data!.description),
                     Text(
-                      snapshot.data!.openedAt.isNotEmpty
+                      snapshot.data!.status == ReportStatus.opened
                           ? 'Opened at ${snapshot.data!.openedAt}'
                           : 'Not opened',
                       style: const TextStyle(fontStyle: FontStyle.italic),

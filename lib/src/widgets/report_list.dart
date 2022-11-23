@@ -31,38 +31,23 @@ class _ReportListState extends State<ReportList> {
 
   @override
   Widget build(BuildContext context) => FutureBuilder<List<Report>>(
-        future: futureReportList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) => ListTile(
-                      title: Text(
-                          //widget.reports[index].description,
-                          snapshot.data?[index].description ??
-                              'No description'),
-                      onTap: (widget.onTap != null)
-                          ? () => widget.onTap!(snapshot.data![index])
-                          : null,
-                    ));
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+      future: futureReportList,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) => ListTile(
+                    title: Text(
+                        snapshot.data?[index].description ?? 'No description'),
+                    onTap: (widget.onTap != null)
+                        ? () => widget.onTap!(snapshot.data![index])
+                        : null,
+                  ));
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
 
-          // By default, show a loading spinner.
-          return const Center(child: CircularProgressIndicator());
-        },
-        // itemCount: widget.reports.length,
-        // itemBuilder: (context, index) => ListTile(
-        //   title: Text(
-        //     widget.reports[index].description,
-        //   ),
-        //   subtitle: Text(
-        //     widget.reports[index].id.toString(),
-        //   ),
-        //   onTap: widget.onTap != null
-        //       ? () => widget.onTap!(widget.reports[index])
-        //       : null,
-        // ),
-      );
+        // By default, show a loading spinner.
+        return const Center(child: CircularProgressIndicator());
+      });
 }

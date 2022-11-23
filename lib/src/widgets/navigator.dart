@@ -47,19 +47,9 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
         selectedReportId =
             int.tryParse(routeState.route.parameters['reportId']!);
       }
-      //selectedReport =
-      // selectedReport = libraryInstance.allBooks.firstWhereOrNull(
-      //     (b) => b.id.toString() == routeState.route.parameters['reportId']);
     }
 
-    // Author? selectedAuthor;
-    // if (pathTemplate == '/author/:authorId') {
-    //   selectedAuthor = libraryInstance.allAuthors.firstWhereOrNull(
-    //       (b) => b.id.toString() == routeState.route.parameters['authorId']);
-    // }
-
-    // TODO: BIG: Wrap this with try-catch. Then, if a SessionExpiredException
-    //       is thrown, redirect to /home!
+    // TODO: Wrap this with try-catch. Then, if a SessionExpiredException is thrown, redirect to /home!
 
     return Navigator(
       key: widget.navigatorKey,
@@ -77,6 +67,8 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
         return route.didPop(result);
       },
       pages: [
+        // TODO: Add similar page but with poliisiauto logo. Show it for a few seconds.
+
         if (routeState.route.pathTemplate == '/signin')
           // Display the sign in screen.
           FadeTransitionPage<void>(

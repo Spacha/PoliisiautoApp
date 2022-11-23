@@ -16,23 +16,12 @@ PoliisiautoAuth getAuth(BuildContext context) {
 
 bool isTeacher(BuildContext context) {
   PoliisiautoAuth auth = getAuth(context);
-  return auth.signedIn && auth.user?.role == Role.teacher;
+  return auth.signedIn && auth.user?.role == UserRole.teacher;
 }
 
 bool isStudent(BuildContext context) {
   PoliisiautoAuth auth = getAuth(context);
-  return auth.signedIn && auth.user?.role == Role.student;
-}
-
-enum Role { teacher, student }
-
-/// TODO: Implement and move to 'data/user.dart'
-class User {
-  final String name;
-  final Role role;
-  final int organizationId;
-
-  User(this.name, this.role, this.organizationId);
+  return auth.signedIn && auth.user?.role == UserRole.student;
 }
 
 /// A mock authentication service
@@ -77,14 +66,7 @@ class PoliisiautoAuth extends ChangeNotifier {
 
   Future<bool> _tryInitializeSession() async {
     try {
-      // FIXME
-      Map<String, dynamic> userTemp = await api.fetchAuthenticatedUser();
-      user = User(
-          userTemp['name'] ?? 'Unknown',
-          (userTemp['role'].toLowerCase() == 'teacher'
-              ? Role.teacher
-              : Role.student),
-          int.parse(userTemp['organization_id']));
+      user = await api.fetchAuthenticatedUser();
 
       _signedIn = true;
       notifyListeners();

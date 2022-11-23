@@ -87,6 +87,9 @@ class _InformationContentState extends State<InformationContent> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text(snapshot.data!.name);
+
+                // TODO: Show credits!
+
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }

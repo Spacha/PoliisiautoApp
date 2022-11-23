@@ -30,20 +30,18 @@ class PoliisiautoApi {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (_isOk(response)) {
       return await response.stream.bytesToString();
-    } else {
-      print('Error: ${response.stream.bytesToString()}');
-      return null;
-      //throw Exception('Failed to login (${response.statusCode})');
     }
+
+    return null;
   }
 
   Future<bool> sendLogout() async {
     var request = await buildAuthenticatedRequest('POST', 'logout');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (_isOk(response)) {
       await _storage.delete(key: 'bearer_token');
       return true;
     }
@@ -56,35 +54,25 @@ class PoliisiautoApi {
         await buildAuthenticatedRequest('GET', 'profile/organization');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (_isOk(response)) {
       return Organization.fromJson(
           jsonDecode(await response.stream.bytesToString()));
-    } else {
-      //print(response.reasonPhrase);
-      throw Exception('Failed to load authenticated user');
     }
+
+    throw Exception(
+        'Failed to load authenticated user: $response.reasonPhrase');
   }
 
-  Future<Map<String, String>> fetchAuthenticatedUser() async {
+  Future<User> fetchAuthenticatedUser() async {
     var request = await buildAuthenticatedRequest('GET', 'profile');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      //print(await response.stream.bytesToString());
-      //return Album.fromJson(jsonDecode(response.body));
-      //List<Report> reports;
-      Map<String, dynamic> user =
-          jsonDecode(await response.stream.bytesToString());
-
-      return {
-        'name': '${user['first_name']} ${user['last_name']}',
-        'role': '${user['role']}',
-        'organization_id': '${user['organization_id']}',
-      };
-    } else {
-      //print(response.reasonPhrase);
-      throw Exception('Failed to load authenticated user');
+    if (_isOk(response)) {
+      return User.fromJson(jsonDecode(await response.stream.bytesToString()));
     }
+
+    throw Exception(
+        'Failed to load authenticated user: $response.reasonPhrase');
   }
 
   Future<Organization> fetchOrganization(int organizationId) async {
@@ -92,27 +80,19 @@ class PoliisiautoApi {
         await buildAuthenticatedRequest('GET', 'organizations/$organizationId');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      //print(await response.stream.bytesToString());
-      //return Album.fromJson(jsonDecode(response.body));
-      //List<Report> reports;
+    if (_isOk(response)) {
       return Organization.fromJson(
           jsonDecode(await response.stream.bytesToString()));
-    } else {
-      //print(response.reasonPhrase);
-      throw Exception('Failed to load organization');
     }
+
+    throw Exception('Failed to load organization: $response.reasonPhrase');
   }
 
   Future<List<Report>> fetchReports() async {
     var request = await buildAuthenticatedRequest('GET', 'reports');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      //print(await response.stream.bytesToString());
-      //return Album.fromJson(jsonDecode(response.body));
-      //List<Report> reports;
-      //return Report.fromJson(jsonDecode(await response.stream.bytesToString()));
+    if (_isOk(response)) {
       final List<dynamic> reportsJson =
           jsonDecode(await response.stream.bytesToString());
 
@@ -122,25 +102,20 @@ class PoliisiautoApi {
       }
 
       return reports;
-    } else {
-      //print(response.reasonPhrase);
-      throw Exception('Failed to load reports');
     }
+
+    throw Exception('Failed to load reports: $response.reasonPhrase');
   }
 
   Future<Report> fetchReport(int reportId) async {
     var request = await buildAuthenticatedRequest('GET', 'reports/$reportId');
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      //print(await response.stream.bytesToString());
-      //return Album.fromJson(jsonDecode(response.body));
-      //List<Report> reports;
+    if (_isOk(response)) {
       return Report.fromJson(jsonDecode(await response.stream.bytesToString()));
-    } else {
-      //print(response.reasonPhrase);
-      throw Exception('Failed to load report');
     }
+
+    throw Exception('Failed to load report: $response.reasonPhrase');
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -192,4 +167,6 @@ class PoliisiautoApi {
   }
 
   String get baseAddress => '$host/api/$version';
+  bool _isOk(http.BaseResponse response) =>
+      200 <= response.statusCode && response.statusCode < 300;
 }
