@@ -43,7 +43,8 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
         children: [
-          Image.asset('images/stock-image-classroom.jpg', fit: BoxFit.contain),
+          Image.asset('assets/images/stock-image-classroom.jpg',
+              fit: BoxFit.contain),
           ...[
             Text(
               'Welcome, ${getAuth(context).user!.name}!',

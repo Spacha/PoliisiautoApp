@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import '../routing.dart';
+import '../screens/splash.dart';
 import '../screens/sign_in.dart';
 import '../screens/report_new.dart';
 import '../screens/report_details.dart';
@@ -27,10 +28,11 @@ class PoliisiautoNavigator extends StatefulWidget {
 }
 
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
+  final _splashKey = const ValueKey('Splash');
   final _signInKey = const ValueKey('Sign in');
   final _scaffoldKey = const ValueKey('App scaffold');
-  final _reportNewKey = const ValueKey('New report screen');
-  final _reportDetailsKey = const ValueKey('Report details screen');
+  final _reportNewKey = const ValueKey('New repor');
+  final _reportDetailsKey = const ValueKey('Report details');
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +69,16 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
         return route.didPop(result);
       },
       pages: [
-        // TODO: Add similar page but with poliisiauto logo. Show it for a few seconds.
-
-        if (routeState.route.pathTemplate == '/signin')
+        if (routeState.route.pathTemplate == '/splash')
+          // Display the landing screen for a few seconds.
+          FadeTransitionPage<void>(
+            key: _splashKey,
+            child: SplashScreen(
+              delaySeconds: 3,
+              redirectCallback: () => routeState.go('/signin'),
+            ),
+          )
+        else if (routeState.route.pathTemplate == '/signin')
           // Display the sign in screen.
           FadeTransitionPage<void>(
             key: _signInKey,

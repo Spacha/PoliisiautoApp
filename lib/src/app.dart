@@ -28,6 +28,7 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
     /// Configure the parser with all of the app's allowed path templates.
     _routeParser = TemplateRouteParser(
       allowedPaths: [
+        '/splash',
         '/signin',
         '/home',
         '/reports',
@@ -40,7 +41,7 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
         '/information',
       ],
       guard: _guard,
-      initialRoute: '/signin',
+      initialRoute: '/splash',
     );
 
     _routeState = RouteState(_routeParser);
@@ -83,29 +84,37 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
 
   Future<ParsedRoute> _guard(ParsedRoute from) async {
     final signedIn = _auth.signedIn;
+    final splashRoute = ParsedRoute('/splash', '/splash', {}, {});
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
     final homeRoute = ParsedRoute('/home', '/home', {}, {});
 
     // Flow paths:
     // | signedIn | from == signInRoute | canRestoreSession || return value
     // |----------|---------------------|-------------------||--------------
-    // |    0     |          0          |         x         || signInRoute
+    // |    0     |          0*         |         x         || signInRoute
     // |    0     |          1          |         0         || from
     // |    0     |          1          |         1         || homeRoute
     // |    1     |          0          |         x         || homeRoute
     // |    1     |          1          |         x         || from
+    // * splash screen is an exception
 
     if (!signedIn) {
       // If the user IS NOT signed in...
-      // ...and not on sign-in page -> redirect there
-      if (from != signInRoute) return signInRoute;
+      // ...and not on sign-in page or splash screen -> redirect there
+      if (from != signInRoute && from != splashRoute) {
+        return signInRoute;
+      }
 
       // ...and already in signInRoute, try restoring previous session
-      if (await _auth.tryRestoreSession()) return homeRoute;
+      if (from == signInRoute && await _auth.tryRestoreSession()) {
+        return homeRoute;
+      }
     } else {
       // If the user IS signed in...
       // ...going to signInRoute -> redirect home
-      if (from == signInRoute) return homeRoute;
+      if (from == signInRoute) {
+        return homeRoute;
+      }
     }
 
     return from;

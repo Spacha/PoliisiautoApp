@@ -60,6 +60,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  # For generating launcher icons to Android and iOS
+  flutter_launcher_icons: ^0.11.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -73,7 +76,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/stock-image-classroom.jpg
+    - assets/images/stock-image-classroom.jpg
+    - assets/logo-text-2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
