@@ -1,6 +1,8 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
+import 'package:poliisiauto/src/auth.dart';
+import 'package:poliisiauto/src/routing.dart';
 import '../data.dart';
 import '../api.dart';
 
@@ -63,6 +65,51 @@ Widget buildBullyField(BuildContext context, List<User> bullyOptions,
             ),
         onSelected: ((option) => controller.text = option.id.toString()));
 
+/// Bullied was not me: Checkbox
+Widget buildBulliedWasNotMeField(
+        BuildContext context, bool state, ValueSetter<bool?> onChanged) =>
+    CheckboxListTile(
+      title: const Padding(
+          padding: EdgeInsets.only(left: 24),
+          child: Text('Kiusattu oli joku muu kuin minä')),
+      value: state,
+      onChanged: onChanged,
+    );
+
+/// Bullied: Text field with autocomplete
+Widget buildBulliedField(BuildContext context, List<User> bulliedOptions,
+        TextEditingController controller, bool enabled) =>
+    Autocomplete<User>(
+        displayStringForOption: (option) => option.name,
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          if (textEditingValue.text == '') {
+            return const Iterable<User>.empty();
+          }
+          return bulliedOptions.where((User option) {
+            return option.name
+                .toLowerCase()
+                .contains(textEditingValue.text.toLowerCase());
+          });
+        },
+        fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) =>
+            TextFormField(
+              controller: controller,
+              enabled: enabled,
+              focusNode: focusNode,
+              onEditingComplete: onFieldSubmitted,
+              maxLength: 100,
+              validator: (value) {
+                return null;
+              },
+              decoration: const InputDecoration(
+                icon: Icon(Icons.person_outline),
+                hintText: 'Kirjoita kiusatun nimi',
+                labelText: 'Ketä kiusattiin? (valinnainen)',
+                counterText: '',
+              ),
+            ),
+        onSelected: ((option) => controller.text = option.id.toString()));
+
 Widget buildAssigneeField(BuildContext context, List<User> assigneeOptions,
         ValueSetter<User?> onChanged) =>
     DropdownButtonFormField<User>(
@@ -81,6 +128,17 @@ Widget buildAssigneeField(BuildContext context, List<User> assigneeOptions,
       ),
     );
 
+/// Anonymous: Checkbox
+Widget buildAnonymousField(
+        BuildContext context, bool state, ValueSetter<bool?> onChanged) =>
+    CheckboxListTile(
+      title: const Padding(
+          padding: EdgeInsets.only(left: 24),
+          child: Text('En halua että opettaja tietää nimeni')),
+      value: state,
+      onChanged: onChanged,
+    );
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class NewReportScreen extends StatefulWidget {
@@ -96,16 +154,12 @@ class _NewReportScreenState extends State<NewReportScreen> {
   /// Form fields
   final _descriptionController = TextEditingController();
   final _bullyController = TextEditingController();
+  final _bulliedController = TextEditingController();
 
   User? _selectedAssignee;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedAssignee = null;
-  }
-
-  static final List<User> _bullyOptions = <User>[
+  bool _bulliedWasNotMe = false;
+  bool _isAnonymous = true;
+  static final List<User> _studentOptions = <User>[
     User(
         id: 1,
         firstName: 'Miika',
@@ -129,7 +183,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
         role: UserRole.student),
   ];
 
-  static final List<User> _assigneeOptions = <User>[
+  static final List<User> _teacherOptions = <User>[
     User(
         // Always add this to the front
         id: -1,
@@ -148,9 +202,18 @@ class _NewReportScreenState extends State<NewReportScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _selectedAssignee = null;
+    _bulliedWasNotMe = false;
+    _isAnonymous = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Tee ilmoitus')),
+        resizeToAvoidBottomInset: false,
         body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Form(
@@ -159,9 +222,17 @@ class _NewReportScreenState extends State<NewReportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildDescriptionField(context, _descriptionController),
-                  buildBullyField(context, _bullyOptions, _bullyController),
-                  buildAssigneeField(context, _assigneeOptions, (User? option) {
+                  buildBullyField(context, _studentOptions, _bullyController),
+                  buildAssigneeField(context, _teacherOptions, (User? option) {
                     setState(() => _selectedAssignee = option);
+                  }),
+                  buildBulliedWasNotMeField(context, _bulliedWasNotMe, (state) {
+                    setState(() => _bulliedWasNotMe = state ?? false);
+                  }),
+                  buildBulliedField(context, _studentOptions,
+                      _bulliedController, _bulliedWasNotMe),
+                  buildAnonymousField(context, _isAnonymous, (state) {
+                    setState(() => _isAnonymous = state ?? false);
                   }),
                   const SizedBox(height: 16),
                   Center(
@@ -186,14 +257,29 @@ class _NewReportScreenState extends State<NewReportScreen> {
             )));
   }
 
-  void _submitForm() {
-    api.storeReport(Report(
+  void _submitForm() async {
+    // Defaults: if ID is not a positive integer, set it to null
+    int authUserId = getAuth(context).user!.id;
+    int? bullyId = int.tryParse(_bullyController.value.text) ?? -1;
+    int? bulliedId = int.tryParse(_bulliedController.value.text) ?? -1;
+    int assigneeId = _selectedAssignee?.id ?? -1;
+
+    // if 'bullied was me', set the current user as bullied
+    if (!_bulliedWasNotMe) bulliedId = authUserId;
+
+    await api
+        .storeReport(Report(
       description: _descriptionController.value.text,
-      bullyId: int.parse(_bullyController.value.text),
-      // bulliedId: int.parse(_bulliedController.value.text),
-      // isAnonymous: int.parse(_isAnonymous.value.text) == 1,
-      assigneeId: _selectedAssignee?.id,
-      isAnonymous: true,
-    ));
+      reporterId: authUserId,
+      bullyId: bullyId > 0 ? bullyId : null,
+      bulliedId: bulliedId > 0 ? bulliedId : null,
+      assigneeId: assigneeId > 0 ? assigneeId : null,
+      isAnonymous: _isAnonymous,
+    ))
+        .then((success) {
+      // if (success) {
+      //   RouteStateScope.of(context).go('/reports/sent');
+      // }
+    });
   }
 }
