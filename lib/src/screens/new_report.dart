@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/auth.dart';
-import 'package:poliisiauto/src/routing.dart';
 import '../data.dart';
 import '../api.dart';
 
@@ -159,47 +158,8 @@ class _NewReportScreenState extends State<NewReportScreen> {
   User? _selectedHandler;
   bool _bulliedWasNotMe = false;
   bool _isAnonymous = true;
-  static final List<User> _studentOptions = <User>[
-    User(
-        id: 1,
-        firstName: 'Miika',
-        lastName: 'Sikala',
-        email: 'miika@example.com',
-        emailVerified: true,
-        role: UserRole.student),
-    User(
-        id: 2,
-        firstName: 'Essi',
-        lastName: 'Passoja',
-        email: 'essi@example.com',
-        emailVerified: true,
-        role: UserRole.student),
-    User(
-        id: 3,
-        firstName: 'Lauri',
-        lastName: 'Klemettilä',
-        email: 'lauri@example.com',
-        emailVerified: true,
-        role: UserRole.student),
-  ];
 
-  static final List<User> _teacherOptions = <User>[
-    User(
-        // Always add this to the front
-        id: -1,
-        firstName: 'Kuka tahansa opettaja',
-        lastName: '',
-        email: '',
-        emailVerified: true,
-        role: UserRole.teacher),
-    User(
-        id: 4,
-        firstName: 'Onni',
-        lastName: 'Opettaja',
-        email: 'onni@example.com',
-        emailVerified: true,
-        role: UserRole.teacher),
-  ];
+  late Future<Map<String, List<User>>> _options;
 
   @override
   void initState() {
@@ -207,6 +167,17 @@ class _NewReportScreenState extends State<NewReportScreen> {
     _selectedHandler = null;
     _bulliedWasNotMe = false;
     _isAnonymous = false;
+
+    _options = Future.delayed(Duration.zero, () => _fetchOptions());
+  }
+
+  Future<Map<String, List<User>>> _fetchOptions() async {
+    Map<String, List<User>> temp = {};
+    temp['teachers'] = await api.fetchTeachers();
+    temp['students'] = await api.fetchStudents();
+
+    temp['teachers']!.insert(0, dummyTeacher);
+    return temp;
   }
 
   @override
@@ -214,47 +185,62 @@ class _NewReportScreenState extends State<NewReportScreen> {
     return Scaffold(
         appBar: AppBar(title: const Text('Tee ilmoitus')),
         resizeToAvoidBottomInset: false,
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildDescriptionField(context, _descriptionController),
-                  buildBullyField(context, _studentOptions, _bullyController),
-                  buildBulliedWasNotMeField(context, _bulliedWasNotMe, (state) {
-                    setState(() => _bulliedWasNotMe = state ?? false);
-                  }),
-                  buildBulliedField(context, _studentOptions,
-                      _bulliedController, _bulliedWasNotMe),
-                  buildHandlerField(context, _teacherOptions, (User? option) {
-                    setState(() => _selectedHandler = option);
-                  }),
-                  buildAnonymousField(context, _isAnonymous, (state) {
-                    setState(() => _isAnonymous = state ?? false);
-                  }),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: SizedBox(
-                      height: 40,
-                      width: 120,
-                      child: TextButton(
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                          if (_formKey.currentState!.validate()) {
-                            // Process data.
-                            _submitForm();
-                          }
-                        },
-                        child: const Text('Lähetä'),
+        body: FutureBuilder<Map<String, List<User>>>(
+            future: _options,
+            builder: ((context, snapshot) {
+              if (snapshot.hasData) {
+                List<User> teacherOptions = snapshot.data!['teachers']!;
+                List<User> studentOptions = snapshot.data!['students']!;
+
+                return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildDescriptionField(
+                              context, _descriptionController),
+                          buildBullyField(
+                              context, studentOptions, _bullyController),
+                          buildBulliedWasNotMeField(context, _bulliedWasNotMe,
+                              (state) {
+                            setState(() => _bulliedWasNotMe = state ?? false);
+                          }),
+                          buildBulliedField(context, studentOptions,
+                              _bulliedController, _bulliedWasNotMe),
+                          buildHandlerField(context, teacherOptions,
+                              (User? option) {
+                            setState(() => _selectedHandler = option);
+                          }),
+                          buildAnonymousField(context, _isAnonymous, (state) {
+                            setState(() => _isAnonymous = state ?? false);
+                          }),
+                          const SizedBox(height: 16),
+                          Center(
+                            child: SizedBox(
+                              height: 40,
+                              width: 120,
+                              child: TextButton(
+                                onPressed: () {
+                                  // Validate will return true if the form is valid, or false if
+                                  // the form is invalid.
+                                  if (_formKey.currentState!.validate()) {
+                                    // Process data.
+                                    _submitForm();
+                                  }
+                                },
+                                child: const Text('Lähetä'),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            )));
+                    ));
+              }
+
+              return const Center(child: CircularProgressIndicator());
+            })));
   }
 
   void _submitForm() async {
@@ -283,4 +269,13 @@ class _NewReportScreenState extends State<NewReportScreen> {
       }
     });
   }
+
+  User get dummyTeacher => User(
+        id: -1,
+        firstName: 'Kuka tahansa opettaja',
+        lastName: '',
+        email: '',
+        emailVerified: true,
+        role: UserRole.teacher,
+      );
 }

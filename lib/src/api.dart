@@ -90,6 +90,44 @@ class PoliisiautoApi {
     throw Exception('Request failed: ${await response.stream.bytesToString()}');
   }
 
+  Future<List<User>> fetchTeachers() async {
+    var request = await buildAuthenticatedRequest('GET', 'teachers');
+    http.StreamedResponse response = await request.send();
+
+    if (_isOk(response)) {
+      final List<dynamic> teachersJson =
+          jsonDecode(await response.stream.bytesToString());
+
+      List<User> teachers = [];
+      for (var t in teachersJson) {
+        teachers.add(User.fromJson(t));
+      }
+
+      return teachers;
+    }
+
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
+  }
+
+  Future<List<User>> fetchStudents() async {
+    var request = await buildAuthenticatedRequest('GET', 'students');
+    http.StreamedResponse response = await request.send();
+
+    if (_isOk(response)) {
+      final List<dynamic> studentsJson =
+          jsonDecode(await response.stream.bytesToString());
+
+      List<User> students = [];
+      for (var s in studentsJson) {
+        students.add(User.fromJson(s));
+      }
+
+      return students;
+    }
+
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
+  }
+
   Future<List<Report>> fetchReports(
       {String order = 'DESC', String? route}) async {
     var request = await buildAuthenticatedRequest('GET', route ?? 'reports');
@@ -100,8 +138,8 @@ class PoliisiautoApi {
           jsonDecode(await response.stream.bytesToString());
 
       List<Report> reports = [];
-      for (var reportJson in reportsJson) {
-        reports.add(Report.fromJson(reportJson));
+      for (var r in reportsJson) {
+        reports.add(Report.fromJson(r));
       }
 
       // order the reports by creation date
