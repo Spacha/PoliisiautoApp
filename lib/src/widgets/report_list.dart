@@ -61,7 +61,10 @@ class _ReportListState extends State<ReportList> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) => ListTile(
                     title: Text(
-                        snapshot.data?[index].description ?? 'No description'),
+                        snapshot.data?[index].description ?? '(Ei kuvausta)'),
+                    subtitle: snapshot.data?[index].reporterName != null
+                        ? Text(snapshot.data?[index].reporterName ?? '')
+                        : null,
                     onTap: (widget.onTap != null)
                         ? () => widget.onTap!(snapshot.data![index])
                         : null,

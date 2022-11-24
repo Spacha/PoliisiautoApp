@@ -35,6 +35,8 @@ class Report {
   final DateTime? openedAt;
   final DateTime? closedAt;
 
+  final String? reporterName;
+
   const Report({
     required this.description,
     required this.isAnonymous,
@@ -47,6 +49,7 @@ class Report {
     this.handlerId,
     this.bullyId,
     this.bulliedId,
+    this.reporterName,
   });
 
   factory Report.fromJson(Map<String, dynamic> json) {
@@ -62,6 +65,7 @@ class Report {
       handlerId: json['handler_id'],
       bullyId: json['bully_id'],
       bulliedId: json['bullied_id'],
+      reporterName: json['reporter_name'],
     );
   }
 
@@ -77,6 +81,6 @@ class Report {
 
   @override
   String toString() {
-    return 'Report(id: $id, description: $description, isAnonymous: $isAnonymous, openedAt: $openedAt, closedAt: $closedAt, reportCaseId: $reportCaseId, reporterId: $reporterId, handlerId: $handlerId, bullyId: $bullyId, bulliedId: $bulliedId)';
+    return 'Report(id: $id, description: $description, isAnonymous: $isAnonymous, openedAt: $openedAt, closedAt: $closedAt, reportCaseId: $reportCaseId, reporterId: $reporterId, handlerId: $handlerId, bullyId: $bullyId, bulliedId: $bulliedId), reporterName: $reporterName';
   }
 }
