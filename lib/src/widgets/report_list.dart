@@ -7,8 +7,10 @@ import '../api.dart';
 class ReportList extends StatefulWidget {
   final String category;
   final ValueChanged<Report>? onTap;
+  final int dataDirtyCounter;
 
   const ReportList({
+    required this.dataDirtyCounter,
     required this.category,
     this.onTap,
     super.key,
@@ -24,7 +26,18 @@ class _ReportListState extends State<ReportList> {
   @override
   void initState() {
     super.initState();
-    futureReportList = api.fetchReports();
+    futureReportList = api.fetchReports(order: 'ASC');
+  }
+
+  @override
+  void didUpdateWidget(ReportList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.dataDirtyCounter != widget.dataDirtyCounter) {
+      setState(() {
+        futureReportList = api.fetchReports(order: 'ASC');
+      });
+    }
   }
 
   @override

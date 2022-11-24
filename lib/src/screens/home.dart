@@ -1,9 +1,7 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
 import '../auth.dart';
-import '../routing.dart';
 import '../widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,19 +59,6 @@ class HomeContent extends StatelessWidget {
                 getAuth(context).signOut();
               },
               child: const Text('Sign out'),
-            ),
-            Link(
-              uri: Uri.parse('/reports/new'),
-              builder: (context, followLink) => TextButton(
-                onPressed: followLink,
-                child: const Text('Go directly report creation (Link)'),
-              ),
-            ),
-            TextButton(
-              child: const Text('Go directly to report creation (RouteState)'),
-              onPressed: () {
-                RouteStateScope.of(context).go('/reports/new');
-              },
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
         ],

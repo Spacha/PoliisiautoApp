@@ -6,6 +6,7 @@ import '../routing.dart';
 import '../widgets/drawer.dart';
 import '../widgets/report_list.dart';
 import '../auth.dart';
+import '../screens/new_report.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
@@ -19,11 +20,15 @@ class _ReportsScreenState extends State<ReportsScreen>
   late TabController _tabController;
   RouteState get _routeState => RouteStateScope.of(context);
 
+  late int _dataDirtyCounter;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(_handleTabIndexChanged);
+
+    _dataDirtyCounter = 0;
   }
 
   @override
@@ -78,28 +83,46 @@ class _ReportsScreenState extends State<ReportsScreen>
               controller: _tabController,
               children: [
                 ReportList(
+                  dataDirtyCounter: _dataDirtyCounter,
                   category: 'category 1',
                   onTap: _handleReportTapped,
                 ),
                 ReportList(
+                  dataDirtyCounter: _dataDirtyCounter,
                   category: 'category 2',
                   onTap: _handleReportTapped,
                 ),
                 ReportList(
+                  dataDirtyCounter: _dataDirtyCounter,
                   category: 'category 3',
                   onTap: _handleReportTapped,
                 )
               ],
             )
-          : ReportList(category: 'all', onTap: _handleReportTapped),
+          : ReportList(
+              dataDirtyCounter: _dataDirtyCounter,
+              category: 'all',
+              onTap: _handleReportTapped),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _routeState.go('/reports/new'),
+        //onPressed: () => _routeState.go('/reports/new'),
         //onPressed: () => Navigator.pushNamed(context, '/reports/new'),
-        //onPressed: () => openNewReportPage(context),
+        onPressed: () => _openNewReportScreen(context),
         tooltip: 'New report',
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _openNewReportScreen(BuildContext context) async {
+    return Navigator.of(context)
+        .push(MaterialPageRoute(
+      builder: (context) => const NewReportScreen(),
+    ))
+        .then((result) {
+      setState(() {
+        _dataDirtyCounter++;
+      });
+    });
   }
 
   void _handleReportTapped(Report report) {

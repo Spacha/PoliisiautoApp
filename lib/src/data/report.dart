@@ -31,6 +31,7 @@ class Report {
   final int? bullyId;
   final int? bulliedId;
   final bool isAnonymous;
+  final DateTime? createdAt;
   final DateTime? openedAt;
   final DateTime? closedAt;
 
@@ -38,6 +39,7 @@ class Report {
     required this.description,
     required this.isAnonymous,
     this.id,
+    this.createdAt,
     this.openedAt,
     this.closedAt,
     this.reportCaseId,
@@ -52,6 +54,7 @@ class Report {
       id: json['id'],
       description: json['description'],
       isAnonymous: json['is_anonymous'] == 1,
+      createdAt: DateTime.tryParse(json['created_at'] ?? ''),
       openedAt: DateTime.tryParse(json['opened_at'] ?? ''),
       closedAt: DateTime.tryParse(json['closed_at'] ?? ''),
       reportCaseId: json['report_case_id'],

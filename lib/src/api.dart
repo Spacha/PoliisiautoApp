@@ -90,7 +90,7 @@ class PoliisiautoApi {
     throw Exception('Failed to load organization: $response.reasonPhrase');
   }
 
-  Future<List<Report>> fetchReports() async {
+  Future<List<Report>> fetchReports({String order = 'DESC'}) async {
     var request = await buildAuthenticatedRequest('GET', 'reports');
     http.StreamedResponse response = await request.send();
 
@@ -101,6 +101,13 @@ class PoliisiautoApi {
       List<Report> reports = [];
       for (var reportJson in reportsJson) {
         reports.add(Report.fromJson(reportJson));
+      }
+
+      // order the reports by creation date
+      if (order == 'DESC') {
+        reports.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+      } else {
+        reports.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       }
 
       return reports;
