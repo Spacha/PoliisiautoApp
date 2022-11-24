@@ -87,11 +87,12 @@ class PoliisiautoApi {
           jsonDecode(await response.stream.bytesToString()));
     }
 
-    throw Exception('Failed to load organization: $response.reasonPhrase');
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
   }
 
-  Future<List<Report>> fetchReports({String order = 'DESC'}) async {
-    var request = await buildAuthenticatedRequest('GET', 'reports');
+  Future<List<Report>> fetchReports(
+      {String order = 'DESC', String? route}) async {
+    var request = await buildAuthenticatedRequest('GET', route ?? 'reports');
     http.StreamedResponse response = await request.send();
 
     if (_isOk(response)) {
@@ -113,7 +114,7 @@ class PoliisiautoApi {
       return reports;
     }
 
-    throw Exception('Failed to load reports: $response.reasonPhrase');
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
   }
 
   Future<Report> fetchReport(int reportId) async {
@@ -124,7 +125,7 @@ class PoliisiautoApi {
       return Report.fromJson(jsonDecode(await response.stream.bytesToString()));
     }
 
-    throw Exception('Failed to load report: $response.reasonPhrase');
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
   }
 
   Future<bool> sendNewReport(Report report) async {
@@ -135,7 +136,7 @@ class PoliisiautoApi {
       'description': _stringify(report.description),
       'is_anonymous': _stringify(report.isAnonymous),
       'reporter_id': _stringify(report.reporterId),
-      'assignee_id': _stringify(report.assigneeId),
+      'handler_id': _stringify(report.handlerId),
       'bully_id': _stringify(report.bullyId),
       'bullied_id': _stringify(report.bulliedId),
     });

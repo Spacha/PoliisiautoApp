@@ -77,7 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    _emailController.text = 'miika@example.com';
+                    _emailController.text = 'olli@example.com';
                     _passwordController.text = 'kikkakokkeli';
                   },
                   child: const Text('Autofill (teacher)'),

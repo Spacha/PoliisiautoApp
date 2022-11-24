@@ -1,6 +1,7 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
+import 'package:poliisiauto/src/auth.dart';
 import '../data.dart';
 import '../api.dart';
 
@@ -26,7 +27,7 @@ class _ReportListState extends State<ReportList> {
   @override
   void initState() {
     super.initState();
-    futureReportList = api.fetchReports(order: 'ASC');
+    futureReportList = Future.delayed(Duration.zero, () => _fetchReports());
   }
 
   @override
@@ -35,9 +36,20 @@ class _ReportListState extends State<ReportList> {
 
     if (oldWidget.dataDirtyCounter != widget.dataDirtyCounter) {
       setState(() {
-        futureReportList = api.fetchReports(order: 'ASC');
+        futureReportList = _fetchReports();
       });
     }
+  }
+
+  Future<List<Report>> _fetchReports() {
+    String? route;
+    if (widget.category == 'assigned') {
+      route = 'teachers/${getAuth(context).user!.id}/assigned-reports';
+    } else if (widget.category == 'created') {
+      route = 'teachers/${getAuth(context).user!.id}/reports';
+    }
+
+    return api.fetchReports(order: 'ASC', route: route);
   }
 
   @override

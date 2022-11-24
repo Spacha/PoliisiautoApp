@@ -36,9 +36,9 @@ class _ReportsScreenState extends State<ReportsScreen>
     super.didChangeDependencies();
 
     final newPath = _routeState.route.pathTemplate;
-    if (newPath.startsWith('/reports/popular')) {
+    if (newPath.startsWith('/reports/assigned-to-me')) {
       _tabController.index = 0;
-    } else if (newPath.startsWith('/reports/recent')) {
+    } else if (newPath.startsWith('/reports/created-by-me')) {
       _tabController.index = 1;
     } else if (newPath == '/reports/all') {
       _tabController.index = 2;
@@ -56,21 +56,21 @@ class _ReportsScreenState extends State<ReportsScreen>
     //final routeState = RouteStateScope.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reports'),
+        title: const Text('Ilmoitukset'),
         bottom: isTeacher(context)
             ? TabBar(
                 controller: _tabController,
                 tabs: const [
                   Tab(
-                    text: 'Popular',
-                    icon: Icon(Icons.people),
+                    text: 'Osoitetut',
+                    icon: Icon(Icons.school),
                   ),
                   Tab(
-                    text: 'New',
-                    icon: Icon(Icons.new_releases),
+                    text: 'Minun luomat',
+                    icon: Icon(Icons.person),
                   ),
                   Tab(
-                    text: 'All',
+                    text: 'Kaikki',
                     icon: Icon(Icons.list),
                   ),
                 ],
@@ -84,17 +84,17 @@ class _ReportsScreenState extends State<ReportsScreen>
               children: [
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
-                  category: 'category 1',
+                  category: 'assigned',
                   onTap: _handleReportTapped,
                 ),
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
-                  category: 'category 2',
+                  category: 'created',
                   onTap: _handleReportTapped,
                 ),
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
-                  category: 'category 3',
+                  category: 'all',
                   onTap: _handleReportTapped,
                 )
               ],

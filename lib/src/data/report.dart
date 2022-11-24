@@ -3,7 +3,7 @@
 // "description": "Joku (ehkä Jaska) kiusaa mua taas!",
 // "report_case_id": 1,
 // "reporter_id": 1,
-// "assignee_id": null,
+// "handler_id": null,
 // "bully_id": null,
 // "bullied_id": null,
 // "is_anonymous": 1,
@@ -27,7 +27,7 @@ class Report {
   final String description;
   final int? reportCaseId;
   final int? reporterId;
-  final int? assigneeId;
+  final int? handlerId;
   final int? bullyId;
   final int? bulliedId;
   final bool isAnonymous;
@@ -44,7 +44,7 @@ class Report {
     this.closedAt,
     this.reportCaseId,
     this.reporterId,
-    this.assigneeId,
+    this.handlerId,
     this.bullyId,
     this.bulliedId,
   });
@@ -59,7 +59,7 @@ class Report {
       closedAt: DateTime.tryParse(json['closed_at'] ?? ''),
       reportCaseId: json['report_case_id'],
       reporterId: json['reporter_id'],
-      assigneeId: json['assignee_id'],
+      handlerId: json['handler_id'],
       bullyId: json['bully_id'],
       bulliedId: json['bullied_id'],
     );
@@ -77,6 +77,6 @@ class Report {
 
   @override
   String toString() {
-    return 'Report(id: $id, description: $description, isAnonymous: $isAnonymous, openedAt: $openedAt, closedAt: $closedAt, reportCaseId: $reportCaseId, reporterId: $reporterId, assigneeId: $assigneeId, bullyId: $bullyId, bulliedId: $bulliedId)';
+    return 'Report(id: $id, description: $description, isAnonymous: $isAnonymous, openedAt: $openedAt, closedAt: $closedAt, reportCaseId: $reportCaseId, reporterId: $reporterId, handlerId: $handlerId, bullyId: $bullyId, bulliedId: $bulliedId)';
   }
 }

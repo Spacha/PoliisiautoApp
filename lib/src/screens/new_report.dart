@@ -110,11 +110,11 @@ Widget buildBulliedField(BuildContext context, List<User> bulliedOptions,
             ),
         onSelected: ((option) => controller.text = option.id.toString()));
 
-Widget buildAssigneeField(BuildContext context, List<User> assigneeOptions,
+Widget buildHandlerField(BuildContext context, List<User> handlerOptions,
         ValueSetter<User?> onChanged) =>
     DropdownButtonFormField<User>(
       onChanged: onChanged,
-      items: assigneeOptions.map<DropdownMenuItem<User>>((User option) {
+      items: handlerOptions.map<DropdownMenuItem<User>>((User option) {
         return DropdownMenuItem<User>(
           value: option,
           child: Text(option.name),
@@ -156,7 +156,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
   final _bullyController = TextEditingController();
   final _bulliedController = TextEditingController();
 
-  User? _selectedAssignee;
+  User? _selectedHandler;
   bool _bulliedWasNotMe = false;
   bool _isAnonymous = true;
   static final List<User> _studentOptions = <User>[
@@ -204,7 +204,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedAssignee = null;
+    _selectedHandler = null;
     _bulliedWasNotMe = false;
     _isAnonymous = false;
   }
@@ -228,8 +228,8 @@ class _NewReportScreenState extends State<NewReportScreen> {
                   }),
                   buildBulliedField(context, _studentOptions,
                       _bulliedController, _bulliedWasNotMe),
-                  buildAssigneeField(context, _teacherOptions, (User? option) {
-                    setState(() => _selectedAssignee = option);
+                  buildHandlerField(context, _teacherOptions, (User? option) {
+                    setState(() => _selectedHandler = option);
                   }),
                   buildAnonymousField(context, _isAnonymous, (state) {
                     setState(() => _isAnonymous = state ?? false);
@@ -262,7 +262,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
     int authUserId = getAuth(context).user!.id;
     int? bullyId = int.tryParse(_bullyController.value.text) ?? -1;
     int? bulliedId = int.tryParse(_bulliedController.value.text) ?? -1;
-    int assigneeId = _selectedAssignee?.id ?? -1;
+    int handlerId = _selectedHandler?.id ?? -1;
 
     // if 'bullied was me', set the current user as bullied
     if (!_bulliedWasNotMe) bulliedId = authUserId;
@@ -273,7 +273,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
       reporterId: authUserId,
       bullyId: bullyId > 0 ? bullyId : null,
       bulliedId: bulliedId > 0 ? bulliedId : null,
-      assigneeId: assigneeId > 0 ? assigneeId : null,
+      handlerId: handlerId > 0 ? handlerId : null,
       isAnonymous: _isAnonymous,
     ))
         .then((success) {
