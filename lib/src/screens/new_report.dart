@@ -148,7 +148,7 @@ class NewReportScreen extends StatefulWidget {
   State<NewReportScreen> createState() => _NewReportScreenState();
 }
 
-class _NewReportScreenState extends State<NewReportScreen> with ChangeNotifier {
+class _NewReportScreenState extends State<NewReportScreen> {
   final _formKey = GlobalKey<FormState>();
 
   /// Form fields

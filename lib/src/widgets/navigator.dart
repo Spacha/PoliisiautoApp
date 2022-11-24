@@ -64,7 +64,9 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
 
         var page = route.settings is Page ? route.settings as Page : null;
 
-        if (page != null && page.key == _newReportKey) {}
+        // if (page != null && page.key == _newReportKey) {
+        //   routeState.go('/reports');
+        // }
         print('$route did pop with result: $result');
 
         return route.didPop(result);

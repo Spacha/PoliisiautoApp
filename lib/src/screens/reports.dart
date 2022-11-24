@@ -6,12 +6,9 @@ import '../routing.dart';
 import '../widgets/drawer.dart';
 import '../widgets/report_list.dart';
 import '../auth.dart';
-import 'new_report.dart';
 
 class ReportsScreen extends StatefulWidget {
-  const ReportsScreen({
-    super.key,
-  });
+  const ReportsScreen({super.key});
 
   @override
   State<ReportsScreen> createState() => _ReportsScreenState();
@@ -21,7 +18,6 @@ class _ReportsScreenState extends State<ReportsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   RouteState get _routeState => RouteStateScope.of(context);
-  //bool _listenerAdded = false;
 
   @override
   void initState() {
@@ -47,20 +43,11 @@ class _ReportsScreenState extends State<ReportsScreen>
   @override
   void dispose() {
     _tabController.removeListener(_handleTabIndexChanged);
-    // if (_listenerAdded) {
-    //   _routeState.removeListener(_kakka);
-    // }
     super.dispose();
   }
 
-  //void _kakka() {}
-
   @override
   Widget build(BuildContext context) {
-    // if (!_listenerAdded) {
-    //   _routeState.addListener(_kakka);
-    //   setState(() => {_listenerAdded = true});
-    // }
     //final routeState = RouteStateScope.of(context);
     return Scaffold(
       appBar: AppBar(
