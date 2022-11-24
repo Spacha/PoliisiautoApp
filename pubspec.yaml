@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/images/stock-image-classroom.jpg
     - assets/logo-text-2x.png
+    - assets/logo-2x.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

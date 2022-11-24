@@ -15,10 +15,11 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  /// Form fields
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  // TODO: Validate form!
 
   @override
   Widget build(BuildContext context) {
@@ -26,67 +27,109 @@ class _SignInScreenState extends State<SignInScreen> {
     final routeState = RouteStateScope.of(context);
 
     return Scaffold(
-      body: Center(
-        child: Card(
-          child: Container(
-            constraints: BoxConstraints.loose(const Size(600, 600)),
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Sign in',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Email'),
-                  controller: _emailController,
-                ),
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  controller: _passwordController,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TextButton(
-                    onPressed: () async {
-                      bool success = await _tryLogin(authState);
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              constraints: BoxConstraints.loose(const Size(600, 600)),
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                          width: 120, child: Image.asset('assets/logo-2x.png')),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Kirjaudu sisään',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Anna sähköpostiosoite';
+                          }
+                          return null;
+                        },
+                        decoration:
+                            const InputDecoration(labelText: 'Sähköposti'),
+                        controller: _emailController,
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Anna salasana';
+                          }
+                          return null;
+                        },
+                        decoration:
+                            const InputDecoration(labelText: 'Salasana'),
+                        obscureText: true,
+                        controller: _passwordController,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextButton(
+                          onPressed: () async {
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
 
-                      if (success) {
-                        await routeState.go('/home');
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) => const AlertDialog(
-                                  title: Text('Login failed!'),
-                                ));
-                      }
-                    },
-                    child: const Text('Sign in'),
-                  ),
-                ),
+                            bool success = await _tryLogin(authState);
+                            if (success) {
+                              await routeState.go('/home');
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text(
+                                            'Kirjautuminen epäonnistui!'),
+                                        content: const Text(
+                                            'Varmista että kirjoitit sähköpostin ja salasanan oikein.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text('Selvä'),
+                                          ),
+                                        ],
+                                      ));
+                            }
+                          },
+                          child: const Text('Sign in'),
+                        ),
+                      ),
 
-                /// Debug:
-                const Divider(),
-                TextButton(
-                  onPressed: () {
-                    _emailController.text = 'miika@example.com';
-                    _passwordController.text = 'kikkakokkeli';
-                  },
-                  child: const Text('Autofill (student)'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    _emailController.text = 'olli@example.com';
-                    _passwordController.text = 'kikkakokkeli';
-                  },
-                  child: const Text('Autofill (teacher)'),
-                ),
-              ],
+                      /// Debug:
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              _emailController.text = 'miika@example.com';
+                              _passwordController.text = 'kikkakokkeli';
+                            },
+                            child: const Text('Autofill (student)',
+                                style: TextStyle(color: Colors.orange)),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _emailController.text = 'olli@example.com';
+                              _passwordController.text = 'kikkakokkeli';
+                            },
+                            child: const Text('Autofill (teacher)',
+                                style: TextStyle(color: Colors.orange)),
+                          ),
+                        ],
+                      )
+                    ],
+                  )),
             ),
-          ),
-        ),
-      ),
+          ]),
     );
   }
 

@@ -5,6 +5,49 @@ import '../widgets/drawer.dart';
 import '../data.dart';
 import '../api.dart';
 
+List<Widget> buildCreditWidgets() {
+  /*
+  Thesis worker summer 2021 - 2022
+  Moilanen Tapio (concept videos)
+  * Producing videos of three concepts (winners)
+
+  Research and Development Project course group spring 2021
+  * Producing descriptive videos based on children's ideas
+  * Arranging a voting based on these videos; best idea from each school
+  * Producing three concepts for the winning ideas; one idea from each school
+  * Organizing a workshop for further development of their idea in Jääli school
+  * Developing a prototype based on the workshop results for the Jääli concept
+  * Developing protypes based on the voting results for the Kaakkuri and OIS concepts
+  Pesonen Atte (project manager)
+  Ansamaa Matti
+  Bui Le Ba Vuong
+  Salmelin Silja
+  Kärkäs Petteri
+
+  * Jääli, Kaakkuri & Oulu International School (OIS) autumn 2020
+  */
+  Text normText(String t) => Text(t, textAlign: TextAlign.center);
+  Text boldText(String t) => Text(
+        t,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      );
+  return [
+    const SizedBox(height: 10),
+    boldText('Thesis worker summer 2021 - 2022'),
+    normText('Moilanen Tapio (concept videos)'),
+    const SizedBox(height: 10),
+    boldText('Research and Development Project course group spring 2021'),
+    normText('Pesonen Atte (project manager)'),
+    normText('Ansamaa Matti'),
+    normText('Bui Le Ba Vuong'),
+    normText('Salmelin Silja'),
+    normText('Kärkäs Petteri'),
+    const SizedBox(height: 10),
+    boldText('Jääli, Kaakkuri & Oulu International School (OIS) autumn 2020'),
+  ];
+}
+
 class InformationScreen extends StatefulWidget {
   const InformationScreen({super.key});
 
@@ -15,7 +58,7 @@ class InformationScreen extends StatefulWidget {
 class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: const Text('Information')),
+      appBar: AppBar(title: const Text('Apusivut')),
       drawer: const PoliisiautoDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,8 +99,8 @@ class _InformationContentState extends State<InformationContent> {
         children: [
           ...[
             Text(
-              'Information',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'Poliisiauto (beta)',
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
           TextButton(
@@ -78,16 +121,13 @@ class _InformationContentState extends State<InformationContent> {
                 ],
               ),
             ),
-            child: const Text('Show Dialog'),
+            child: const Text('Ponnahdusikkuna'),
           ),
           FutureBuilder<Organization>(
             future: futureOrganization,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data!.name);
-
-                // TODO: Show credits!
-
+                return Text('Testiorganisaatio: ${snapshot.data!.name}');
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
@@ -96,6 +136,12 @@ class _InformationContentState extends State<InformationContent> {
               return const CircularProgressIndicator();
             },
           ),
+          const SizedBox(height: 20),
+          Text(
+            'Kiitokset',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          ...buildCreditWidgets()
         ],
       );
 }

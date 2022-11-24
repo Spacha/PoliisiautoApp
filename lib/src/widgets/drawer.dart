@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../routing.dart';
+import '../auth.dart';
 
 class PoliisiautoDrawer extends StatelessWidget {
   const PoliisiautoDrawer({super.key});
@@ -21,15 +22,15 @@ class PoliisiautoDrawer extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          DrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text('Welcome, teacher!'),
+            child: Text('Hei ${getAuth(context).user!.name}'),
           ),
           ListTile(
             leading: const Icon(Icons.house_outlined),
-            title: const Text('Home'),
+            title: const Text('Etusivu'),
             tileColor:
                 (selectedIndex == 0) ? tileHighlightColor : Colors.transparent,
             onTap: () {
@@ -41,7 +42,7 @@ class PoliisiautoDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.speaker_notes_outlined),
-            title: const Text('Reports'),
+            title: const Text('Ilmoitukset'),
             tileColor:
                 (selectedIndex == 1) ? tileHighlightColor : Colors.transparent,
             onTap: () {
@@ -53,12 +54,23 @@ class PoliisiautoDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.info_outlined),
-            title: const Text('Information'),
+            title: const Text('Apusivut'),
             tileColor:
                 (selectedIndex == 2) ? tileHighlightColor : Colors.transparent,
             onTap: () {
               // Update the state of the app
               routeState.go('/information');
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+          ListTile(
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text('Kirjaudu ulos'),
+            onTap: () {
+              // Update the state of the app
+              getAuth(context).signOut();
               // Then close the drawer
               Navigator.pop(context);
             },

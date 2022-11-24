@@ -225,10 +225,11 @@ class _NewReportScreenState extends State<NewReportScreen> {
                                 onPressed: () {
                                   // Validate will return true if the form is valid, or false if
                                   // the form is invalid.
-                                  if (_formKey.currentState!.validate()) {
-                                    // Process data.
-                                    _submitForm();
+                                  if (!_formKey.currentState!.validate()) {
+                                    return;
                                   }
+                                  // Process data.
+                                  _submitForm();
                                 },
                                 child: const Text('Lähetä'),
                               ),

@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Welcome!')),
+        appBar: AppBar(title: const Text('Tervetuloa!')),
         drawer: const PoliisiautoDrawer(),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -47,7 +47,7 @@ class HomeContent extends StatelessWidget {
               fit: BoxFit.contain),
           ...[
             Text(
-              'Welcome, ${getAuth(context).user!.name}!',
+              'Tervetuloa, ${getAuth(context).user!.name}!',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const Text(
@@ -58,7 +58,7 @@ class HomeContent extends StatelessWidget {
               onPressed: () {
                 getAuth(context).signOut();
               },
-              child: const Text('Sign out'),
+              child: const Text('Kirjaudu ulos'),
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
         ],
