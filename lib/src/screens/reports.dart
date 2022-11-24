@@ -1,11 +1,12 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
+import '../auth.dart';
 import '../data.dart';
 import '../routing.dart';
 import '../widgets/drawer.dart';
 import '../widgets/report_list.dart';
-import '../auth.dart';
+import '../screens/report_details.dart';
 import '../screens/new_report.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -85,24 +86,24 @@ class _ReportsScreenState extends State<ReportsScreen>
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
                   category: 'assigned',
-                  onTap: _handleReportTapped,
+                  onTap: (report) => _openReportDetailsScreen(report, context),
                 ),
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
                   category: 'created',
-                  onTap: _handleReportTapped,
+                  onTap: (report) => _openReportDetailsScreen(report, context),
                 ),
                 ReportList(
                   dataDirtyCounter: _dataDirtyCounter,
                   category: 'all',
-                  onTap: _handleReportTapped,
+                  onTap: (report) => _openReportDetailsScreen(report, context),
                 )
               ],
             )
           : ReportList(
               dataDirtyCounter: _dataDirtyCounter,
               category: 'all',
-              onTap: _handleReportTapped),
+              onTap: (report) => _openReportDetailsScreen(report, context)),
       floatingActionButton: FloatingActionButton(
         //onPressed: () => _routeState.go('/reports/new'),
         //onPressed: () => Navigator.pushNamed(context, '/reports/new'),
@@ -119,9 +120,27 @@ class _ReportsScreenState extends State<ReportsScreen>
       builder: (context) => const NewReportScreen(),
     ))
         .then((result) {
-      setState(() {
-        _dataDirtyCounter++;
-      });
+      if (result != null) {
+        setState(() {
+          _dataDirtyCounter++;
+        });
+      }
+    });
+  }
+
+  void _openReportDetailsScreen(Report report, BuildContext context) async {
+    if (report.id == null) return;
+
+    return Navigator.of(context)
+        .push(MaterialPageRoute(
+      builder: (context) => ReportDetailsScreen(reportId: report.id ?? 0),
+    ))
+        .then((result) {
+      if (result != null) {
+        setState(() {
+          _dataDirtyCounter++;
+        });
+      }
     });
   }
 

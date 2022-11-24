@@ -17,27 +17,32 @@ class ReportDetailsScreen extends StatefulWidget {
 }
 
 class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
-  late Future<Report> futureReport;
+  late Future<Report> _futureReport;
 
   @override
   void initState() {
     super.initState();
-    futureReport = api.fetchReport(widget.reportId);
+    _futureReport = api.fetchReport(widget.reportId);
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (report == null) {
-    //   return const Scaffold(
-    //     body: Center(
-    //       child: Text('No report found.'),
-    //     ),
-    //   );
-    // }
     return Scaffold(
-      appBar: AppBar(title: const Text('Report details')),
+      appBar: AppBar(title: const Text('Ilmoituksen tiedot'), actions: [
+        IconButton(
+          onPressed: () async {
+            bool sure = await _confirmDelete(context) ?? false;
+            if (sure) {
+              if (await _delete() && mounted) {
+                Navigator.pop(context, 'report_deleted');
+              }
+            }
+          },
+          icon: const Icon(Icons.delete_outline),
+        ),
+      ]),
       body: FutureBuilder<Report>(
-          future: futureReport,
+          future: _futureReport,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Center(
@@ -50,24 +55,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                           : 'Not opened',
                       style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
-                    // TextButton(
-                    //   child: const Text('View author (Push)'),
-                    //   onPressed: () {
-                    //     Navigator.of(context).push<void>(
-                    //       MaterialPageRoute<void>(
-                    //         builder: (context) =>
-                    //             AuthorDetailsScreen(author: book!.author),
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                    // Link(
-                    //   uri: Uri.parse('/author/${book!.author.id}'),
-                    //   builder: (context, followLink) => TextButton(
-                    //     onPressed: followLink,
-                    //     child: const Text('View author (Link)'),
-                    //   ),
-                    // ),
                   ],
                 ),
               );
@@ -79,5 +66,30 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
             return const Center(child: CircularProgressIndicator());
           }),
     );
+  }
+
+  Future<bool?> _confirmDelete(context) => showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Oletko varma?'),
+          content: const Text('Haluatko varmasti poistaa ilmoituksen?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Peru'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text(
+                'Kyllä',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Future<bool> _delete() async {
+    return await api.deleteReport(widget.reportId);
   }
 }

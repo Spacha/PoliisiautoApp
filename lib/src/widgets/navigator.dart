@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../routing.dart';
 import '../screens/splash.dart';
 import '../screens/sign_in.dart';
-import '../screens/report_details.dart';
 import 'fade_transition_page.dart';
 import '../screens/home.dart';
 import '../screens/reports.dart';
@@ -27,18 +26,12 @@ class PoliisiautoNavigator extends StatefulWidget {
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _splashKey = const ValueKey('Splash');
   final _signInKey = const ValueKey('Sign in');
-  final _reportDetailsKey = const ValueKey('Report details');
 
   @override
   Widget build(BuildContext context) {
     final routeState = RouteStateScope.of(context);
     final currentRoute = routeState.route;
     final pathTemplate = currentRoute.pathTemplate;
-
-    int? selectedReportId;
-    if (pathTemplate == '/reports/:reportId') {
-      selectedReportId = int.tryParse(currentRoute.parameters['reportId']!);
-    }
 
     // TODO: Wrap this with try-catch. Then, if a SessionExpiredException is thrown, redirect to /home!
 
@@ -96,14 +89,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
 
           // Add an additional page to the stack if the user is viewing a report
 
-          // Show report
-          if (selectedReportId != null)
-            MaterialPage<void>(
-              key: _reportDetailsKey,
-              child: ReportDetailsScreen(
-                reportId: selectedReportId,
-              ),
-            )
+          // ...
         ],
       ],
     );

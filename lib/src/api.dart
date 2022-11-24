@@ -187,6 +187,15 @@ class PoliisiautoApi {
     return _isOk(response);
   }
 
+  Future<bool> deleteReport(int id) async {
+    //print('$report');
+    var request = await buildAuthenticatedRequest('DELETE', 'reports/$id');
+
+    http.StreamedResponse response = await request.send();
+
+    return _isOk(response);
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   /// Bearer Token
   //////////////////////////////////////////////////////////////////////////////
