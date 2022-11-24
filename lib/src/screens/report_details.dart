@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 import '../api.dart';
 import '../data.dart';
 
+Widget buildField(BuildContext context, String label, String content) =>
+    Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(label, style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: 6),
+          Text(content)
+        ]));
+
 class ReportDetailsScreen extends StatefulWidget {
   final int reportId;
 
@@ -45,18 +54,51 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
           future: _futureReport,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Center(
-                child: Column(
-                  children: [
-                    Text(snapshot.data!.description),
-                    Text(
-                      snapshot.data!.status == ReportStatus.opened
-                          ? 'Opened at ${snapshot.data!.openedAt}'
-                          : 'Not opened',
-                      style: const TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ],
-                ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 6),
+                  buildField(context, 'Ilmoituksen kuvaus',
+                      snapshot.data!.description),
+                  const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+                  buildField(context, 'Ilmoittaja',
+                      snapshot.data!.reporterName ?? '(ei tiedossa)'),
+                  const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+                  buildField(context, 'Kiusaaja',
+                      snapshot.data!.bullyName ?? '(ei ilmoitettu)'),
+                  const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+                  buildField(context, 'Kiusattu',
+                      snapshot.data!.bulliedName ?? '(ei ilmoitettu)'),
+                  const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: SizedBox(
+                          width: double.infinity,
+                          height: 60,
+                          child: Card(
+                              color: Color.fromARGB(255, 170, 231, 202),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: const [
+                                    Text('Ei viestejä',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 86, 157, 123)))
+                                  ])))),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: () => _onSendMessage(),
+                          icon: const Icon(Icons.message_outlined),
+                          label: const Text('Lähetä viesti'),
+                        ),
+                      ))
+                ],
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
@@ -91,5 +133,9 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
 
   Future<bool> _delete() async {
     return await api.deleteReport(widget.reportId);
+  }
+
+  void _onSendMessage() {
+    return;
   }
 }

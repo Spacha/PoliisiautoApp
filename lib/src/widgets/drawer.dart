@@ -26,7 +26,8 @@ class PoliisiautoDrawer extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text('Hei ${getAuth(context).user!.name}'),
+            child: Text('Hei ${getAuth(context).user!.name}!',
+                style: const TextStyle(color: Colors.white)),
           ),
           ListTile(
             leading: const Icon(Icons.house_outlined),

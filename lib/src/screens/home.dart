@@ -51,9 +51,11 @@ class HomeContent extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const Text(
-              'This is a sample page with some weird sample and debugging content.',
+              'Tähän tulee esimerkiksi organisaatiokohtaista sisältöä, joka voi myös muuttua päivittäin.',
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 200),
+            const Divider(),
             ElevatedButton(
               onPressed: () {
                 getAuth(context).signOut();

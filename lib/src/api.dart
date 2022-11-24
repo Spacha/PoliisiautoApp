@@ -130,7 +130,13 @@ class PoliisiautoApi {
 
   Future<List<Report>> fetchReports(
       {String order = 'DESC', String? route}) async {
-    var request = await buildAuthenticatedRequest('GET', route ?? 'reports');
+    http.MultipartRequest request;
+    // FIXME: Throws if logged out from '/reports' as teacher
+    try {
+      request = await buildAuthenticatedRequest('GET', route ?? 'reports');
+    } catch (e) {
+      return [];
+    }
     http.StreamedResponse response = await request.send();
 
     if (_isOk(response)) {

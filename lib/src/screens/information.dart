@@ -127,7 +127,9 @@ class _InformationContentState extends State<InformationContent> {
             future: futureOrganization,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text('Testiorganisaatio: ${snapshot.data!.name}');
+                return Text(
+                    textAlign: TextAlign.center,
+                    'Testiorganisaatio: ${snapshot.data!.name}\n${snapshot.data!.completeAddress}');
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }

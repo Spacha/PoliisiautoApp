@@ -35,7 +35,12 @@ class Report {
   final DateTime? openedAt;
   final DateTime? closedAt;
 
+  ///
   final String? reporterName;
+  final String? bullyName;
+  final String? bulliedName;
+
+  ///
 
   const Report({
     required this.description,
@@ -49,7 +54,13 @@ class Report {
     this.handlerId,
     this.bullyId,
     this.bulliedId,
+
+    ///
     this.reporterName,
+    this.bullyName,
+    this.bulliedName,
+
+    ///
   });
 
   factory Report.fromJson(Map<String, dynamic> json) {
@@ -65,7 +76,13 @@ class Report {
       handlerId: json['handler_id'],
       bullyId: json['bully_id'],
       bulliedId: json['bullied_id'],
+
+      ///
       reporterName: json['reporter_name'],
+      bullyName: json['bully_name'],
+      bulliedName: json['bullied_name'],
+
+      ///
     );
   }
 
