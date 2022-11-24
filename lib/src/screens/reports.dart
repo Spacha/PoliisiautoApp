@@ -6,6 +6,7 @@ import '../routing.dart';
 import '../widgets/drawer.dart';
 import '../widgets/report_list.dart';
 import '../auth.dart';
+import 'new_report.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({
@@ -20,6 +21,7 @@ class _ReportsScreenState extends State<ReportsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   RouteState get _routeState => RouteStateScope.of(context);
+  //bool _listenerAdded = false;
 
   @override
   void initState() {
@@ -45,59 +47,73 @@ class _ReportsScreenState extends State<ReportsScreen>
   @override
   void dispose() {
     _tabController.removeListener(_handleTabIndexChanged);
+    // if (_listenerAdded) {
+    //   _routeState.removeListener(_kakka);
+    // }
     super.dispose();
   }
 
+  //void _kakka() {}
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Reports'),
-          bottom: isTeacher(context)
-              ? TabBar(
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(
-                      text: 'Popular',
-                      icon: Icon(Icons.people),
-                    ),
-                    Tab(
-                      text: 'New',
-                      icon: Icon(Icons.new_releases),
-                    ),
-                    Tab(
-                      text: 'All',
-                      icon: Icon(Icons.list),
-                    ),
-                  ],
-                )
-              : null,
-        ),
-        drawer: const PoliisiautoDrawer(),
-        body: isTeacher(context)
-            ? TabBarView(
+  Widget build(BuildContext context) {
+    // if (!_listenerAdded) {
+    //   _routeState.addListener(_kakka);
+    //   setState(() => {_listenerAdded = true});
+    // }
+    //final routeState = RouteStateScope.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reports'),
+        bottom: isTeacher(context)
+            ? TabBar(
                 controller: _tabController,
-                children: [
-                  ReportList(
-                    category: 'category 1',
-                    onTap: _handleReportTapped,
+                tabs: const [
+                  Tab(
+                    text: 'Popular',
+                    icon: Icon(Icons.people),
                   ),
-                  ReportList(
-                    category: 'category 2',
-                    onTap: _handleReportTapped,
+                  Tab(
+                    text: 'New',
+                    icon: Icon(Icons.new_releases),
                   ),
-                  ReportList(
-                    category: 'category 3',
-                    onTap: _handleReportTapped,
-                  )
+                  Tab(
+                    text: 'All',
+                    icon: Icon(Icons.list),
+                  ),
                 ],
               )
-            : ReportList(category: 'all', onTap: _handleReportTapped),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _routeState.go('/reports/new'),
-          tooltip: 'New report',
-          child: const Icon(Icons.add),
-        ),
-      );
+            : null,
+      ),
+      drawer: const PoliisiautoDrawer(),
+      body: isTeacher(context)
+          ? TabBarView(
+              controller: _tabController,
+              children: [
+                ReportList(
+                  category: 'category 1',
+                  onTap: _handleReportTapped,
+                ),
+                ReportList(
+                  category: 'category 2',
+                  onTap: _handleReportTapped,
+                ),
+                ReportList(
+                  category: 'category 3',
+                  onTap: _handleReportTapped,
+                )
+              ],
+            )
+          : ReportList(category: 'all', onTap: _handleReportTapped),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _routeState.go('/reports/new'),
+        //onPressed: () => Navigator.pushNamed(context, '/reports/new'),
+        //onPressed: () => openNewReportPage(context),
+        tooltip: 'New report',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
 
   void _handleReportTapped(Report report) {
     _routeState.go('/reports/${report.id}');

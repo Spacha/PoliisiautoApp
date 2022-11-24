@@ -148,7 +148,7 @@ class NewReportScreen extends StatefulWidget {
   State<NewReportScreen> createState() => _NewReportScreenState();
 }
 
-class _NewReportScreenState extends State<NewReportScreen> {
+class _NewReportScreenState extends State<NewReportScreen> with ChangeNotifier {
   final _formKey = GlobalKey<FormState>();
 
   /// Form fields
@@ -223,14 +223,14 @@ class _NewReportScreenState extends State<NewReportScreen> {
                 children: [
                   buildDescriptionField(context, _descriptionController),
                   buildBullyField(context, _studentOptions, _bullyController),
-                  buildAssigneeField(context, _teacherOptions, (User? option) {
-                    setState(() => _selectedAssignee = option);
-                  }),
                   buildBulliedWasNotMeField(context, _bulliedWasNotMe, (state) {
                     setState(() => _bulliedWasNotMe = state ?? false);
                   }),
                   buildBulliedField(context, _studentOptions,
                       _bulliedController, _bulliedWasNotMe),
+                  buildAssigneeField(context, _teacherOptions, (User? option) {
+                    setState(() => _selectedAssignee = option);
+                  }),
                   buildAnonymousField(context, _isAnonymous, (state) {
                     setState(() => _isAnonymous = state ?? false);
                   }),
@@ -268,7 +268,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
     if (!_bulliedWasNotMe) bulliedId = authUserId;
 
     await api
-        .storeReport(Report(
+        .sendNewReport(Report(
       description: _descriptionController.value.text,
       reporterId: authUserId,
       bullyId: bullyId > 0 ? bullyId : null,
@@ -277,9 +277,10 @@ class _NewReportScreenState extends State<NewReportScreen> {
       isAnonymous: _isAnonymous,
     ))
         .then((success) {
-      // if (success) {
-      //   RouteStateScope.of(context).go('/reports/sent');
-      // }
+      if (success) {
+        //RouteStateScope.of(context).go('/reports/sent');
+        Navigator.pop(context, 'report_created');
+      }
     });
   }
 }

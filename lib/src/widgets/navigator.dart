@@ -7,7 +7,10 @@ import '../screens/sign_in.dart';
 import '../screens/new_report.dart';
 import '../screens/report_details.dart';
 import 'fade_transition_page.dart';
-import 'scaffold.dart';
+//import 'scaffold.dart';
+import '../screens/home.dart';
+import '../screens/reports.dart';
+import '../screens/information.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
 /// on the `routeState` that was parsed by the TemplateRouteParser.
@@ -26,24 +29,24 @@ class PoliisiautoNavigator extends StatefulWidget {
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _splashKey = const ValueKey('Splash');
   final _signInKey = const ValueKey('Sign in');
-  final _scaffoldKey = const ValueKey('App scaffold');
-  final _reportNewKey = const ValueKey('New report');
+  //final _scaffoldKey = const ValueKey('App scaffold');
+  final _newReportKey = const ValueKey('New report');
   final _reportDetailsKey = const ValueKey('Report details');
 
   @override
   Widget build(BuildContext context) {
     final routeState = RouteStateScope.of(context);
+    final currentRoute = routeState.route;
     //final authState = PoliisiautoAuthScope.of(context);
-    final pathTemplate = routeState.route.pathTemplate;
+    final pathTemplate = currentRoute.pathTemplate;
 
     bool creatingNewReport = false;
     int? selectedReportId;
     if (pathTemplate == '/reports/:reportId') {
-      if (routeState.route.parameters['reportId'] == 'new') {
+      if (currentRoute.parameters['reportId'] == 'new') {
         creatingNewReport = true;
       } else {
-        selectedReportId =
-            int.tryParse(routeState.route.parameters['reportId']!);
+        selectedReportId = int.tryParse(currentRoute.parameters['reportId']!);
       }
     }
 
@@ -52,40 +55,67 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
     return Navigator(
       key: widget.navigatorKey,
       onPopPage: (route, dynamic result) {
-        // When a page that is stacked on top of the scaffold is popped, display
-        // the /books or /authors tab in BookstoreScaffold.
+        // refresh the reports after successful report creation
         // if (route.settings is Page &&
-        //     (route.settings as Page).key == _reportDetailsKey) {
-        //   routeState.go('/reports/popular');
+        //     (route.settings as Page).key == _newReportKey &&
+        //     result == 'report_created') {
+        //   routeState.go('/reports');
         // }
-        // if (route.settings is Page &&
-        //     (route.settings as Page).key == _authorDetailsKey) {
-        //   routeState.go('/authors');
-        // }
+
+        var page = route.settings is Page ? route.settings as Page : null;
+
+        if (page != null && page.key == _newReportKey) {}
+        print('$route did pop with result: $result');
+
         return route.didPop(result);
       },
       pages: [
-        if (routeState.route.pathTemplate == '/splash')
-          // Display the landing screen for a few seconds.
+        //////////////////////////////////////////////////////////////////////
+        // Display the special screens
+        //////////////////////////////////////////////////////////////////////
+        if (pathTemplate == '/splash')
+          // Display the splash screen
           FadeTransitionPage<void>(
             key: _splashKey,
-            child: SplashScreen(
-              delaySeconds: 3,
-              redirectCallback: () => routeState.go('/signin'),
-            ),
+            child: const SplashScreen(duration: 3),
           )
-        else if (routeState.route.pathTemplate == '/signin')
+        else if (pathTemplate == '/signin')
           // Display the sign in screen.
           FadeTransitionPage<void>(
             key: _signInKey,
             child: const SignInScreen(),
           )
         else ...[
+          //////////////////////////////////////////////////////////////////////
           // Display the app
-          FadeTransitionPage<void>(
-            key: _scaffoldKey,
-            child: const PoliisiautoScaffold(),
-          ),
+          //////////////////////////////////////////////////////////////////////
+          if (pathTemplate.startsWith('/home') || pathTemplate == '/')
+            const FadeTransitionPage<void>(
+              key: ValueKey('home'),
+              child: HomeScreen(),
+            )
+          else if (pathTemplate.startsWith('/reports'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('reports'),
+              child: ReportsScreen(),
+            )
+          else if (pathTemplate.startsWith('/information'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('information'),
+              child: InformationScreen(),
+            )
+          // Avoid building a Navigator with an empty `pages` list when the
+          // RouteState is set to an unexpected path, such as /signin.
+          //
+          // Since RouteStateScope is an InheritedNotifier, any change to the
+          // route will result in a call to this build method, even though this
+          // widget isn't built when those routes are active.
+          else
+            FadeTransitionPage<void>(
+              key: const ValueKey('empty'),
+              child: Container(),
+            ),
+          //////////////////////////////////////////////////////////////////////
 
           // Add an additional page to the stack if the user is viewing a report
 
@@ -99,7 +129,7 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             )
           else if (creatingNewReport)
             MaterialPage<void>(
-              key: _reportNewKey,
+              key: _newReportKey,
               child: const NewReportScreen(),
             )
         ],

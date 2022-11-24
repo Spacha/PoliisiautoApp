@@ -1,15 +1,14 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
+import 'package:poliisiauto/src/routing.dart';
 
 class SplashScreen extends StatefulWidget {
-  final int delaySeconds;
-  final VoidCallback redirectCallback;
+  final int duration;
 
   const SplashScreen({
     super.key,
-    required this.delaySeconds,
-    required this.redirectCallback,
+    required this.duration,
   });
 
   @override
@@ -21,8 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds: widget.delaySeconds)).then((val) {
-      widget.redirectCallback();
+    Future.delayed(Duration(seconds: widget.duration)).then((val) {
+      RouteStateScope.of(context).go('/signin');
     });
   }
 
