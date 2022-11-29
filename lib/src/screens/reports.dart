@@ -83,36 +83,27 @@ class _ReportsScreenState extends State<ReportsScreen>
           ? TabBarView(
               controller: _tabController,
               children: [
-                ReportList(
-                  dataDirtyCounter: _dataDirtyCounter,
-                  category: 'assigned',
-                  onTap: (report) => _openReportDetailsScreen(report, context),
-                ),
-                ReportList(
-                  dataDirtyCounter: _dataDirtyCounter,
-                  category: 'created',
-                  onTap: (report) => _openReportDetailsScreen(report, context),
-                ),
-                ReportList(
-                  dataDirtyCounter: _dataDirtyCounter,
-                  category: 'all',
-                  onTap: (report) => _openReportDetailsScreen(report, context),
-                )
+                buildReportListWidget('teacher.assigned', showIds: true),
+                buildReportListWidget('teacher.created', showIds: true),
+                buildReportListWidget('all', showIds: true),
               ],
             )
-          : ReportList(
-              dataDirtyCounter: _dataDirtyCounter,
-              category: 'all',
-              onTap: (report) => _openReportDetailsScreen(report, context)),
+          : buildReportListWidget('all'),
       floatingActionButton: FloatingActionButton(
-        //onPressed: () => _routeState.go('/reports/new'),
-        //onPressed: () => Navigator.pushNamed(context, '/reports/new'),
         onPressed: () => _openNewReportScreen(context),
-        tooltip: 'New report',
+        tooltip: 'Tee ilmoitus',
         child: const Icon(Icons.add),
       ),
     );
   }
+
+  ReportList buildReportListWidget(String category, {bool showIds = false}) =>
+      ReportList(
+        dataDirtyCounter: _dataDirtyCounter,
+        showIds: showIds,
+        category: category,
+        onTap: (report) => _openReportDetailsScreen(report, context),
+      );
 
   void _openNewReportScreen(BuildContext context) async {
     return Navigator.of(context)
