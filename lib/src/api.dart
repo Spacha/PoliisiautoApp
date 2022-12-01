@@ -21,6 +21,10 @@ class PoliisiautoApi {
   /// API endpoints
   //////////////////////////////////////////////////////////////////////////////
 
+  //////////////////////////////////////////////////////////////////////////////
+  /// Auth endpoints
+  //////////////////////////////////////////////////////////////////////////////
+
   Future<String?> sendLogin(Credentials credentials) async {
     var request = await buildRequest('POST', 'login');
 
@@ -77,6 +81,10 @@ class PoliisiautoApi {
         'Failed to load authenticated user: $response.reasonPhrase');
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  /// Organization endpoints
+  //////////////////////////////////////////////////////////////////////////////
+
   Future<Organization> fetchOrganization(int organizationId) async {
     var request =
         await buildAuthenticatedRequest('GET', 'organizations/$organizationId');
@@ -127,6 +135,10 @@ class PoliisiautoApi {
 
     throw Exception('Request failed: ${await response.stream.bytesToString()}');
   }
+
+  //////////////////////////////////////////////////////////////////////////////
+  /// Report endpoints
+  //////////////////////////////////////////////////////////////////////////////
 
   Future<List<Report>> fetchReports(
       {String order = 'DESC', String? route}) async {
@@ -194,8 +206,64 @@ class PoliisiautoApi {
   }
 
   Future<bool> deleteReport(int id) async {
-    //print('$report');
     var request = await buildAuthenticatedRequest('DELETE', 'reports/$id');
+
+    http.StreamedResponse response = await request.send();
+
+    return _isOk(response);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  /// Message endpoints
+  //////////////////////////////////////////////////////////////////////////////
+
+  Future<List<Message>> fetchMessages(int reportId) async {
+    http.MultipartRequest request;
+    request =
+        await buildAuthenticatedRequest('GET', 'reports/$reportId/messages');
+    http.StreamedResponse response = await request.send();
+
+    if (_isOk(response)) {
+      final List<dynamic> messagesJson =
+          jsonDecode(await response.stream.bytesToString());
+
+      List<Message> messages = [];
+      for (var r in messagesJson) {
+        messages.add(Message.fromJson(r));
+      }
+
+      // order the messages by creation date
+      messages.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+
+      return messages;
+    }
+
+    throw Exception('Request failed: ${await response.stream.bytesToString()}');
+  }
+
+  Future<bool> sendNewMessage(Message message) async {
+    var request = await buildAuthenticatedRequest(
+        'POST', 'reports/${message.reportId}/messages');
+
+    request.fields.addAll({
+      'content': _stringify(message.content),
+      'is_anonymous': _stringify(message.isAnonymous),
+      'report_id': _stringify(message.reportId),
+      'author_id': _stringify(message.authorId)
+    });
+
+    http.StreamedResponse response = await request.send();
+
+    // DEBUG: Print response content if the request fails
+    if (!_isOk(response)) _dbgPrintResponse(response);
+
+    return _isOk(response);
+  }
+
+  Future<bool> deleteMessage(int id) async {
+    //print('$report');
+    var request =
+        await buildAuthenticatedRequest('DELETE', 'report-messages/$id');
 
     http.StreamedResponse response = await request.send();
 

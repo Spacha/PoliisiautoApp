@@ -34,8 +34,6 @@ class _ReportsScreenState extends State<ReportsScreen>
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
-
     final newPath = _routeState.route.pathTemplate;
     if (newPath.startsWith('/reports/assigned-to-me')) {
       _tabController.index = 0;
@@ -44,6 +42,8 @@ class _ReportsScreenState extends State<ReportsScreen>
     } else if (newPath == '/reports/all') {
       _tabController.index = 2;
     }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -111,6 +111,9 @@ class _ReportsScreenState extends State<ReportsScreen>
       builder: (context) => const NewReportScreen(),
     ))
         .then((result) {
+      // After the 'new report' screen is closed, check the return value which tells if
+      // a new report was created, which would mean that we'd have to reload the report list
+      // so we should update the counter which will trigger a refresh.
       if (result != null) {
         setState(() {
           _dataDirtyCounter++;
@@ -135,21 +138,17 @@ class _ReportsScreenState extends State<ReportsScreen>
     });
   }
 
-  void _handleReportTapped(Report report) {
-    _routeState.go('/reports/${report.id}');
-  }
-
   void _handleTabIndexChanged() {
     switch (_tabController.index) {
       case 1:
-        _routeState.go('/reports/recent');
+        _routeState.go('/reports/rassigned-to-me');
         break;
       case 2:
-        _routeState.go('/reports/all');
+        _routeState.go('/reports/created-by-me');
         break;
       case 0:
       default:
-        _routeState.go('/reports/popular');
+        _routeState.go('/reports/all');
         break;
     }
   }
