@@ -5,6 +5,7 @@ import '../auth.dart';
 import '../api.dart';
 import '../data.dart';
 import '../screens/new_message.dart';
+import '../widgets/empty_list.dart';
 
 class ReportDetailsScreen extends StatefulWidget {
   final int reportId;
@@ -39,6 +40,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Ilmoituksen tiedot'), actions: [
+        // TODO: Hide if the report is not created by the current user!
         IconButton(
           onPressed: () async {
             bool sure = await _confirmDelete(
@@ -74,10 +76,10 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                   const Divider(color: Color.fromARGB(255, 193, 193, 193)),
                   _buildField('Viestit',
                       child: _buildMessagesWidget(_futureMessages)),
-                  const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+                  //const Divider(color: Color.fromARGB(255, 193, 193, 193)),
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 24),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
@@ -160,7 +162,9 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
               return snapshot.data!.isEmpty
-                  ? Text('tyhjä') //TODO!
+                  ? const SizedBox(
+                      width: double.infinity,
+                      child: EmptyListWidget('Ei viestejä', showIcon: false))
                   : Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
