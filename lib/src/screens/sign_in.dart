@@ -110,18 +110,42 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              _emailController.text = 'miika@example.com';
-                              _passwordController.text = 'kikkakokkeli';
+                              _emailController.text = 'olli.o@esimerkki.fi';
+                              _passwordController.text = 'salasana';
                             },
-                            child: const Text('Autofill (student)',
+                            child: const Text('Olli O. (opettaja)',
                                 style: TextStyle(color: Colors.orange)),
                           ),
                           TextButton(
                             onPressed: () {
-                              _emailController.text = 'olli@example.com';
-                              _passwordController.text = 'kikkakokkeli';
+                              _emailController.text = 'kaisa.k@esimerkki.fi';
+                              _passwordController.text = 'salasana';
                             },
-                            child: const Text('Autofill (teacher)',
+                            child: const Text('Kaisa K. (opettaja)',
+                                style: TextStyle(color: Colors.orange)),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _emailController.text = 'kerttu.k@esimerkki.fi';
+                              _passwordController.text = 'salasana';
+                            },
+                            child: const Text('Kerttu K. (oppilas)',
+                                style: TextStyle(color: Colors.orange)),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _emailController.text = 'ville.v@esimerkki.fi';
+                              _passwordController.text = 'salasana';
+                            },
+                            child: const Text('Ville V. (oppilas)',
+                                style: TextStyle(color: Colors.orange)),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _emailController.text = 'elli.e@esimerkki.fi';
+                              _passwordController.text = 'salasana';
+                            },
+                            child: const Text('Elli E. (oppilas)',
                                 style: TextStyle(color: Colors.orange)),
                           ),
                         ],
