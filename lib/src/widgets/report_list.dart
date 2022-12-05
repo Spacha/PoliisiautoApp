@@ -68,13 +68,13 @@ class _ReportListState extends State<ReportList> {
   Future<List<Report>> _fetchReports() {
     String? route;
 
-    if (widget.category == 'teacher.assigned') {
+    if (isStudent(context)) {
+      route = 'students/${getAuth(context).user!.id}/reports';
+    } else if (widget.category == 'teacher.assigned') {
       // get reports created by currently logged in user - must be a teacher
-      assert(isTeacher(context));
       route = 'teachers/${getAuth(context).user!.id}/assigned-reports';
     } else if (widget.category == 'teacher.created') {
       // get reports assigned to currently logged in user - must be a teacher
-      assert(isTeacher(context));
       route = 'teachers/${getAuth(context).user!.id}/reports';
     }
 

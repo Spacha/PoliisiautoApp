@@ -99,31 +99,36 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ));
                             }
                           },
-                          child: const Text('Sign in'),
+                          child: const Text('Kirjaudu'),
                         ),
                       ),
 
                       /// Debug:
                       const Divider(),
                       Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                _emailController.text = 'olli.o@esimerkki.fi';
+                                _passwordController.text = 'salasana';
+                              },
+                              child: const Text('Olli O. (opettaja)',
+                                  style: TextStyle(color: Colors.orange)),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                _emailController.text = 'kaisa.k@esimerkki.fi';
+                                _passwordController.text = 'salasana';
+                              },
+                              child: const Text('Kaisa K. (opettaja)',
+                                  style: TextStyle(color: Colors.orange)),
+                            ),
+                          ]),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              _emailController.text = 'olli.o@esimerkki.fi';
-                              _passwordController.text = 'salasana';
-                            },
-                            child: const Text('Olli O. (opettaja)',
-                                style: TextStyle(color: Colors.orange)),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              _emailController.text = 'kaisa.k@esimerkki.fi';
-                              _passwordController.text = 'salasana';
-                            },
-                            child: const Text('Kaisa K. (opettaja)',
-                                style: TextStyle(color: Colors.orange)),
-                          ),
+                          const Divider(),
                           TextButton(
                             onPressed: () {
                               _emailController.text = 'kerttu.k@esimerkki.fi';
@@ -140,6 +145,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: const Text('Ville V. (oppilas)',
                                 style: TextStyle(color: Colors.orange)),
                           ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           TextButton(
                             onPressed: () {
                               _emailController.text = 'elli.e@esimerkki.fi';

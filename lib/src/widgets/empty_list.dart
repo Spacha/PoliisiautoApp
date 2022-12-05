@@ -9,7 +9,8 @@ class EmptyListWidget extends StatelessWidget {
   const EmptyListWidget(this.message, {super.key, this.showIcon = true});
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) => Center(
+          child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           showIcon
@@ -23,5 +24,5 @@ class EmptyListWidget extends StatelessWidget {
           Text(message,
               style: TextStyle(fontSize: 16, color: Colors.grey.shade500)),
         ],
-      );
+      ));
 }
