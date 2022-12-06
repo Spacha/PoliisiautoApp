@@ -39,7 +39,9 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ilmoituksen tiedot'), actions: [
+      appBar: AppBar(title: const Text('Ilmoituksen tiedot'), 
+        centerTitle : true,
+        backgroundColor: const Color.fromARGB(255, 112, 162, 237),actions: [
         // TODO: Hide if the report is not created by the current user!
         IconButton(
           onPressed: () async {
@@ -87,6 +89,9 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                             context, snapshot.data!.isAnonymous),
                         icon: const Icon(Icons.message_outlined),
                         label: const Text('Lähetä viesti'),
+                        style: ElevatedButton.styleFrom(
+                        primary: const Color.fromARGB(255, 112, 162, 237),
+                      ),
                       ),
                     ),
                   )
