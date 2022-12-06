@@ -12,7 +12,7 @@ class Organization {
   final String name;
   final String streetAddress;
   final String city;
-  final int zip;
+  final String zip;
 
   const Organization({
     required this.id,
