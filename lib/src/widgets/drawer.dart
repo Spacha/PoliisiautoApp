@@ -18,65 +18,104 @@ class PoliisiautoDrawer extends StatelessWidget {
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
-      child: ListView(
+      child: Container(
+        color: const Color.fromARGB(255, 112, 162, 237),
+        child: ListView(
         // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.blue,
+        
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 32, 112, 232),
+              ),
+              child: Text('Hei ${getAuth(context).user!.name}!',
+                  style: const TextStyle(color: Colors.white),
+                  textScaleFactor: 1.5,
+                  textAlign: TextAlign.center,
+                  ),
             ),
-            child: Text('Hei ${getAuth(context).user!.name}!',
-                style: const TextStyle(color: Colors.white)),
-          ),
-          ListTile(
-            leading: const Icon(Icons.house_outlined),
-            title: const Text('Etusivu'),
-            tileColor:
-                (selectedIndex == 0) ? tileHighlightColor : Colors.transparent,
-            onTap: () {
-              // Update the state of the app
-              routeState.go('/home');
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.speaker_notes_outlined),
-            title: const Text('Ilmoitukset'),
-            tileColor:
-                (selectedIndex == 1) ? tileHighlightColor : Colors.transparent,
-            onTap: () {
-              // Update the state of the app
-              routeState.go('/reports');
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.info_outlined),
-            title: const Text('Apusivut'),
-            tileColor:
-                (selectedIndex == 2) ? tileHighlightColor : Colors.transparent,
-            onTap: () {
-              // Update the state of the app
-              routeState.go('/information');
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-          const Divider(color: Color.fromARGB(255, 193, 193, 193)),
-          ListTile(
-            leading: const Icon(Icons.logout_outlined),
-            title: const Text('Kirjaudu ulos'),
-            onTap: () {
-              // Update the state of the app
-              getAuth(context).signOut();
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            ListTile(
+              leading: const Icon(Icons.house_outlined),
+              title: const Text('Etusivu'),
+              iconColor: Colors.white,
+              textColor: Colors.white,
+              tileColor:
+                  (selectedIndex == 0) ? tileHighlightColor : Colors.transparent,
+              onTap: () {
+                // Update the state of the app
+                routeState.go('/home');
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+                leading: const Icon(Icons.border_color),
+                title: const Text('Tee uusi ilmoitus'),
+                iconColor: Colors.white,
+                textColor: Colors.white,
+                onTap: () {
+                  // Update the state of the app
+                  routeState.go('/new_report');
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),
+            ListTile(
+              leading: const Icon(Icons.speaker_notes_outlined),
+              title: const Text('Minun ilmoitukset'),
+              iconColor: Colors.white,
+              textColor: Colors.white,
+              tileColor:
+                  (selectedIndex == 1) ? tileHighlightColor : Colors.transparent,
+              onTap: () {
+                // Update the state of the app
+                routeState.go('/reports');
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Asetukset'),
+              iconColor: Colors.white,
+              textColor: Colors.white,
+              onTap: () {
+                // Update the state of the app
+                routeState.go('/settings');
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info_outlined),
+              title: const Text('Tietoa sovelluksesta'),
+              iconColor: Colors.white,
+              textColor: Colors.white,
+              tileColor:
+                  (selectedIndex == 2) ? tileHighlightColor : Colors.transparent,
+              onTap: () {
+                // Update the state of the app
+                routeState.go('/information');
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            const Divider(color: Color.fromARGB(255, 193, 193, 193)),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Kirjaudu ulos'),
+              iconColor: Colors.white,
+              textColor: Colors.white,
+              onTap: () {
+                // Update the state of the app
+                getAuth(context).signOut();
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

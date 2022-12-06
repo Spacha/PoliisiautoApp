@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/auth.dart';
+import 'package:poliisiauto/src/routing/route_state.dart';
 import '../data.dart';
 import '../api.dart';
 
@@ -183,9 +184,19 @@ class _NewReportScreenState extends State<NewReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Tee ilmoitus')),
-        resizeToAvoidBottomInset: false,
-        body: FutureBuilder<Map<String, List<User>>>(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+            // Use the Navigator to go back to the previous route
+              RouteStateScope.of(context).go('/home');
+            },
+          ),
+          title: const Text('Tee ilmoitus'),
+          centerTitle: true,
+          ),
+          resizeToAvoidBottomInset: false,
+          body: FutureBuilder<Map<String, List<User>>>(
             future: _options,
             builder: ((context, snapshot) {
               if (snapshot.hasData) {

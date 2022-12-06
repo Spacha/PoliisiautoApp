@@ -83,6 +83,9 @@ class HomeContent extends StatelessWidget {
           onPressed: () {
             getAuth(context).signOut();
           },
+          style: ElevatedButton.styleFrom(
+            primary: const Color.fromARGB(255, 112, 162, 237),
+          ),
           child: const Text('Kirjaudu ulos'),
         ),
         // Make a floating SOS button on the right bottom corner:

@@ -11,6 +11,8 @@ import '../screens/reports.dart';
 import '../screens/information.dart';
 import '../screens/sos_confirmation.dart';
 import '../screens/sending_sos.dart';
+import '../screens/new_report.dart';
+import '../screens/settings.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
 /// on the `routeState` that was parsed by the TemplateRouteParser.
@@ -94,6 +96,16 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             const FadeTransitionPage<void>(
               key: ValueKey('sending SOS'),
               child: SendingSOSScreen(),
+            )
+          else if (pathTemplate.startsWith('/new_report'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('new report'),
+              child: NewReportScreen(),
+            )
+          else if (pathTemplate.startsWith('/settings'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('settings'),
+              child: SettingsScreen(),
             )
           // Avoid building a Navigator with an empty `pages` list when the
           // RouteState is set to an unexpected path, such as /signin.
