@@ -193,7 +193,8 @@ class _NewReportScreenState extends State<NewReportScreen> {
             },
           ),
           title: const Text('Tee ilmoitus'),
-          centerTitle: true,
+          centerTitle : true,
+          backgroundColor: const Color.fromARGB(255, 112, 162, 237),
           ),
           resizeToAvoidBottomInset: false,
           body: FutureBuilder<Map<String, List<User>>>(

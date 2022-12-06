@@ -63,7 +63,11 @@ class InformationScreen extends StatefulWidget {
 class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: const Text('Tietoa sovelluksesta')),
+      appBar: AppBar(
+        title: const Text('Tietoa sovelluksesta'),
+        centerTitle : true,
+        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
+        ),
       drawer: const PoliisiautoDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(

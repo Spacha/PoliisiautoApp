@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../auth.dart';
 import '../widgets/drawer.dart';
-import '../routing.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -53,6 +52,9 @@ class SettingsContent extends StatelessWidget {
               onPressed: () {
                 PoliisiautoAuthScope.of(context).signOut();
               },
+              style: ElevatedButton.styleFrom(
+              primary: const Color.fromARGB(255, 112, 162, 237),
+              ),
               child: const Text('Kirjaudu ulos'),
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
