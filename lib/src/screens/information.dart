@@ -34,17 +34,22 @@ List<Widget> buildCreditWidgets() {
       );
   return [
     const SizedBox(height: 10),
-    boldText('Thesis worker summer 2021 - 2022'),
-    normText('Moilanen Tapio (concept videos)'),
+    boldText('Software project -kurssi syksy 2022'),
+    normText('Miika Sikala (projektimanageri)'),
+    normText('Lauri Klemettilä'),
+    normText('Essi Passoja'),
     const SizedBox(height: 10),
-    boldText('Research and Development Project course group spring 2021'),
-    normText('Pesonen Atte (project manager)'),
+    boldText('Thesis worker kesä 2021 - 2022'),
+    normText('Moilanen Tapio (konseptivideot)'),
+    const SizedBox(height: 10),
+    boldText('Research and Development Project -kurssiryhmä kevät 2021'),
+    normText('Pesonen Atte (projektimanageri)'),
     normText('Ansamaa Matti'),
     normText('Bui Le Ba Vuong'),
     normText('Salmelin Silja'),
     normText('Kärkäs Petteri'),
     const SizedBox(height: 10),
-    boldText('Jääli, Kaakkuri & Oulu International School (OIS) autumn 2020'),
+    boldText('Jääli, Kaakkuri & Oulu International School (OIS) syksy 2020'),
   ];
 }
 
@@ -58,7 +63,7 @@ class InformationScreen extends StatefulWidget {
 class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: const Text('Apusivut')),
+      appBar: AppBar(title: const Text('Tietoa sovelluksesta')),
       drawer: const PoliisiautoDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -103,7 +108,7 @@ class _InformationContentState extends State<InformationContent> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
-          TextButton(
+          /* TextButton(
             onPressed: () => showDialog<String>(
               context: context,
               builder: (context) => AlertDialog(
@@ -122,7 +127,7 @@ class _InformationContentState extends State<InformationContent> {
               ),
             ),
             child: const Text('Ponnahdusikkuna'),
-          ),
+          ),*/
           FutureBuilder<Organization>(
             future: futureOrganization,
             builder: (context, snapshot) {
