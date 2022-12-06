@@ -5,11 +5,12 @@ import 'package:poliisiauto/src/screens/forgot_password.dart';
 import '../routing.dart';
 import '../screens/splash.dart';
 import '../screens/sign_in.dart';
-import '../screens/forgot_password.dart';
 import 'fade_transition_page.dart';
 import '../screens/home.dart';
 import '../screens/reports.dart';
 import '../screens/information.dart';
+import '../screens/sos_confirmation.dart';
+import '../screens/sending_sos.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
 /// on the `routeState` that was parsed by the TemplateRouteParser.
@@ -83,6 +84,16 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             const FadeTransitionPage<void>(
               key: ValueKey('information'),
               child: InformationScreen(),
+            )
+          else if (pathTemplate.startsWith('/sos_confirmation'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('SOS confirmation'),
+              child: SOSConfirmationScreen(),
+            )
+          else if (pathTemplate.startsWith('/sending_sos'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('sending SOS'),
+              child: SendingSOSScreen(),
             )
           // Avoid building a Navigator with an empty `pages` list when the
           // RouteState is set to an unexpected path, such as /signin.

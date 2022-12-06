@@ -27,6 +27,8 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
         '/signin',
         '/forgot_password',
         '/home',
+        '/sos_confirmation',
+        '/sending_sos',
         '/reports',
         '/reports/new',
         '/reports/assigned-to-me',
