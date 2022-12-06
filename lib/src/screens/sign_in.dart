@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         controller: _passwordController,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(0),
                         child: TextButton(
                           onPressed: () async {
                             if (!_formKey.currentState!.validate()) {
@@ -100,6 +100,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                           },
                           child: const Text('Kirjaudu'),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: TextButton(
+                          onPressed: () async {
+                            RouteStateScope.of(context).go('/forgot_password');
+                          },
+                          child: const Text('Unohtuiko salasana?'),
                         ),
                       ),
 
@@ -159,7 +168,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 style: TextStyle(color: Colors.orange)),
                           ),
                         ],
-                      )
+                      ) // Debug ends
                     ],
                   )),
             ),

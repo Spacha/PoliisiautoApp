@@ -21,14 +21,11 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
 
   @override
   void initState() {
-    // initialize the global API accessor
-    // api = PoliisiautoApi(host: 'http://192.168.56.56', version: 'v1');
-
-    /// Configure the parser with all of the app's allowed path templates.
     _routeParser = TemplateRouteParser(
       allowedPaths: [
         '/splash',
         '/signin',
+        '/forgot_password',
         '/home',
         '/reports',
         '/reports/new',
@@ -85,6 +82,7 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
     final signedIn = _auth.signedIn;
     final splashRoute = ParsedRoute('/splash', '/splash', {}, {});
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
+    final forgotPasswordRoute = ParsedRoute('/forgot_password', '/forgot_password', {}, {});
     final homeRoute = ParsedRoute('/home', '/home', {}, {});
 
     // Flow paths:
@@ -100,7 +98,7 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
     if (!signedIn) {
       // If the user IS NOT signed in...
       // ...and not on sign-in page or splash screen -> redirect there
-      if (from != signInRoute && from != splashRoute) {
+      if (from != signInRoute && from != splashRoute && from != forgotPasswordRoute) {
         return signInRoute;
       }
 
