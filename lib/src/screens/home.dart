@@ -83,7 +83,6 @@ class HomeContent extends StatelessWidget {
                 width: 100,
               ),
             ),
-
             Text(
               'Tervetuloa, ${getAuth(context).user!.name}!',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -94,31 +93,13 @@ class HomeContent extends StatelessWidget {
             ),
             const SizedBox(height: 70),
             const Divider(),
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: const Icon(Icons.logout_outlined),
               onPressed: () {
-                getAuth(context).signOut();
+                PoliisiautoAuthScope.of(context).signOut();
               },
-              child: const Text('Kirjaudu ulos'),
+              label: const Text('Kirjaudu ulos'),
             ),
-            // Make a floating SOS button on the right bottom corner:
-            /*Padding(padding: const EdgeInsets.only(top: 50),
-          child: Align(
-          alignment: const Alignment(0.75, 1.0), 
-          child: FloatingActionButton(
-            onPressed: () {RouteStateScope.of(context).go('/sos_confirmation');},
-            backgroundColor: const Color.fromARGB(255, 158, 29, 20),
-            heroTag: null,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            tooltip: 'Lähetä SOS ilmoitus lähellä oleville aikuisille.',
-            enableFeedback: true,
-            autofocus: true,
-            focusNode: FocusNode(),
-            child: const Text('SOS'),
-          ),
-        ),
-      ),*/
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
         ],
       );

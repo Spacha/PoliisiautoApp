@@ -45,11 +45,12 @@ class SettingsContent extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const Text('Ei vielä implementoitu.'),
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: const Icon(Icons.logout_outlined),
               onPressed: () {
                 PoliisiautoAuthScope.of(context).signOut();
               },
-              child: const Text('Kirjaudu ulos'),
+              label: const Text('Kirjaudu ulos'),
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),
         ],

@@ -64,9 +64,20 @@ class PoliisiautoDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-
-          // TODO: Add help screen (selectedIndex = 2)
-
+          ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: const Text('Apua'),
+            iconColor: Colors.white,
+            textColor: Colors.white,
+            tileColor:
+                (selectedIndex == 2) ? tileHighlightColor : Colors.transparent,
+            onTap: () {
+              // Update the state of the app
+              routeState.go('/help');
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
           const Divider(color: Color.fromARGB(255, 193, 193, 193)),
           ListTile(
             leading: const Icon(Icons.settings),

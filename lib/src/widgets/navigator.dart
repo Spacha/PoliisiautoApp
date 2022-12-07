@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import '../routing.dart';
+import 'fade_transition_page.dart';
 import '../screens/splash.dart';
 import '../screens/sign_in.dart';
-import 'fade_transition_page.dart';
 import '../screens/home.dart';
 import '../screens/reports.dart';
+import '../screens/help.dart';
 import '../screens/information.dart';
 import '../screens/settings.dart';
 
@@ -71,15 +72,20 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
               key: ValueKey('reports'),
               child: ReportsScreen(),
             )
-          else if (pathTemplate.startsWith('/settings'))
+          else if (pathTemplate.startsWith('/help'))
             const FadeTransitionPage<void>(
-              key: ValueKey('settings'),
-              child: SettingsScreen(),
+              key: ValueKey('help'),
+              child: HelpScreen(),
             )
           else if (pathTemplate.startsWith('/information'))
             const FadeTransitionPage<void>(
               key: ValueKey('information'),
               child: InformationScreen(),
+            )
+          else if (pathTemplate.startsWith('/settings'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('settings'),
+              child: SettingsScreen(),
             )
 
           // Avoid building a Navigator with an empty `pages` list when the

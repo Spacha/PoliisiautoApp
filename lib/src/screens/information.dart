@@ -2,30 +2,8 @@
 
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
-import '../data.dart';
-import '../api.dart';
 
 List<Widget> buildCreditWidgets() {
-  /*
-  Thesis worker summer 2021 - 2022
-  Moilanen Tapio (concept videos)
-  * Producing videos of three concepts (winners)
-
-  Research and Development Project course group spring 2021
-  * Producing descriptive videos based on children's ideas
-  * Arranging a voting based on these videos; best idea from each school
-  * Producing three concepts for the winning ideas; one idea from each school
-  * Organizing a workshop for further development of their idea in Jääli school
-  * Developing a prototype based on the workshop results for the Jääli concept
-  * Developing protypes based on the voting results for the Kaakkuri and OIS concepts
-  Pesonen Atte (project manager)
-  Ansamaa Matti
-  Bui Le Ba Vuong
-  Salmelin Silja
-  Kärkäs Petteri
-
-  * Jääli, Kaakkuri & Oulu International School (OIS) autumn 2020
-  */
   Text normText(String t) => Text(t, textAlign: TextAlign.center);
   Text boldText(String t) => Text(
         t,
@@ -80,11 +58,9 @@ class _InformationScreenState extends State<InformationScreen> {
             alignment: Alignment.topCenter,
             child: ConstrainedBox(
               constraints: const BoxConstraints(minWidth: double.infinity),
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                  child: InformationContent(),
-                ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                child: InformationContent(),
               ),
             ),
           ),
@@ -100,43 +76,27 @@ class InformationContent extends StatefulWidget {
 }
 
 class _InformationContentState extends State<InformationContent> {
-  late Future<Organization> futureOrganization;
-
-  @override
-  void initState() {
-    super.initState();
-    futureOrganization = api.fetchAuthenticatedUserOrganization();
-  }
-
   @override
   Widget build(BuildContext context) => Column(
         children: [
-          ...[
-            Text(
-              'Poliisiauto (beta)',
-              style: Theme.of(context).textTheme.headlineSmall,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Image.asset(
+              'assets/logo-text-2x.png',
+              width: 140,
             ),
-          ],
-          FutureBuilder<Organization>(
-            future: futureOrganization,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(
-                    textAlign: TextAlign.center,
-                    'Testiorganisaatio: ${snapshot.data!.name}\n${snapshot.data!.completeAddress}');
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
           ),
+          const Text(
+            'Poliisiauto on koululaisten ideoima sovellus, jonka kautta lapset voivat ilmoittaa kiusaamisesta luotettavalle aikuiselle ja aikuiset pystyvät käsittelemään kiusaamistapauksia.\nSovelluksen lähdekoodi on avoin.',
+            textAlign: TextAlign.center,
+          ),
+          const Divider(),
           const SizedBox(height: 20),
           Text(
             'Kiitokset',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
+          const SizedBox(height: 20),
           ...buildCreditWidgets()
         ],
       );
