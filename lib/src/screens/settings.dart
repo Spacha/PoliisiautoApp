@@ -15,24 +15,20 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-     appBar : AppBar (
-        title: const Text('Asetukset'),
-        centerTitle : true,
-        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
-     ),
-    drawer: const PoliisiautoDrawer(),
-    body: SafeArea(
-      child: SingleChildScrollView(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: double.infinity),
-            child: const SettingsContent(),
+        appBar: AppBar(title: const Text('Asetukset')),
+        drawer: const PoliisiautoDrawer(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: double.infinity),
+                child: const SettingsContent(),
+              ),
+            ),
           ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 class SettingsContent extends StatelessWidget {
@@ -44,7 +40,8 @@ class SettingsContent extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           ...[
-            Text('Minun asetukset',
+            Text(
+              'Minun asetukset',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const Text('Ei vielä implementoitu.'),
@@ -53,7 +50,7 @@ class SettingsContent extends StatelessWidget {
                 PoliisiautoAuthScope.of(context).signOut();
               },
               style: ElevatedButton.styleFrom(
-              primary: const Color.fromARGB(255, 112, 162, 237),
+                primary: Theme.of(context).primaryColor,
               ),
               child: const Text('Kirjaudu ulos'),
             ),

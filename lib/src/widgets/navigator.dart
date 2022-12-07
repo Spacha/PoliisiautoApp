@@ -1,7 +1,6 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
-import 'package:poliisiauto/src/screens/forgot_password.dart';
 import '../routing.dart';
 import '../screens/splash.dart';
 import '../screens/sign_in.dart';
@@ -31,7 +30,6 @@ class PoliisiautoNavigator extends StatefulWidget {
 class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
   final _splashKey = const ValueKey('Splash');
   final _signInKey = const ValueKey('Sign in');
-  final _forgotPasswordKey = const ValueKey('Forgot Password');
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +60,6 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
             key: _signInKey,
             child: const SignInScreen(),
           )
-        else if (pathTemplate == '/forgot_password')
-          // Display the forgot password screen.
-          FadeTransitionPage<void>(
-            key: _forgotPasswordKey,
-            child: const ForgotPasswordScreen(),
-          )
         else ...[
           //////////////////////////////////////////////////////////////////////
           // Display the app
@@ -87,6 +79,9 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
               key: ValueKey('information'),
               child: InformationScreen(),
             )
+
+          // TODO: Use route stack!
+
           else if (pathTemplate.startsWith('/sos_confirmation'))
             const FadeTransitionPage<void>(
               key: ValueKey('SOS confirmation'),

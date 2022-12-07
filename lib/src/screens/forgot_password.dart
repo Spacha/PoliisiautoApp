@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import '../routing.dart';
 
-
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({
     super.key,
@@ -18,35 +17,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar : AppBar (
-        title: const Text('Unohditko salasanasi?'),
-        centerTitle : true,
-        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
-        leading: InkWell(
-          onTap: () {
-            RouteStateScope.of(context).go('/frontpage');
-          },
-          child: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-        ),
-    ),
+        appBar: AppBar(title: const Text('Unohditko salasanasi?')),
         body: Center(
           child: Card(
             child: Container(
-              constraints: BoxConstraints.loose(const Size(600, 600)),
+              //constraints: BoxConstraints.loose(const Size(600, 600)),
               padding: const EdgeInsets.all(8),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset('assets/logo-2x.png',
-                    height: 200,
-                    width: 200,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Image.asset(
+                      'assets/logo-2x.png',
+                      width: 100,
+                    ),
                   ),
+                  const Text(
+                      'Ei hätää! Lähetämme sähköpostiisi linkin, jonka kautta voit antaa uuden salasanan ja kirjautua sen jälkeen uudelleen.'),
                   TextField(
-                    decoration: const InputDecoration(labelText: 'Sähköposti:'),
+                    decoration:
+                        const InputDecoration(labelText: 'Sähköpostiosoite'),
                     key: const ValueKey("forgotten e-mail"),
                     obscureText: true,
                     controller: _emailController,
@@ -55,8 +46,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     padding: const EdgeInsets.all(0),
                     child: TextButton(
                       // TODO: Not implemented yet.
-                      onPressed: () async {RouteStateScope.of(context).go('/frontpage');},
-                      child: const Text('Lähetä salasanan uusimislinkki sähköpostiin.'),
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Huomio!'),
+                          content: const Text(
+                              'Salasanan uusimista ei ole vielä toteutettu :('),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('Selvä homma'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: const Text('Lähetä linkki'),
                     ),
                   ),
                 ],

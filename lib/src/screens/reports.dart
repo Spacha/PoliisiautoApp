@@ -58,10 +58,9 @@ class _ReportsScreenState extends State<ReportsScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ilmoitukset'),
-        centerTitle : true,
-        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
         bottom: isTeacher(context)
             ? TabBar(
+                labelColor: Colors.white,
                 controller: _tabController,
                 tabs: const [
                   Tab(

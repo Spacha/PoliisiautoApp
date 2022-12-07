@@ -18,7 +18,7 @@ class PoliisiautoDrawer extends StatelessWidget {
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
-      backgroundColor: const Color.fromARGB(255, 112, 162, 237),
+      backgroundColor: Theme.of(context).primaryColor,
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,

@@ -1,9 +1,10 @@
 // Copyright 2022, Poliisiauto developers.
 
 import 'package:flutter/material.dart';
-import 'package:poliisiauto/src/auth.dart';
+import '../auth.dart';
 import '../routing.dart';
 import '../data.dart';
+import 'forgot_password.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({
@@ -105,9 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Padding(
                         padding: const EdgeInsets.all(0),
                         child: TextButton(
-                          onPressed: () async {
-                            RouteStateScope.of(context).go('/forgot_password');
-                          },
+                          onPressed: () => _openForgotPasswordScreen(context),
                           child: const Text('Unohtuiko salasana?'),
                         ),
                       ),
@@ -181,6 +180,11 @@ class _SignInScreenState extends State<SignInScreen> {
         _passwordController.value.text, _getDeviceName());
 
     return await authState.signIn(credentials);
+  }
+
+  void _openForgotPasswordScreen(BuildContext context) async {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
   }
 
   String _getDeviceName() {

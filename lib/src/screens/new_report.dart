@@ -185,19 +185,16 @@ class _NewReportScreenState extends State<NewReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-            // Use the Navigator to go back to the previous route
-              RouteStateScope.of(context).go('/home');
-            },
-          ),
-          title: const Text('Tee ilmoitus'),
-          centerTitle : true,
-          backgroundColor: const Color.fromARGB(255, 112, 162, 237),
-          ),
-          resizeToAvoidBottomInset: false,
-          body: FutureBuilder<Map<String, List<User>>>(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                // Use the Navigator to go back to the previous route
+                RouteStateScope.of(context).go('/home');
+              },
+            ),
+            title: const Text('Tee ilmoitus')),
+        resizeToAvoidBottomInset: false,
+        body: FutureBuilder<Map<String, List<User>>>(
             future: _options,
             builder: ((context, snapshot) {
               if (snapshot.hasData) {

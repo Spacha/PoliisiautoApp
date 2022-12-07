@@ -54,7 +54,8 @@ List<Widget> buildCreditWidgets() {
     normText('Salmelin Silja'),
     normText('Kärkäs Petteri'),
     const SizedBox(height: 10),
-    boldText('Jäälin koulu, Kaakkurin koulu ja Oulu International School (OIS), 2021'),
+    boldText(
+        'Jäälin koulu, Kaakkurin koulu ja Oulu International School (OIS), 2021'),
     normText('Jääli 6 luokka, opettaja Eveliina Jurvelin'),
     normText('Kaakkuri 6 luokka, opettaja Antti Arffman'),
     normText('OIS 2-3 luokka, opettaja Heidi Tuomela'),
@@ -71,11 +72,7 @@ class InformationScreen extends StatefulWidget {
 class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('Tietoa sovelluksesta'),
-        centerTitle : true,
-        backgroundColor: const Color.fromARGB(255, 112, 162, 237),
-        ),
+      appBar: AppBar(title: const Text('Tietoa sovelluksesta')),
       drawer: const PoliisiautoDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -120,26 +117,6 @@ class _InformationContentState extends State<InformationContent> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
-          /* TextButton(
-            onPressed: () => showDialog<String>(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Alert!'),
-                content: const Text('The alert description goes here.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            ),
-            child: const Text('Ponnahdusikkuna'),
-          ),*/
           FutureBuilder<Organization>(
             future: futureOrganization,
             builder: (context, snapshot) {

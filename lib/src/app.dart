@@ -5,6 +5,8 @@ import 'auth.dart';
 import 'routing.dart';
 import 'widgets/navigator.dart';
 
+const primaryColor = Color.fromARGB(255, 112, 162, 237);
+
 class PoliisiautoApp extends StatefulWidget {
   const PoliisiautoApp({super.key});
 
@@ -71,6 +73,9 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
             // Revert back to pre-Flutter-2.5 transition behavior:
             // https://github.com/flutter/flutter/issues/82053
             theme: ThemeData(
+              appBarTheme: const AppBarTheme(
+                  backgroundColor: primaryColor, centerTitle: true),
+              primaryColor: primaryColor,
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
@@ -86,7 +91,8 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
     final signedIn = _auth.signedIn;
     final splashRoute = ParsedRoute('/splash', '/splash', {}, {});
     final signInRoute = ParsedRoute('/signin', '/signin', {}, {});
-    final forgotPasswordRoute = ParsedRoute('/forgot_password', '/forgot_password', {}, {});
+    final forgotPasswordRoute =
+        ParsedRoute('/forgot_password', '/forgot_password', {}, {});
     final homeRoute = ParsedRoute('/home', '/home', {}, {});
 
     // Flow paths:
@@ -102,7 +108,9 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
     if (!signedIn) {
       // If the user IS NOT signed in...
       // ...and not on sign-in page or splash screen -> redirect there
-      if (from != signInRoute && from != splashRoute && from != forgotPasswordRoute) {
+      if (from != signInRoute &&
+          from != splashRoute &&
+          from != forgotPasswordRoute) {
         return signInRoute;
       }
 
