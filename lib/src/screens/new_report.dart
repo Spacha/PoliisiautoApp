@@ -184,15 +184,7 @@ class _NewReportScreenState extends State<NewReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                // Use the Navigator to go back to the previous route
-                RouteStateScope.of(context).go('/home');
-              },
-            ),
-            title: const Text('Tee ilmoitus')),
+        appBar: AppBar(title: const Text('Tee ilmoitus')),
         resizeToAvoidBottomInset: false,
         body: FutureBuilder<Map<String, List<User>>>(
             future: _options,

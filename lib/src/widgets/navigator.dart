@@ -74,34 +74,17 @@ class _PoliisiautoNavigatorState extends State<PoliisiautoNavigator> {
               key: ValueKey('reports'),
               child: ReportsScreen(),
             )
+          else if (pathTemplate.startsWith('/settings'))
+            const FadeTransitionPage<void>(
+              key: ValueKey('settings'),
+              child: SettingsScreen(),
+            )
           else if (pathTemplate.startsWith('/information'))
             const FadeTransitionPage<void>(
               key: ValueKey('information'),
               child: InformationScreen(),
             )
 
-          // TODO: Use route stack!
-
-          else if (pathTemplate.startsWith('/sos_confirmation'))
-            const FadeTransitionPage<void>(
-              key: ValueKey('SOS confirmation'),
-              child: SOSConfirmationScreen(),
-            )
-          else if (pathTemplate.startsWith('/sending_sos'))
-            const FadeTransitionPage<void>(
-              key: ValueKey('sending SOS'),
-              child: SendingSOSScreen(),
-            )
-          else if (pathTemplate.startsWith('/new_report'))
-            const FadeTransitionPage<void>(
-              key: ValueKey('new report'),
-              child: NewReportScreen(),
-            )
-          else if (pathTemplate.startsWith('/settings'))
-            const FadeTransitionPage<void>(
-              key: ValueKey('settings'),
-              child: SettingsScreen(),
-            )
           // Avoid building a Navigator with an empty `pages` list when the
           // RouteState is set to an unexpected path, such as /signin.
           //

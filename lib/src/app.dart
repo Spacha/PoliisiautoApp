@@ -76,6 +76,10 @@ class _PoliisiautoAppState extends State<PoliisiautoApp> {
               appBarTheme: const AppBarTheme(
                   backgroundColor: primaryColor, centerTitle: true),
               primaryColor: primaryColor,
+              elevatedButtonTheme: const ElevatedButtonThemeData(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(primaryColor))),
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),

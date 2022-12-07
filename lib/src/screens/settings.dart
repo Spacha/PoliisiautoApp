@@ -49,9 +49,6 @@ class SettingsContent extends StatelessWidget {
               onPressed: () {
                 PoliisiautoAuthScope.of(context).signOut();
               },
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor,
-              ),
               child: const Text('Kirjaudu ulos'),
             ),
           ].map((w) => Padding(padding: const EdgeInsets.all(8), child: w)),

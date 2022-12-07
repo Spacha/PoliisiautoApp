@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import '../auth.dart';
 import '../widgets/drawer.dart';
-import '../routing.dart';
+import 'send_emergency_report.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +28,43 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _openEmergencyReportScreen(context),
+          tooltip: 'Tee hätäilmoitus',
+          backgroundColor: Colors.red,
+          child: const Icon(Icons.support_outlined),
+        ),
       );
+
+  void _openEmergencyReportScreen(BuildContext context) async {
+    final bool? sure = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text(
+                  'Oletko varma että haluat lähettää hätäilmoituksen?'),
+              content: const Text(
+                  'Kun teet hätäilmoituksen, lähimmät aikuiset saavat ilmoituksen, jossa näkyy nimesi, sijaintisi ja muuta tietoa.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Peruuta'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text(
+                    'Olen varma',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+            ));
+
+    // if the user canceled, do nothing
+    if (sure == null || !sure || !mounted) return;
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const SendEmergencyReportScreen()));
+  }
 }
 
 class HomeContent extends StatelessWidget {
@@ -40,38 +76,20 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           ...[
-            Image.asset(
-              'assets/logo-2x.png',
-              height: 200,
-              width: 200,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Image.asset(
+                'assets/logo-2x.png',
+                width: 100,
+              ),
             ),
 
             Text(
               'Tervetuloa, ${getAuth(context).user!.name}!',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
-            // TODO: SOS button only for children --> separate screen(?)
-            // Below is also a working option for a floating SOS button, that will
-            // be located in the bottom right corner.
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: ElevatedButton(
-                onPressed: () {
-                  RouteStateScope.of(context).go('/sos_confirmation');
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(60),
-                  backgroundColor: const Color.fromARGB(255, 158, 29, 20),
-                  textStyle: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                child: const Text('SOS'),
-              ),
-            ),
             const Text(
-              'Tähän tulee esimerkiksi organisaatiokohtaista sisältöä, joka voi '
-              'muuttua päivittäin.',
+              'Tähän tulee esimerkiksi organisaatiokohtaista sisältöä, joka voi muuttua päivittäin.',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 70),
@@ -80,9 +98,6 @@ class HomeContent extends StatelessWidget {
               onPressed: () {
                 getAuth(context).signOut();
               },
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).primaryColor,
-              ),
               child: const Text('Kirjaudu ulos'),
             ),
             // Make a floating SOS button on the right bottom corner:

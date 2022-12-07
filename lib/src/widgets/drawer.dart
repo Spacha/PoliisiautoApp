@@ -51,8 +51,8 @@ class PoliisiautoDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.speaker_notes_outlined),
             title: isTeacher(context)
-                ? const Text('Minun ilmoitukset')
-                : const Text('Ilmoitukset'),
+                ? const Text('Ilmoitukset')
+                : const Text('Minun ilmoitukset'),
             iconColor: Colors.white,
             textColor: Colors.white,
             tileColor:

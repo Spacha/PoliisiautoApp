@@ -87,9 +87,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                             context, snapshot.data!.isAnonymous),
                         icon: const Icon(Icons.message_outlined),
                         label: const Text('Lähetä viesti'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
-                        ),
                       ),
                     ),
                   )
