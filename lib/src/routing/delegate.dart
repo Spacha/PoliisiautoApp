@@ -39,9 +39,16 @@ class SimpleRouterDelegate extends RouterDelegate<ParsedRoute>
   ParsedRoute get currentConfiguration => routeState.route;
 
   @override
+  void notifyListeners() {
+    if (routeState != null) {
+      super.notifyListeners();
+    }
+  }
+
+  @override
   void dispose() {
     routeState.removeListener(notifyListeners);
-    routeState.dispose();
+    // routeState.dispose();
     super.dispose();
   }
 }

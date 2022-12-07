@@ -3,64 +3,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:poliisiauto/main.dart' as app;
+// import 'package:poliisiauto/src/app.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
 
   group('end-to-end test', () {
-   /* testWidgets('SOS button.',
-        (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+    testWidgets('Forgot password ', (tester) async {app.main();
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
-      // Verify the SOS widget exists on front page and it functions correctly.
-      expect(find.text('Kirjaudu sisään'), findsOneWidget);
-      final Finder sos1 = find.text('SOS');
-      await tester.tap(sos1);
-      await tester.pumpAndSettle();
+      // Find the "Unohtuiko salasana?" button on login page and tap it
+      expect(find.text('Unohtuiko salasana?'), findsOneWidget);
+      final Finder forgotPasswordButton = find.text('Unohtuiko salasana?');
+      await tester.tap(forgotPasswordButton);
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
-      // Check SOS confirmation functionality.
-      expect(find.text('Klikkaa painiketta\nuudelleen jos\nhaluat lähettää\nSOS -ilmoituksen'), findsOneWidget);
-      final Finder sos2 = find.text('SOS');
-      await tester.tap(sos2);
-      await tester.pumpAndSettle();
-
-      // Confirm we are at the SOS page.
-      expect(find.text('SOS ilmoitusta lähetetään'), findsOneWidget);
-      final Finder quit = find.textContaining('Lopeta lähetys');
-      await tester.tap(quit);
-      await tester.pumpAndSettle();
+      // Check that the screen is correct and return to login page
+      expect(find.text('Unohditko salasanasi?'), findsOneWidget);
+      final Finder goBack = find.byIcon(Icons.arrow_back);
+      await tester.tap(goBack);
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       // Confirm we are back to the front page.
-      expect(find.text('Kirjaudu sisään'), findsOneWidget);
-  });*/
-    testWidgets('Forgotten password button.',
-        (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      //await tester.pump(const Duration(milliseconds: 8000));
-
-
-      expect(find.text('Kirjaudu sisään'), findsOneWidget);
-      final Finder loginButton = find.text('Kirjaudu sisään');
-      await tester.tap(loginButton);
-      await tester.pumpAndSettle();
-      expect(find.text('Kirjaudu Sisään'), findsOneWidget);
-      final Finder forgotPassword = find.text('Unohtuiko salasana?');
-      await tester.tap(forgotPassword);
-      await tester.pumpAndSettle();
-
-      await tester.enterText(find.byKey(const ValueKey("forgotten e-mail")), 'testi.tunnus@s-posti.com');
-      final Finder sendEmail = find.text('Lähetä salasanan uusimislinkki sähköpostiin.');
-      await tester.tap(sendEmail);
-      await tester.pumpAndSettle();
-
-      // Confirm we are back to the front page.
-      expect(find.text('Kirjaudu sisään'), findsOneWidget);
-  });
-    testWidgets('Log in and home page functionalities.',
-        (tester) async {
-      app.main();
+      expect(find.text('Kirjaudu'), findsOneWidget);
+  });/*
+    testWidgets('Log in to teacher account and check page contents.', (tester) async {app.main();
       await tester.pumpAndSettle();
 
       // Verify login widget functionality
@@ -159,6 +127,6 @@ void main() {
       await tester.tap(icon);
       await tester.pumpAndSettle();
       expect(find.text('Kirjaudu Sisään'), findsWidgets);  // TODO: this should maybe take user to front page, not to login page.
-      });
+      });*/
   });
 }
