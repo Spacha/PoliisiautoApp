@@ -91,7 +91,6 @@ class HomeContent extends StatelessWidget {
               'Tähän tulee esimerkiksi organisaatiokohtaista sisältöä, joka voi muuttua päivittäin.',
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 70),
             const Divider(),
             ElevatedButton.icon(
               icon: const Icon(Icons.logout_outlined),

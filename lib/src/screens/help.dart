@@ -56,9 +56,14 @@ class _HelpContentState extends State<HelpContent> {
         children: [
           ...[
             Text(
-              'Jaajaa',
+              'Apusivut',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
+            const Text(
+              'Tälle sivulle voidaan hakea organisaation omia linkkejä, sekä muuta sisältöä.',
+              textAlign: TextAlign.center,
+            ),
+            const Divider(),
           ],
           FutureBuilder<Organization>(
             future: futureOrganization,
@@ -66,7 +71,7 @@ class _HelpContentState extends State<HelpContent> {
               if (snapshot.hasData) {
                 return Text(
                     textAlign: TextAlign.center,
-                    'Testiorganisaatio: ${snapshot.data!.name}\n${snapshot.data!.completeAddress}');
+                    'Organisaatio: ${snapshot.data!.name}\n${snapshot.data!.completeAddress}');
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
