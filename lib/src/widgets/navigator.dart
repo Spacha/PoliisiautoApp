@@ -8,9 +8,6 @@ import 'fade_transition_page.dart';
 import '../screens/home.dart';
 import '../screens/reports.dart';
 import '../screens/information.dart';
-import '../screens/sos_confirmation.dart';
-import '../screens/sending_sos.dart';
-import '../screens/new_report.dart';
 import '../screens/settings.dart';
 
 /// Builds the top-level navigator for the app. The pages to display are based
