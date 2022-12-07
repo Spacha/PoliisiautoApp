@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022, Miika Sikala, Essi Passoja, Lauri Klemettilä
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
+
 // Sample request:
 // "id": 1,
 // "description": "Joku (ehkä Jaska) kiusaa mua taas!",
@@ -61,8 +67,12 @@ class Report {
       description: json['description'],
       isAnonymous: json['is_anonymous'] == 1,
       createdAt: DateTime.tryParse(json['created_at'] ?? ''),
-      openedAt: json['opened_at'] != null ? DateTime.tryParse(json['opened_at']) : null,
-      closedAt: json['closed_at'] != null ? DateTime.tryParse(json['closed_at']) : null,
+      openedAt: json['opened_at'] != null
+          ? DateTime.tryParse(json['opened_at'])
+          : null,
+      closedAt: json['closed_at'] != null
+          ? DateTime.tryParse(json['closed_at'])
+          : null,
       reportCaseId: json['report_case_id'],
       reporterId: json['reporter_id'],
       handlerId: json['handler_id'],

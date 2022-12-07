@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022, Miika Sikala, Essi Passoja, Lauri Klemettilä
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
+
 // Sample request:
 // "id": 3,
 // "content": "This is a message to a report!",

@@ -1,4 +1,8 @@
-// Copyright 2022, Poliisiauto developers.
+/*
+ * Copyright (c) 2022, Miika Sikala, Essi Passoja, Lauri Klemettilä
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
 
 export 'data/credentials.dart';
 export 'data/organization.dart';
