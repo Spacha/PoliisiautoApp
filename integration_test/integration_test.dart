@@ -87,7 +87,8 @@ void main() {
       await tester.tap(debugUserButton);
       await tester.pumpAndSettle(const Duration(seconds: 1));
       /* USE THESE LINES FOR LOG IN ONCE DEBUG USERS ARE REMOVED FROM THE LOG IN -PAGE:
-      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'olli.o@esimerkki.fi');
+      // await tester.enterText(find.byKey(const ValueKey("e-mail")), 'olli.o@esimerkki.fi');
+      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'kerttu.k@esimerkki.fi');
       await tester.enterText(find.byKey(const ValueKey("password")), 'salasana');
       */
       final Finder loginButton2 = find.text('Kirjaudu');
@@ -140,14 +141,14 @@ void main() {
       await tester.tap(debugStudentButton);
       await tester.pumpAndSettle(const Duration(seconds: 1));
       /* USE THESE LINES FOR LOG IN ONCE DEBUG USERS ARE REMOVED FROM THE LOG IN -PAGE:
-      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'olli.o@esimerkki.fi');
+      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'kerttu.k@esimerkki.fi');
       await tester.enterText(find.byKey(const ValueKey("password")), 'salasana');
       */
       final Finder loginButton2 = find.text('Kirjaudu');
       await tester.tap(loginButton2);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      // Go to reports -page via sidebar
+      // Go to reports -page via sidebar.
       final Finder drawer = find.byTooltip('Open navigation menu');
       expect(drawer, findsWidgets);
       await tester.tap(drawer);
@@ -155,56 +156,127 @@ void main() {
       final Finder goToIcon = find.byIcon(Icons.speaker_notes_outlined);
       await tester.tap(goToIcon);
       await tester.pumpAndSettle(const Duration(seconds: 1));
-      // Go to new report -page via floating button
+      // Go to new report -page via floating button.
       for (var i=0; i<2; i++) {
         expect(find.text('Ilmoitukset'), findsWidgets);
         expect(find.byType(FloatingActionButton), findsOneWidget);
         await tester.tap(find.byType(FloatingActionButton));
         await tester.pumpAndSettle(const Duration(seconds: 1));
+        // Test back -button.
         if (i==0) {
           expect(find.byTooltip('Back'), findsOneWidget);
           await tester.tap(find.byTooltip('Back'));
           await tester.pumpAndSettle(const Duration(seconds: 1));
         }
+        // Make a new report.
         else {
+          // Write description.
           await tester.enterText(find.byKey(const ValueKey("Description")), 
           "Ville löi Elliä ruokatunnilla.");
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+          // Choose bully (notice autofill).
           await tester.enterText(find.byKey(const ValueKey("Bully")), 
-          'Ville Vitosluokkalainen');
-
+          'Ville');
+          await tester.pumpAndSettle(const Duration(seconds: 2));
+          final findCorrectUser = find.text("Ville Vitosluokkalainen");
+          await tester.tap(findCorrectUser);
+          await tester.pumpAndSettle(const Duration(seconds: 2));
+          // Test Bullied was not me -checkbox.
           final bulliedCheckboxFinder = find.byKey(const ValueKey("BulliedCheckbox"));
           var bulliedCheckbox = tester.firstWidget(bulliedCheckboxFinder) as CheckboxListTile;
           expect(bulliedCheckbox.value, false);
           // TODO: make check that the text input is not possible when Checkbox is unchecked.
           await tester.tap(bulliedCheckboxFinder);
           await tester.pumpAndSettle();
-          /*await tester.enterText(find.byKey(const ValueKey("Bullied")),
-          'Elli Eskarilainen');
-          await tester.pumpAndSettle();*/
-          //expect(find.text("Elli Eskarilainen"), findsOneWidget);
+          // Add name of bullied person (notice autofill).
+          await tester.enterText(find.byKey(const ValueKey("Bullied")),
+          'Elli');
+          await tester.pumpAndSettle(const Duration(seconds: 2));
+          final findCorrectUser2 = find.text("Elli Eskarilainen");
+          await tester.tap(findCorrectUser2);
+          await tester.pumpAndSettle();
+          // Choose adult from dropdown menu.
           final teacherDrobdownFinder = find.byKey(const ValueKey("SendTo"));
           await tester.tap(teacherDrobdownFinder);
           await tester.pumpAndSettle();
           final dropdownItem = find.text('Olli Opettaja').last;
           await tester.tap(dropdownItem);
           await tester.pumpAndSettle();
+          // Test anonymous -checkbox.
           final anonCheckboxFinder = find.byKey(const ValueKey("AnonCheckbox"));
           var anonCheckbox = tester.firstWidget(anonCheckboxFinder) as CheckboxListTile;
           expect(anonCheckbox.value, false);
           await tester.tap(anonCheckboxFinder);
           await tester.pumpAndSettle();
-          // expect(anonCheckbox.value, true); does not work as expected, why?
+          // expect(anonCheckbox.value, true); // does not work as expected, why?
+          // Send report, run next test for deletion on teacher -user.
           final sendReportButton = find.text('Lähetä');
           await tester.tap(sendReportButton);
           await tester.pumpAndSettle();
+          // Check the report is on My reports.
           expect(find.text("Ilmoitukset"), findsOneWidget);
           final sentReportFinder = find.textContaining("Ville löi");
           await tester.tap(sentReportFinder);
           await tester.pumpAndSettle();
           expect(find.textContaining("Ville löi"), findsOneWidget);
-          await tester.pumpAndSettle(const Duration(seconds: 10));
+          await tester.pumpAndSettle(const Duration(seconds: 3));
+        }
+      }
+    });
+    
+    testWidgets('Delete made report (notice test order)', (tester) async {app.main();
+      // NOTE: This test can only be run after running test "New report page".
+      await tester.pumpAndSettle(const Duration(seconds: 5));
+      expect(find.text('Kirjaudu sisään'), findsOneWidget);
 
-        }}
+      // Try logging in with test credentials.
+      final Finder debugTeacherButton = find.byKey(const ValueKey("debug teacher"));
+      await tester.tap(debugTeacherButton);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      /* USE THESE LINES FOR LOG IN ONCE DEBUG USERS ARE REMOVED FROM THE LOG IN -PAGE:
+      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'olli.o@esimerkki.fi');
+      await tester.enterText(find.byKey(const ValueKey("password")), 'salasana');
+      */
+      final Finder loginButton = find.text('Kirjaudu');
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      // Go to reports -page via sidebar.
+      final Finder drawer = find.byTooltip('Open navigation menu');
+      expect(drawer, findsWidgets);
+      await tester.tap(drawer);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      final Finder goToIcon = find.byIcon(Icons.speaker_notes_outlined);
+      await tester.tap(goToIcon);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+      // Check that we are in Reports -screen.
+      expect(find.text("Ilmoitukset"), findsOneWidget);
+      // Try to find the previosly made report.
+      final sentReportFinder = find.textContaining("Ville löi");
+      await tester.tap(sentReportFinder);
+      await tester.pumpAndSettle();
+      expect(find.textContaining("Ville löi"), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 3));
+      // Test delete -button functionality.
+      final Finder deleteReport = find.byIcon(Icons.delete_outline);
+      for (var i=0; i<2; i++) {
+        await tester.tap(deleteReport);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+        expect(find.byType(AlertDialog), findsOneWidget);
+        expect(find.text("Haluatko varmasti poistaa ilmoituksen?"), findsOneWidget);
+        if (i==0) {
+          final Finder cancelDelete = find.text('Peru');
+          await tester.tap(cancelDelete);
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+        }
+        else {
+          final Finder makeDelete = find.text('Kyllä');
+          await tester.tap(makeDelete);
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+        }
+      }
+      // Check that the report is now missing.
+      expect(find.text("Ilmoitukset"), findsOneWidget);
+      expect(find.textContaining("Ville löi"), findsNothing);
     });
   });
 }
