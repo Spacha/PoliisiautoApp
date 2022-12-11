@@ -62,6 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         decoration:
                             const InputDecoration(labelText: 'Sähköposti'),
                         controller: _emailController,
+                        key: const ValueKey("e-mail"),
                       ),
                       TextFormField(
                         validator: (value) {
@@ -74,6 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             const InputDecoration(labelText: 'Salasana'),
                         obscureText: true,
                         controller: _passwordController,
+                        key: const ValueKey("password"),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(0),
@@ -125,6 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 _emailController.text = 'olli.o@esimerkki.fi';
                                 _passwordController.text = 'salasana';
                               },
+                              key: const ValueKey("debug teacher"),
                               child: const Text('Olli O. (opettaja)',
                                   style: TextStyle(color: Colors.orange)),
                             ),
@@ -146,6 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               _emailController.text = 'kerttu.k@esimerkki.fi';
                               _passwordController.text = 'salasana';
                             },
+                            key: const ValueKey("debug student"),
                             child: const Text('Kerttu K. (oppilas)',
                                 style: TextStyle(color: Colors.orange)),
                           ),

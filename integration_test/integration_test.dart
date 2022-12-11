@@ -17,36 +17,36 @@ void main() {
       expect(find.text('Unohtuiko salasana?'), findsOneWidget);
       final Finder forgotPasswordButton = find.text('Unohtuiko salasana?');
       await tester.tap(forgotPasswordButton);
-      await tester.pumpAndSettle(const Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
 
       // Check that the screen is correct and return to login page
       expect(find.text('Unohditko salasanasi?'), findsOneWidget);
       final Finder goBack = find.byIcon(Icons.arrow_back);
       await tester.tap(goBack);
-      await tester.pumpAndSettle(const Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
 
       // Confirm we are back to the front page.
       expect(find.text('Kirjaudu'), findsOneWidget);
-  });/*
-    testWidgets('Log in to teacher account and check page contents.', (tester) async {app.main();
-      await tester.pumpAndSettle();
-
-      // Verify login widget functionality
+  });
+    testWidgets('Log in to a test teacher account and check page contents.', (tester) async {app.main();
+      await tester.pumpAndSettle(const Duration(seconds: 5));
       expect(find.text('Kirjaudu sisään'), findsOneWidget);
-      final Finder loginButton = find.text('Kirjaudu sisään');
-      await tester.tap(loginButton);
-      await tester.pumpAndSettle();
-      expect(find.text('Kirjaudu Sisään'), findsOneWidget);
 
       // Try logging in with test credentials.
-      await tester.enterText(find.byKey(const ValueKey("username")), 'testitunnus');
-      await tester.enterText(find.byKey(const ValueKey("password")), 'testisalasana');
+
+      final Finder debugTeacherButton = find.byKey(const ValueKey("debug teacher"));
+      await tester.tap(debugTeacherButton);
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+      /* USE THESE LINES FOR LOG IN ONCE DEBUG USERS ARE REMOVED FROM THE LOG IN -PAGE:
+      await tester.enterText(find.byKey(const ValueKey("e-mail")), 'olli.o@esimerkki.fi');
+      await tester.enterText(find.byKey(const ValueKey("password")), 'salasana');
+      */
       final Finder loginButton2 = find.text('Kirjaudu');
       await tester.tap(loginButton2);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.text('Etusivu'), findsOneWidget);
 
-      // Test New report button on front page, fill in information and send the report.
+      /*// Test New report button on front page, fill in information and send the report.
       final Finder newReportButton = find.text('Tee uusi ilmoitus');
       await tester.tap(newReportButton);
       await tester.pumpAndSettle();
@@ -127,6 +127,6 @@ void main() {
       await tester.tap(icon);
       await tester.pumpAndSettle();
       expect(find.text('Kirjaudu Sisään'), findsWidgets);  // TODO: this should maybe take user to front page, not to login page.
-      });*/
+      */});
   });
 }
