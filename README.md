@@ -10,4 +10,4 @@ You'll also need a device to test on. Most likely you want to use an Android emu
 
 ## License
 
-PoliisiautoApp is licensed under a 2-clause BSD license. See LICENSE file for more details.
+PoliisiautoApp is licensed under a 2-clause BSD license. See [LICENSE](https://github.com/Spacha/PoliisiautoApp/LICENSE) for more details.
