@@ -1,5 +1,7 @@
 # Poliisiauto mobile app
 
+![Logo of Poliisiauto](docs/logo-text-0.5x.png)
+
 This project is a client application for [PoliisiautoServer](https://github.com/Spacha/PoliisiautoServer). It is an application where users can report bullying to a trusted adult.
 
 ## Getting started
