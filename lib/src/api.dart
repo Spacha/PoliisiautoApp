@@ -7,12 +7,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'data.dart';
 
 /// initialize the global API accessor
 PoliisiautoApi api =
-    PoliisiautoApi(host: 'https://poliisiauto.spacha.dev', version: 'v1');
+    PoliisiautoApi(host: dotenv.get('POLIISIAUTO_API_HOST'), version: 'v1');
 
 class PoliisiautoApi {
   final String host;
@@ -35,7 +36,8 @@ class PoliisiautoApi {
     request.fields.addAll({
       'email': credentials.email,
       'password': credentials.password,
-      'device_name': credentials.deviceName
+      'device_name': credentials.deviceName,
+      'api_key': dotenv.get('POLIISIAUTO_API_KEY') // FIXME: Nonstandard way.
     });
 
     http.StreamedResponse response = await request.send();
