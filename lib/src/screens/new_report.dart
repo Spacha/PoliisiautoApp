@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:poliisiauto/src/auth.dart';
-import 'package:poliisiauto/src/routing/route_state.dart';
 import '../data.dart';
 import '../api.dart';
 
@@ -34,6 +33,7 @@ Widget buildDescriptionField(
         hintText: 'Kerro omin sanoin mitä tapahtui',
         labelText: 'Mitä tapahtui?',
       ),
+      key: const ValueKey("Description"),
     );
 
 /// Bully: Text field with autocomplete
@@ -66,6 +66,7 @@ Widget buildBullyField(BuildContext context, List<User> bullyOptions,
                 labelText: 'Kuka kiusasi? (valinnainen)',
                 counterText: '',
               ),
+              key: const ValueKey("Bully"),
             ),
         onSelected: ((option) => controller.text = option.id.toString()));
 
@@ -78,6 +79,7 @@ Widget buildBulliedWasNotMeField(
           child: Text('Kiusattu oli joku muu kuin minä')),
       value: state,
       onChanged: onChanged,
+      key: const ValueKey("BulliedCheckbox"),
     );
 
 /// Bullied: Text field with autocomplete
@@ -111,6 +113,7 @@ Widget buildBulliedField(BuildContext context, List<User> bulliedOptions,
                 labelText: 'Ketä kiusattiin? (valinnainen)',
                 counterText: '',
               ),
+              key: const ValueKey("Bullied"),
             ),
         onSelected: ((option) => controller.text = option.id.toString()));
 
@@ -130,6 +133,7 @@ Widget buildHandlerField(BuildContext context, List<User> handlerOptions,
         labelText: 'Kenelle haluat lähettää ilmoituksen?',
         counterText: '',
       ),
+      key: const ValueKey("SendTo"),
     );
 
 /// Anonymous: Checkbox
@@ -141,6 +145,7 @@ Widget buildAnonymousField(
           child: Text('En halua että opettaja tietää nimeni')),
       value: state,
       onChanged: onChanged,
+      key: const ValueKey("AnonCheckbox"),
     );
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,16 +1,21 @@
-# poliisiauto
+## Important notice!
 
-A new Flutter project.
+**This is a prototype and must not be used in practice under any circumstances! The developers of this application do not take any responsibility, legal or otherwise, of using this application!**
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+# Poliisiauto mobile app
 
-A few resources to get you started if this is your first Flutter project:
+![Logo of Poliisiauto](docs/logo-text-0.5x.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This project is a client application for [PoliisiautoServer](https://github.com/Spacha/PoliisiautoServer). It is an application where users can report bullying to a trusted adult.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Getting started
+
+This project is made using [Flutter](https://docs.flutter.dev/) and is targeted mainly to Android, but should also work on iOS. Flutter offers a good documentation on how to set up a development environment for it. We recommend using Visual Studio Code with Flutter extension(s) since it has proven to be a very well functioning setup.
+
+You'll also need a device to test on. Most likely you want to use an Android emulator running on the same machine as the editor. Flutter documentation has a tutorial for setting up Android Studio for that purpose.
+
+## License
+
+PoliisiautoApp is licensed under a 2-clause BSD license. See [LICENSE](LICENSE) for more details.
